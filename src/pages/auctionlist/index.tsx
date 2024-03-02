@@ -1,5 +1,5 @@
 const AuctionList = () => {
-	return <></>;
+	return <div>AuctionList</div>;
 };
 
 export default AuctionList;
