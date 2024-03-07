@@ -10,7 +10,10 @@
 	// 기본 포매팅 실행 방지
   "editor.formatOnSave": false,
   "cSpell.words": [
+    "clsx",
     "pretendard",
-    "tailwindcss"
+    "svgr",
+    "tailwindcss",
+    "YUMU"
   ]
 }
