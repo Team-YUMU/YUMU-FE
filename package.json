@@ -23,6 +23,8 @@
 		"tailwind-scrollbar-hide": "^1.1.7"
 	},
 	"devDependencies": {
+		"@cspell/eslint-plugin": "^8.6.0",
+		"@svgr/webpack": "^8.1.0",
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
