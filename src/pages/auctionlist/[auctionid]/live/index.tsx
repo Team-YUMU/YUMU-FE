@@ -1,3 +1,3 @@
 export default function Live() {
-	return <div>Live</div>;
+  return <div>Live</div>;
 }
