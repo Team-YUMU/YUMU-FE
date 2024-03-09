@@ -1,6 +1,6 @@
 import { LiveBids } from '@/components/domain/live/livebids';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
-import { LiveChatting } from '@/components/domain/live/livechatting';
+import { LiveChatting } from '@/components/domain/live/LiveChatting';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
