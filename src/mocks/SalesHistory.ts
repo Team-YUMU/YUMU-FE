@@ -1,6 +1,6 @@
-import { SalesHistory } from '@/types/types';
+import { SalesHistoryType } from '@/types/types';
 
-const SalesHistories: SalesHistory[] = [
+const SalesHistories: SalesHistoryType[] = [
 	{
 		id: 1,
 		artTitle: '모나리자',

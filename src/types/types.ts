@@ -1,4 +1,4 @@
-export type Member = {
+export type MemberType = {
 	id: number;
 	email: string;
 	nickname: string;
@@ -10,18 +10,16 @@ export type Member = {
 	address: null | string;
 };
 
-// 그냥 Art라는 타입 새로 만들어서
-export type PurchaseHistory = {
-	// 구매내역
+export type PurchaseHistoryType = {
 	id: number;
-	artTitle: string; // 여기에 Art 넣고
-	artist: string; // 여기에 Member 넣고
-	price: number; // 이거 Auction으로 대신하고
-	artImage: string; // 이것도 Art로 하고
-	purchaseDate: Date; // 이것도 Auction으로 대체하고 싶어요
+	artTitle: string;
+	artist: string;
+	price: number;
+	artImage: string;
+	purchaseDate: Date;
 };
 
-export type SalesHistory = {
+export type SalesHistoryType = {
 	id: number;
 	artTitle: string;
 	artist: string;
@@ -31,15 +29,13 @@ export type SalesHistory = {
 	saleDate: Date;
 };
 
-// 이거는 잘 된... 거 같?아요? 그냥 member랑 auction 넣어도 되려나? 그럼 너무 뚱뚱해지나?
-export type WishList = {
+export type WishListType = {
 	id: number;
 	memberId: number;
 	auctionId: number;
 };
 
-// 그냥 여기에 Member 다 집어넣으면 PurchaseHistroy에 머리 아플 일 없을 거 같긴한데
-export type Auction = {
+export type AuctionType = {
 	id: number;
 	artTitle: string;
 	artImage: string;

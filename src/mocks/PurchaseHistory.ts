@@ -1,6 +1,6 @@
-import { PurchaseHistory } from '@/types/types';
+import { PurchaseHistoryType } from '@/types/types';
 
-const PurchaseHistories: PurchaseHistory[] = [
+const PurchaseHistories: PurchaseHistoryType[] = [
 	{
 		id: 1,
 		artTitle: '모나리자',

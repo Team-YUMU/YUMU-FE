@@ -1,6 +1,6 @@
-import { WishList } from '@/types/types';
+import { WishListType } from '@/types/types';
 
-const WishLists: WishList[] = [
+const WishLists: WishListType[] = [
 	{
 		id: 1,
 		memberId: 2,
