@@ -1,3 +1,3 @@
 export default function Auction() {
-	return <div>Auction</div>;
+  return <div>Auction</div>;
 }
