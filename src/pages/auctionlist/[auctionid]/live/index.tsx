@@ -39,7 +39,26 @@ export default function Live() {
             </Button>
           </div>
         </div>
-        <div className='bg-white'>경매현황</div>
+        <div className='flex flex-col bg-white'>
+          <div className='flex flex-row'>
+            <p>카테고리</p>
+            <Button>공유</Button>
+            <Button>찜</Button>
+          </div>
+          <div>현재 최고가</div>
+          <p>경매 마감시간</p>
+          <p>참여자 수</p>
+          <p>내 입찰가</p>
+          <div>
+            <p>전체 입찰 내역</p>
+            <ul>
+              <li className='flex flex-row'>
+                <p>익명</p>
+                <p>금액</p>
+              </li>
+            </ul>
+          </div>
+        </div>
         <div className='col-span-3 flex justify-center'>
           <Carousel className='w-2/3'>
             <CarouselPrevious />
