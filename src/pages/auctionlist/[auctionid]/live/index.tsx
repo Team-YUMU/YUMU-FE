@@ -1,3 +1,5 @@
+import LiveChatting from '@/components/LiveChatting';
+import LiveVideo from '@/components/LiveVideo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
@@ -6,11 +8,11 @@ import { Menubar, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar';
 export default function Live() {
   return (
     <div className='m-dvh flex h-dvh select-none flex-col items-center gap-2'>
-      <div className='w-ful bg-emerald-100'>Header</div>
-      <div className='grid grid-cols-3 gap-2 bg-emerald-100'>
+      <div className='w-full bg-emerald-100'>Header</div>
+      <div className='grid grid-cols-3 gap-2 bg-emerald-100 px-2'>
         <div className='col-span-3 bg-white'>상품명</div>
-        <div className='col-span-2 bg-white'>영상작성</div>
-        <div className='bg-white'>채팅</div>
+        <LiveVideo />
+        <LiveChatting />
         <div className='col-span-2 bg-white'>
           <div className='bg-emerald-100'>
             유의사항 ex. 도서신간 배송 불가 / 실문배송이 아닌 이메일로 상품이 전달 됩니다.
@@ -79,7 +81,7 @@ export default function Live() {
           </Carousel>
         </div>
       </div>
-      <div className='bg-emerald-100'>Footer</div>
+      <div className='w-full bg-emerald-100'>Footer</div>
     </div>
   );
 }
