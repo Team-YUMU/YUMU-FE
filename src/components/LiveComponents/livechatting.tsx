@@ -18,7 +18,7 @@ interface ChatListProps {
   value: string;
 }
 
-export default function LiveChatting() {
+export function LiveChatting() {
   const [chatList, setChatList] = useState<ChatListProps[]>([
     { type: 'chat', user: 'T1', value: 'Chat 컴포넌트 확인용 데이터입니다.' },
   ]);
@@ -39,8 +39,8 @@ export default function LiveChatting() {
     form.reset();
   }
   return (
-    <div className='col-span-1 flex flex-col gap-2 bg-white p-2'>
-      <div className='scrollbar-hide flex h-60 flex-col-reverse justify-start gap-2 overflow-y-auto'>
+    <div className='col-span-1 flex flex-col gap-2 rounded-xl bg-slate-50 p-2'>
+      <div className='scrollbar-hide flex h-full flex-col-reverse justify-start gap-2 overflow-y-auto'>
         {chatList.map((chat, index) => (
           <Chat key={index} user={chat.user}>
             {chat.value}
@@ -56,7 +56,7 @@ export default function LiveChatting() {
             control={form.control}
             name='chat'
             render={({ field }) => (
-              <FormItem className='w-full focus-within:outline-none focus:ring-2 focus:ring-purple-600'>
+              <FormItem className='w-full focus-within:outline-none'>
                 <FormControl>
                   <Input
                     placeholder='for chat'

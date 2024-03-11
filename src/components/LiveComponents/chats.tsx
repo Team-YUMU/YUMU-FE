@@ -16,7 +16,7 @@ export function Chat({ user, children }: ChatProps) {
     <div className={`flex ${checkIsUserMe} items-center justify-start gap-2`}>
       <Button variant={'ghost'} className='h-6 w-6 hover:bg-transparent' onClick={handleAvatar}>
         <Avatar className='h-6 w-6'>
-          <AvatarFallback>{user}</AvatarFallback>
+          <AvatarFallback className='bg-white'>{user}</AvatarFallback>
         </Avatar>
       </Button>
       <p className='text-12-500 bg-white'>{children}</p>
