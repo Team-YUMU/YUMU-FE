@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { Avatar, AvatarFallback } from '../ui/avatar';
-import { Button } from '../ui/button';
+import { Avatar, AvatarFallback } from '../../ui/avatar';
+import { Button } from '../../ui/button';
 
 interface ChatProps {
   user: string;

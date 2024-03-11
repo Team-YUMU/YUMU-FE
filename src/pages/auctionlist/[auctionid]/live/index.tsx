@@ -1,9 +1,9 @@
-import { LiveBids } from '@/components/LiveComponents/livebids';
-import { LiveCarousel } from '@/components/LiveComponents/livecarousel';
-import { LiveChatting } from '@/components/LiveComponents/livechatting';
-import { LiveDetail } from '@/components/LiveComponents/livedetail';
-import { LiveDetailScroll } from '@/components/LiveComponents/livedetailscroll';
-import { LiveVideo } from '@/components/LiveComponents/livevideo';
+import { LiveBids } from '@/components/domain/live/livebids';
+import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
+import { LiveChatting } from '@/components/domain/live/livechatting';
+import { AuctionDetailContents } from '@/components/common/AuctionDetailContents';
+import { LiveDetailScroll } from '@/components/domain/live/livedetailscroll';
+import { LiveVideo } from '@/components/domain/live/livevideo';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 export default function Live() {
@@ -21,9 +21,9 @@ export default function Live() {
         </div>
         <LiveChatting />
         <LiveDetailScroll />
-        {/* <LiveDetail /> */}
+        {/* <AuctionDetailContents /> */}
         <LiveBids />
-        <LiveCarousel />
+        <ExhibitionCarousel />
         <div className='w-full'>Footer</div>
       </div>
     </div>

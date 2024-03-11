@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AspectRatio } from '../ui/aspect-ratio';
+import { AspectRatio } from '../../ui/aspect-ratio';
 
 export function LiveVideo() {
   const [stream, setStream] = useState<MediaStream | null>(null);

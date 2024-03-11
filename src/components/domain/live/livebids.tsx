@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
 const testBidList = Array(13).fill(1);
 

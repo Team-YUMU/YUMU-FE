@@ -1,5 +1,5 @@
 import { useState, useRef, SyntheticEvent } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
 type MenuType = '상세페이지' | '작가소개' | '유의사항' | '공지글';
 

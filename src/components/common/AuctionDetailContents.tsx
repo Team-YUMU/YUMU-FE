@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../ui/button';
 
-export function LiveDetail() {
+export function AuctionDetailContents() {
   const [activeTab, setActiveTab] = useState<string>('상세페이지');
   const [isMoreView, setIsMoreView] = useState(false);
 

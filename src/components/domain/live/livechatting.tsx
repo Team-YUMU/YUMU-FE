@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '../ui/button';
-import { Form, FormControl, FormField, FormItem } from '../ui/form';
-import { Input } from '../ui/input';
+import { Button } from '../../ui/button';
+import { Form, FormControl, FormField, FormItem } from '../../ui/form';
+import { Input } from '../../ui/input';
 import { useState } from 'react';
 import { Chat } from './chats';
 
