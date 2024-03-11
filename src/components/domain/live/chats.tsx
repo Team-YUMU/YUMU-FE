@@ -19,7 +19,7 @@ export function Chat({ user, children }: ChatProps) {
           <AvatarFallback className='bg-white'>{user}</AvatarFallback>
         </Avatar>
       </Button>
-      <p className='text-12-500 bg-white'>{children}</p>
+      <p className='bg-white text-12-500'>{children}</p>
     </div>
   );
 }

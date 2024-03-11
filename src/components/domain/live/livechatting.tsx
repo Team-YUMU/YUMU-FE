@@ -40,7 +40,7 @@ export function LiveChatting() {
   }
   return (
     <div className='col-span-1 flex flex-col gap-2 rounded-xl bg-slate-50 p-2'>
-      <div className='scrollbar-hide flex h-full flex-col-reverse justify-start gap-2 overflow-y-auto'>
+      <div className='flex h-full flex-col-reverse justify-start gap-2 overflow-y-auto scrollbar-hide'>
         {chatList.map((chat, index) => (
           <Chat key={index} user={chat.user}>
             {chat.value}
@@ -50,7 +50,7 @@ export function LiveChatting() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className='flex w-full flex-row items-center gap-2 rounded-xl border bg-white focus-within:border-black'
+          className='focus-within:border-black flex w-full flex-row items-center gap-2 rounded-xl border bg-white'
         >
           <FormField
             control={form.control}
