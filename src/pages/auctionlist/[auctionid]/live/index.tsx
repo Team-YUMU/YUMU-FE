@@ -1,15 +1,13 @@
 import { LiveBids } from '@/components/domain/live/livebids';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import { LiveChatting } from '@/components/domain/live/livechatting';
-import { AuctionDetailContents } from '@/components/common/AuctionDetailContents';
-import { LiveDetailScroll } from '@/components/domain/live/livedetailscroll';
+import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 export default function Live() {
   return (
-    <div className='m-auto flex h-dvh select-none flex-col items-center gap-2'>
-      <div className='w-full'>Header</div>
+    <div className='m-auto flex w-[80%] select-none flex-col items-center gap-2 pt-2'>
       <div className='grid grid-cols-3 gap-2 px-2'>
         <div className='col-span-3 bg-slate-200'>상품명</div>
         {/* <LiveVideo /> */}
@@ -20,11 +18,9 @@ export default function Live() {
           </AspectRatio>
         </div>
         <LiveChatting />
-        <LiveDetailScroll />
-        {/* <AuctionDetailContents /> */}
+        <AuctionDetail />
         <LiveBids />
         <ExhibitionCarousel />
-        <div className='w-full'>Footer</div>
       </div>
     </div>
   );

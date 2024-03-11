@@ -8,9 +8,9 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <div>
+    <div className='flex min-h-screen flex-col'>
       <Header />
-      <main>{children}</main>
+      <main className='grow'>{children}</main>
       <Footer />
     </div>
   );
