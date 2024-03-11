@@ -1,13 +1,13 @@
+import Head from 'next/head';
 import Landing from './landing';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 
 export default function Home() {
   return (
     <>
-      <Header />
+      <Head>
+        <title>YUMU 유무</title>
+      </Head>
       <Landing />
-      <Footer />
     </>
   );
 }
