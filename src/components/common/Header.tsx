@@ -1,3 +1,3 @@
 export default function Header() {
-  return <div>헤더</div>;
+  return <header>헤더</header>;
 }

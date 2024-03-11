@@ -1,14 +1,16 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
+import Layout from '@/components/common/Layout';
+import { useRouter } from 'next/router';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
+  if (router.pathname === '/_error') return <Component {...pageProps} />;
+
   return (
-    <>
-      <Head>
-        <title>YUMU</title>
-      </Head>
+    <Layout>
       <Component {...pageProps} />
-    </>
+    </Layout>
   );
 }

@@ -1,3 +1,3 @@
 export default function Footer() {
-  return <div>푸터</div>;
+  return <footer>푸터</footer>;
 }
