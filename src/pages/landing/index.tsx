@@ -1,5 +1,11 @@
 import SignUpPage from '../signup';
+import SignInPage from '../signin';
 
 export default function Landing() {
-  return <SignUpPage />;
+  return (
+    <>
+      <SignInPage />
+      <SignUpPage />
+    </>
+  );
 }
