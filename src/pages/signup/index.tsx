@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { schema } from '@/types/validation';
+import { Input } from '@/components/ui/input';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -35,17 +36,17 @@ export default function SignUpPage() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>email</label>
-          <input {...register('email')} placeholder='email' />
+          <Input {...register('email')} placeholder='email' />
           {errors.email && <p>{errors.email.message}</p>}
         </div>
         <div>
           <label>password</label>
-          <input type='password' {...register('password')} placeholder='password' />
+          <Input type='password' {...register('password')} placeholder='password' />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
         <div>
           <label>password check</label>
-          <input type='password' {...register('passwordCheck')} placeholder='password confirm' />
+          <Input type='password' {...register('passwordCheck')} placeholder='password confirm' />
           {errors.passwordCheck && <p>{errors.passwordCheck.message}</p>}
         </div>
         <button type='submit'>Sign Up</button>

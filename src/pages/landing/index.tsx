@@ -1,11 +1,10 @@
-import SignUpPage from '../signup';
-import SignInPage from '../signin';
+import Test from '../test/test';
 
 export default function Landing() {
   return (
     <>
-      <SignInPage />
-      <SignUpPage />
+      <h1>랜딩</h1>
+      <Test />
     </>
   );
 }
