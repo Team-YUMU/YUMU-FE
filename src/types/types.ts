@@ -50,3 +50,36 @@ export type AuctionType = {
   createdAt: Date;
   status: string;
 };
+
+// =================================================================
+export interface UserInfo {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImageUrl: null | string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserInfoWithToken {
+  accessToken: string;
+  user: UserInfo;
+}
+
+export interface putMemberProps {
+  nickname: string;
+  profileImageUrl: string | null;
+  password: string;
+  newPassword: string;
+}
+
+export interface postAuthLoginProps {
+  email: string;
+  password: string;
+}
+
+export interface postUsersProps {
+  email: string;
+  nickname: string;
+  password: string;
+}
