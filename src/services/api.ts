@@ -63,28 +63,26 @@ export async function getBuyHistory() {
 
 // auction post API
 export async function postAuction({
-  artTitle,
-  artImage,
+  artId,
   artDetail,
-  artist,
   artSize,
   artDate,
   startDate,
   startPrice,
-  endPrice,
   bidder,
+  notice,
+  receiveType,
 }: AuctionType) {
   const res = await authAxios.post(`${AUCTION_BASE_URL}`, {
-    artTitle,
-    artImage,
+    artId,
     artDetail,
-    artist,
     artSize,
     artDate,
     startDate,
     startPrice,
-    endPrice,
     bidder,
+    notice,
+    receiveType,
   });
   return res.data;
 }

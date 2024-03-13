@@ -3,7 +3,6 @@ export type MemberType = {
   email: string;
   nickname: string;
   password: string;
-  account: null | string;
   profileImage: null | string;
   introduce: null | string;
   snsLink: null | string;
@@ -12,6 +11,8 @@ export type MemberType = {
 
 export type PurchaseHistoryType = {
   id: number;
+  memberId: number;
+  auctionId: number;
   artTitle: string;
   artist: string;
   price: number;
@@ -21,6 +22,8 @@ export type PurchaseHistoryType = {
 
 export type SalesHistoryType = {
   id: number;
+  memberId: number;
+  auctionId: number;
   artTitle: string;
   artist: string;
   price: number;
@@ -35,20 +38,29 @@ export type WishListType = {
   auctionId: number;
 };
 
-export type AuctionType = {
+export type ArtType = {
   id: number;
   artTitle: string;
   artImage: string;
-  artDetail: string;
   artist: string;
+  status: string;
+  postDate: Date;
+  wishCnt: number;
+};
+
+export type AuctionType = {
+  id: number;
+  artId: number;
+  artDetail: string;
   artSize: string;
   artDate: Date;
   startDate: Date;
+  endDate: Date;
   startPrice: number;
   endPrice: null | number;
   bidder: null | string;
-  createdAt: Date;
-  status: string;
+  notice: null | string;
+  receiveType: string;
 };
 
 // =================================================================
