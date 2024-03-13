@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
-import { FaUserPen } from 'react-icons/fa6';
 import MyPageTabs from '../../components/domain/myPage/Tabs/MyPageTabs';
 import Edit from '@/components/domain/myPage/Tabs/Edit/Edit';
 import { useRouter } from 'next/router';
@@ -56,7 +55,6 @@ export default function MyPage() {
               className=' flex  items-center justify-center gap-[0.1rem] border-black-0 hover:border-b-[0.1rem]'
             >
               {memberInfo.nickname}
-              <FaUserPen />
             </p>
             <p className='flex h-[2.9rem] w-[9.6rem] items-center justify-center'>작가 설명</p>
             <Separator className='my-4' />

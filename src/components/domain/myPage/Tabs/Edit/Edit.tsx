@@ -24,7 +24,7 @@ export default function Edit() {
       nickname: '닉네임',
       password: '비밀번호',
       passwordCheck: '비밀번호 확인',
-      file: '이미지',
+      file: '프로필 이미지',
     },
     placeholder: {
       email: '이메일을 입력해 주세요.',
