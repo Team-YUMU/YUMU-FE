@@ -10,6 +10,7 @@
 	// 기본 포매팅 실행 방지
   "editor.formatOnSave": false,
   "cSpell.words": [
+    "aeiou",
     "clsx",
     "Embla",
     "hookform",
