@@ -28,16 +28,16 @@ export function AuctionDetail() {
         유의사항 ex. 도서신간 배송 불가 / 실문배송이 아닌 이메일로 상품이 전달 됩니다.
       </div>
       <div className='grid w-full grid-cols-4 gap-2'>
-        <Button variant={'secondary'} onClick={handleMenu} className='rounded-none'>
+        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
           상세페이지
         </Button>
-        <Button variant={'secondary'} onClick={handleMenu} className='rounded-none'>
+        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
           작가소개
         </Button>
-        <Button variant={'secondary'} onClick={handleMenu} className='rounded-none'>
+        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
           유의사항
         </Button>
-        <Button variant={'secondary'} onClick={handleMenu} className='rounded-none'>
+        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
           공지글
         </Button>
       </div>
@@ -127,7 +127,7 @@ export function AuctionDetail() {
             </p>
           </div>
         </div>
-        <Button className='mt-2 w-full' variant={'secondary'} onClick={handleMore}>
+        <Button className='mt-2 w-full' variant={'default'} onClick={handleMore}>
           {isMoreView ? '줄이기' : '더보기'}
         </Button>
       </div>
