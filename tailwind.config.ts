@@ -263,15 +263,17 @@ const config = {
         black: {
           0: '#000000',
           1: '#171717',
+          2: '#222222',
           3: '#333236',
           4: '#4B4B4B',
         },
         gray: {
           7: '#787486',
-          9: '#9FA6B2',
+          9: '#9E9E9E',
           D: '#D9D9D9',
-          E: '#EEEEEE',
+          E: '#E0E0E0',
           F: '#FAFAFA',
+          B: '#BDBDBD',
         },
         white: {
           DEFAULT: '#FFFFFF',
@@ -282,6 +284,7 @@ const config = {
         },
         red: {
           DEFAULT: '#D6173A',
+          F: '#FF7752',
         },
         green: {
           DEFAULT: '#7AC555',
@@ -291,6 +294,7 @@ const config = {
         },
         orange: {
           DEFAULT: '#FFA500',
+          F: '#F9BB00',
         },
         blue: {
           DEFAULT: '#76A5EA',
@@ -299,6 +303,9 @@ const config = {
           DEFAULT: '#E876EA',
           F: '#F4D7DA',
           D: '#D25B68',
+        },
+        yellow: {
+          DEFAULT: '#FEE500',
         },
       },
       borderRadius: {

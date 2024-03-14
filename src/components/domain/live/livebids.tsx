@@ -19,8 +19,8 @@ export function LiveBids() {
       <div className='flex flex-row items-center justify-between'>
         <p className='bg-slate-100'>카테고리</p>
         <div className='space-x-2'>
-          <Button variant={'secondary'}>공유</Button>
-          <Button variant={'secondary'}>찜</Button>
+          <Button variant={'default'}>공유</Button>
+          <Button variant={'default'}>찜</Button>
         </div>
       </div>
       <div className='h-16 bg-slate-100'>현재 최고가</div>
@@ -39,11 +39,11 @@ export function LiveBids() {
         </ul>
       </div>
       {visibleCount < testBidList.length ? (
-        <Button variant={'secondary'} onClick={handleShowMore}>
+        <Button variant={'default'} onClick={handleShowMore}>
           더 보기
         </Button>
       ) : (
-        <Button variant={'secondary'} onClick={handleShowLess}>
+        <Button variant={'default'} onClick={handleShowLess}>
           감추기
         </Button>
       )}
