@@ -58,8 +58,8 @@ export default function Header() {
   };
 
   return (
-    <header>
-      <div className='container mx-auto flex justify-between bg-[pink]'>
+    <header className=' bg-slate-50'>
+      <div className='container mx-auto flex justify-between'>
         <Link href='/'>로고</Link>
         <div>
           <Link href='#' className='mr-[2rem]'>
@@ -122,7 +122,7 @@ export default function Header() {
           )}
         </div>
       </div>
-      <div className='container mx-auto flex justify-end bg-[pink]'>
+      <div className='bg-[ bg-slate-50] container mx-auto flex justify-end'>
         <SearchForm />
       </div>
     </header>
