@@ -35,8 +35,7 @@ const AuthInput = forwardRef<HTMLInputElement, InputProps>(
     let hasToBeToggled = false;
     if (type === 'password') hasToBeToggled = true;
 
-    let borderColor =
-      'focus:outline-orange-F border border-input focus:bg-white border-gray-E  bg-gray-F focus-visible:ring-offset-2';
+    let borderColor = 'focus:outline-orange-F  focus:bg-white outline-gray-E  bg-gray-F focus-visible:ring-offset-2';
     if (errorMessage?.length) borderColor = 'focus:outline-red-F border-red-F bg-white';
 
     const iconColor =
