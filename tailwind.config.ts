@@ -304,6 +304,9 @@ const config = {
           F: '#F4D7DA',
           D: '#D25B68',
         },
+        yellow: {
+          DEFAULT: '#FEE500',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
