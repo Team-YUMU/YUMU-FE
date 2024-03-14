@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { IoIosNotifications } from 'react-icons/io';
 import { HiDotsVertical } from 'react-icons/hi';
+import SearchForm from './SearchForm';
 // import getMembers from '@/mocks/Member';
 
 type userData = {
@@ -93,7 +94,7 @@ export default function Header() {
               <Link href='/signin'>로그인</Link>
               <HoverCard>
                 <HoverCardTrigger asChild>
-                  <Button variant='link' className='p-[0rem] pl-[1rem]'>
+                  <Button>
                     <IoIosNotifications />
                   </Button>
                 </HoverCardTrigger>
