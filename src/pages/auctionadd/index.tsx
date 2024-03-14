@@ -17,6 +17,7 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@
 import { auctionFormSchema } from '@/types/validation';
 import { useState } from 'react';
 import Image from 'next/image';
+import { TimePickerDemo } from '@/components/domain/live/time-picker-demo';
 
 type AuctionFormTypes = z.infer<typeof auctionFormSchema>;
 
@@ -25,8 +26,8 @@ const defaultValues: Partial<AuctionFormTypes> = {
   artImage: '',
   artDetail: '',
   artSize: '',
-  startDate: new Date(),
-  endDate: new Date(),
+  startDate: new Date(0),
+  endDate: new Date(0),
   startPrice: 0,
   receiveType: '',
   notice: '',
@@ -153,20 +154,18 @@ export default function AuctionAdd() {
                 <div>
                   <Popover>
                     <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={'outline'}
-                          className={cn(
-                            'w-[240px] pl-3 text-left font-normal',
-                            !field.value && 'text-muted-foreground',
-                          )}
-                        >
-                          {field.value ? format(field.value, 'PPP') : <span>경매 시작 일시</span>}
-                          <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-                        </Button>
-                      </FormControl>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-[280px] justify-start text-left font-normal',
+                          !field.value && 'text-muted-foreground',
+                        )}
+                      >
+                        <CalendarIcon className='mr-2 h-4 w-4' />
+                        {field.value ? format(field.value, 'yyyy-MM-dd HH:mm:ss') : <span>경매 시작 일시</span>}
+                      </Button>
                     </PopoverTrigger>
-                    <PopoverContent className='w-auto p-0' align='start'>
+                    <PopoverContent className='w-auto p-0'>
                       <Calendar
                         mode='single'
                         selected={field.value}
@@ -174,6 +173,9 @@ export default function AuctionAdd() {
                         disabled={(date) => date < new Date()}
                         initialFocus
                       />
+                      <div className='border-t border-border p-3'>
+                        <TimePickerDemo setDate={field.onChange} date={field.value} />
+                      </div>
                     </PopoverContent>
                   </Popover>
                   <FormMessage />
@@ -190,20 +192,18 @@ export default function AuctionAdd() {
                 <div>
                   <Popover>
                     <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={'outline'}
-                          className={cn(
-                            'w-[240px] pl-3 text-left font-normal',
-                            !field.value && 'text-muted-foreground',
-                          )}
-                        >
-                          {field.value ? format(field.value, 'PPP') : <span>경매 종료 일시</span>}
-                          <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-                        </Button>
-                      </FormControl>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-[280px] justify-start text-left font-normal',
+                          !field.value && 'text-muted-foreground',
+                        )}
+                      >
+                        <CalendarIcon className='mr-2 h-4 w-4' />
+                        {field.value ? format(field.value, 'yyyy-MM-dd HH:mm:ss') : <span>경매 종료 일시</span>}
+                      </Button>
                     </PopoverTrigger>
-                    <PopoverContent className='w-auto p-0' align='start'>
+                    <PopoverContent className='w-auto p-0'>
                       <Calendar
                         mode='single'
                         selected={field.value}
@@ -211,6 +211,9 @@ export default function AuctionAdd() {
                         disabled={(date) => date < new Date()}
                         initialFocus
                       />
+                      <div className='border-t border-border p-3'>
+                        <TimePickerDemo setDate={field.onChange} date={field.value} />
+                      </div>
                     </PopoverContent>
                   </Popover>
                   <FormMessage />

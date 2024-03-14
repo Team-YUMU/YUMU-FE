@@ -32,7 +32,7 @@ export const auctionFormSchema = z.object({
   artImage: z.string().min(1, { message: '필수 항목입니다.' }),
   // 이하 Auction
   artDetail: z.string().min(1, { message: '필수 항목입니다.' }),
-  artSize: z.string().min(1, { message: '필수 항목입니다.' }),
+  artSize: z.string().regex(/^\d+x\d+x\d+$/, { message: '가로x세로x높이 꼴로 입력해주세요' }),
   startDate: z.date({ required_error: '필수 항목입니다.' }),
   endDate: z.date({ required_error: '필수 항목입니다.' }),
   startPrice: z
