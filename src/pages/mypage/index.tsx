@@ -5,6 +5,17 @@ import { Separator } from '@/components/ui/separator';
 import MyPageTabs from '../../components/domain/myPage/Tabs/MyPageTabs';
 import Edit from '@/components/domain/myPage/Tabs/Edit/Edit';
 import { useRouter } from 'next/router';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 // import { getMemberInfo } from '@/services/api';
 
 export default function MyPage() {
@@ -14,6 +25,7 @@ export default function MyPage() {
     profileImage: null,
   });
   const [changeUi, setChangeUi] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const router = useRouter();
 
   // const getMembersData = async () => {
@@ -37,11 +49,15 @@ export default function MyPage() {
     router.push('/');
   };
 
-  const handleDeleteUserClick = () => {};
+  const handleDeleteUserClick = () => {
+    // deleteMembersData();
+    setIsOpenModal(!!true);
+    router.push('/');
+  };
   return (
     <main className='flex h-full min-h-[80vh] w-full items-center justify-center '>
       <article className='flex flex-row gap-[10rem]'>
-        <section className='flex flex-col gap-[5rem]'>
+        <section className='flex flex-col gap-[1rem]'>
           <div className='flex flex-col items-center justify-center gap-5'>
             <Image
               src=''
@@ -63,12 +79,25 @@ export default function MyPage() {
               로그아웃
             </Button>
           </div>
-          <p
-            onClick={handleDeleteUserClick}
-            className='flex h-[2.9rem] w-[8.9rem] items-center justify-center border-black-0 hover:border-b-[0.1rem]'
-          >
-            탈퇴하기
-          </p>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant='outline' size='sm' className='hover:bg-red-F hover:text-white'>
+                탈퇴하기
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className='w-[34rem]'>
+              <AlertDialogHeader>
+                <AlertDialogTitle>정말 탈퇴하시겠습니까?</AlertDialogTitle>
+                <AlertDialogDescription className='text-14-400 text-black-0'>
+                  탈퇴 후 계정 복구는 불가능합니다.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>취소</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDeleteUserClick}>탈퇴</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </section>
         <section>{changeUi === true ? <Edit /> : <MyPageTabs />}</section>
       </article>
