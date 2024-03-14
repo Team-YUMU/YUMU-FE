@@ -25,7 +25,6 @@ export default function MyPage() {
     profileImage: null,
   });
   const [changeUi, setChangeUi] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
   const router = useRouter();
 
   // const getMembersData = async () => {
@@ -51,7 +50,6 @@ export default function MyPage() {
 
   const handleDeleteUserClick = () => {
     // deleteMembersData();
-    setIsOpenModal(!!true);
     router.push('/');
   };
   return (
