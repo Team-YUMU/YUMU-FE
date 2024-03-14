@@ -63,7 +63,6 @@ export type AuctionType = {
   receiveType: string;
 };
 
-// =================================================================
 export interface UserInfo {
   id: number;
   email: string;
