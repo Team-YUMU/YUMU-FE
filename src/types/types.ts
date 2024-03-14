@@ -60,8 +60,7 @@ export type AuctionType = {
   endPrice: null | number;
   bidder: null | string;
   notice: null | string;
-  createdAt: Date;
-  status: string;
+  receiveType: string;
 };
 
 export interface UserInfo {
