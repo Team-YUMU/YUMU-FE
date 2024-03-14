@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage } from '../ui/avatar';
+import SearchForm from './SearchForm';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 // import getMembers from '@/mocks/Member';
@@ -93,7 +94,7 @@ export default function Header() {
         </div>
       </div>
       <div className='container mx-auto flex justify-end bg-[pink]'>
-        <div>검색 컴포넌트</div>
+        <SearchForm />
       </div>
     </header>
   );

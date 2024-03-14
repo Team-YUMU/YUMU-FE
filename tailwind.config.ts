@@ -327,9 +327,12 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      aspectRatio: {
+        'card-image': '4 / 3',
+      },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide'), require('@tailwindcss/line-clamp')],
 } satisfies Config;
 
 export default config;
