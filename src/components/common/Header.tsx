@@ -9,9 +9,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage } from '../ui/avatar';
-import SearchForm from './SearchForm';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { IoIosNotifications } from 'react-icons/io';
+import { HiDotsVertical } from 'react-icons/hi';
 // import getMembers from '@/mocks/Member';
 
 type userData = {
@@ -22,7 +24,7 @@ type userData = {
 export default function Header() {
   const [memberData, setMemberData] = useState<userData | null>(null);
   const router = useRouter();
-
+  const boardId = router.query.id;
   //데이터를 불러온다.
   const userMembersData = async () => {
     try {
@@ -44,7 +46,7 @@ export default function Header() {
       userMembersData();
     }
     //의존성 배열 비워두면 안된다
-  }, []);
+  }, [boardId]);
 
   //로그아웃 클릭시 토큰 제거와 메인 페이지 이동
   const handleLogout = () => {
@@ -89,6 +91,32 @@ export default function Header() {
           ) : (
             <>
               <Link href='/signin'>로그인</Link>
+              <HoverCard>
+                <HoverCardTrigger asChild>
+                  <Button variant='link' className='p-[0rem] pl-[1rem]'>
+                    <IoIosNotifications />
+                  </Button>
+                </HoverCardTrigger>
+                <HoverCardContent className='mr-[2rem] w-80 bg-[#ddd] pb-[0rem]'>
+                  {/* 데이터 갈아끼워지게 작업 컴포넌트화 */}
+                  <div className='mb-4 flex justify-between space-x-4 rounded-[0.8rem] bg-[#fff] p-[0.4rem]'>
+                    <div className='flex h-[2rem] w-[3rem] items-center justify-center rounded-full '>
+                      <IoIosNotifications />
+                    </div>
+                    <div className='space-y-1'>
+                      <h4 className='text-sm font-semibold'>경매 1시간전 </h4>
+                      <p className='text-sm'>[백만불짜리]의 경매 시작 1시간전 입니다.</p>
+                      <div className='flex items-center pt-2'>
+                        {/* 알림보낸 시간 */}
+                        <span className='text-xs text-muted-foreground'>08:00</span>
+                      </div>
+                    </div>
+                    <div>
+                      <HiDotsVertical />
+                    </div>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
             </>
           )}
         </div>
