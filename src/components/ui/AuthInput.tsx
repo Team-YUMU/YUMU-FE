@@ -1,8 +1,8 @@
 import { HTMLProps, forwardRef, useState } from 'react';
 import Image from 'next/image';
 import ErrorMessage from './ErrorMessage';
-import Email from '../svgs/Email';
-import Pwd from '../svgs/Pwd';
+import EmailIcon from '../svgs/EmailIcon';
+import PwdIcon from '../svgs/PwdIcon';
 
 interface InputProps extends HTMLProps<HTMLInputElement> {
   required: boolean;
@@ -55,15 +55,18 @@ const AuthInput = forwardRef<HTMLInputElement, InputProps>(
             type={inputType}
             name={inputName}
             onFocus={handleFocus}
-            onBlur={handleBlur}
             ref={ref}
             {...props}
+            onBlur={(event) => {
+              handleBlur();
+              props?.onBlur?.(event);
+            }}
           />
           {inputName === 'email' || inputName === 'nickname' ? (
-            <Email width={15} height={15} color={iconColor} className={`absolute bottom-[1.8rem] left-[1.7rem]`} />
+            <EmailIcon width={15} height={15} color={iconColor} className={`absolute bottom-[1.8rem] left-[1.7rem]`} />
           ) : null}
           {inputName === 'password' || inputName === 'passwordCheck' ? (
-            <Pwd width={15} height={15} color={iconColor} className={`absolute bottom-[1.8rem] left-[1.7rem]`} />
+            <PwdIcon width={15} height={15} color={iconColor} className={`absolute bottom-[1.8rem] left-[1.7rem]`} />
           ) : null}
           {hasToBeToggled && (
             <button type='button' onClick={handleClickToggle}>
