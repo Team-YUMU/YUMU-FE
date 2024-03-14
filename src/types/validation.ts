@@ -8,10 +8,8 @@ export const schema = z
       .min(2, { message: '이메일을 입력해 주세요.' }),
     password: z
       .string()
-      .min(8, { message: '최소 8자 이상 입력해 주세요.' })
-      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/, {
-        message: '비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.',
-      }),
+      .min(8, { message: '비밀번호는 영문, 숫자 조합 8자 이상 입력해 주세요.' })
+      .regex(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/, { message: '비밀번호는 영문, 숫자 조합 8자 이상 입력해 주세요.' }),
     passwordCheck: z.string(),
     nickname: z
       .string()
@@ -25,3 +23,28 @@ export const schema = z
     },
     { message: '비밀번호가 일치하지 않습니다.', path: ['passwordCheck'] },
   );
+
+export const auctionFormSchema = z.object({
+  // 이하 Art
+  artTitle: z.string().min(1, { message: '필수 항목입니다.' }).max(30, {
+    message: '30글자 이내로 작성해주세요.',
+  }),
+  artImage: z.string().min(1, { message: '필수 항목입니다.' }),
+  // 이하 Auction
+  artDetail: z.string().min(1, { message: '필수 항목입니다.' }),
+  artSize: z.string().min(1, { message: '필수 항목입니다.' }),
+  startDate: z.date({ required_error: '필수 항목입니다.' }),
+  endDate: z.date({ required_error: '필수 항목입니다.' }),
+  startPrice: z
+    .number()
+    .min(1, { message: '필수 항목입니다.' })
+    .or(z.string().min(1, { message: '필수 항목입니다.' }))
+    .transform((startPrice) => (typeof startPrice === 'string' ? Number(startPrice) : startPrice)),
+  receiveType: z.string().min(1, { message: '필수 항목입니다.' }),
+  notice: z
+    .string()
+    .max(160, {
+      message: '160자 이내로 작성해주세요.',
+    })
+    .optional(),
+});
