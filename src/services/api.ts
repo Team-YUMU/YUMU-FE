@@ -1,5 +1,6 @@
 import {
   AuctionType,
+  RegistrationType,
   UserInfo,
   UserInfoWithToken,
   postAuthLoginProps,
@@ -63,26 +64,26 @@ export async function getBuyHistory() {
 
 // auction post API
 export async function postAuction({
-  artId,
+  artTitle,
+  artImage,
   artDetail,
   artSize,
-  artDate,
   startDate,
+  endDate,
   startPrice,
-  bidder,
-  notice,
   receiveType,
-}: AuctionType) {
+  notice,
+}: RegistrationType) {
   const res = await authAxios.post(`${AUCTION_BASE_URL}`, {
-    artId,
+    artTitle,
+    artImage,
     artDetail,
     artSize,
-    artDate,
     startDate,
+    endDate,
     startPrice,
-    bidder,
-    notice,
     receiveType,
+    notice,
   });
   return res.data;
 }

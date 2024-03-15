@@ -25,12 +25,10 @@ export const schema = z
   );
 
 export const auctionFormSchema = z.object({
-  // 이하 Art
   artTitle: z.string().min(1, { message: '필수 항목입니다.' }).max(30, {
     message: '30글자 이내로 작성해주세요.',
   }),
   artImage: z.string().min(1, { message: '필수 항목입니다.' }),
-  // 이하 Auction
   artDetail: z.string().min(1, { message: '필수 항목입니다.' }),
   artSize: z.string().regex(/^\d+x\d+x\d+$/, { message: '가로x세로x높이 꼴로 입력해주세요' }),
   startDate: z.date({ required_error: '필수 항목입니다.' }),

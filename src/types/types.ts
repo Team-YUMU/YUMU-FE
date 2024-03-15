@@ -63,6 +63,18 @@ export type AuctionType = {
   receiveType: string;
 };
 
+export type RegistrationType = {
+  artTitle: string;
+  artImage: string;
+  artDetail: string;
+  artSize: string;
+  startDate: Date;
+  endDate: Date;
+  startPrice: number;
+  receiveType: string;
+  notice: string;
+};
+
 export interface UserInfo {
   id: number;
   email: string;
