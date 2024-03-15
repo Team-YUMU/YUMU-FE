@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -21,15 +20,15 @@ import { postAuction } from '@/services/api';
 import { RegistrationType } from '@/types/types';
 
 const defaultValues: Partial<RegistrationType> = {
-  artTitle: '',
-  artImage: '',
-  artDetail: '',
-  artSize: '',
-  startDate: new Date(0),
-  endDate: new Date(0),
-  startPrice: 0,
-  receiveType: '',
-  notice: '',
+  artTitle: undefined,
+  artImage: undefined,
+  artDetail: undefined,
+  artSize: undefined,
+  startDate: undefined,
+  endDate: undefined,
+  startPrice: undefined,
+  receiveType: undefined,
+  notice: undefined,
 };
 
 export default function Registration() {
@@ -164,7 +163,7 @@ export default function Registration() {
                         )}
                       >
                         <CalendarIcon className='mr-2 h-4 w-4' />
-                        {field.value ? format(field.value, 'yyyy-MM-dd HH:mm:ss') : <span>경매 시작 일시</span>}
+                        {field.value ? format(field.value, 'yyyy년 MM월 dd일 HH:mm') : <span>경매 시작 일시</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className='w-auto p-0'>
@@ -175,7 +174,7 @@ export default function Registration() {
                         disabled={(date) => date < new Date()}
                         initialFocus
                       />
-                      <div className='border-t border-border p-3'>
+                      <div className='border-t border-border p-2'>
                         <TimePickerDemo setDate={field.onChange} date={field.value} isSeconds={false} isIcon={false} />
                       </div>
                     </PopoverContent>
@@ -234,7 +233,7 @@ export default function Registration() {
                 </div>
                 <div>
                   <FormControl>
-                    <Input type='number' placeholder='경매 시작가' {...field} />
+                    <Input placeholder='경매 시작가' {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>

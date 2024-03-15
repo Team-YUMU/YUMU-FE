@@ -1,5 +1,5 @@
 'use client';
-
+// 예시 입니다
 import * as React from 'react';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
@@ -27,7 +27,7 @@ export function DateTimePickerDemo() {
       <PopoverContent className='w-auto p-0'>
         <Calendar mode='single' selected={date} onSelect={setDate} initialFocus />
         <div className='border-t border-border p-3'>
-          <TimePickerDemo setDate={setDate} date={date} />
+          <TimePickerDemo setDate={setDate} date={date} isSeconds isIcon />
         </div>
       </PopoverContent>
     </Popover>
