@@ -7,7 +7,7 @@ interface EmailProps {
   height: number;
 }
 
-const Email = ({ className, color, width, height }: EmailProps) => {
+const EmailIcon = ({ className, color, width, height }: EmailProps) => {
   return (
     <svg
       width={`${width}`}
@@ -27,4 +27,4 @@ const Email = ({ className, color, width, height }: EmailProps) => {
   );
 };
 
-export default Email;
+export default EmailIcon;

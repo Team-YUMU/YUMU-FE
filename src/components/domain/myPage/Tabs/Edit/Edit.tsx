@@ -15,7 +15,7 @@ export default function Edit() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const INPUT_SETTING = {
@@ -81,7 +81,7 @@ export default function Edit() {
             {...register('passwordCheck')}
           />
         </div>
-        <Button type='submit' disabled={!isValid} variant={'default'} size={'default'} className='flex'>
+        <Button type='submit' variant={'default'} size={'default'} className='flex'>
           수정하기
         </Button>
       </div>
