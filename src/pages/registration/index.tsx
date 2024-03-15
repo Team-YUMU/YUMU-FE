@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -16,33 +15,32 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
 import { auctionFormSchema } from '@/types/validation';
 import { useState } from 'react';
-import Image from 'next/image';
 import { TimePickerDemo } from '@/components/domain/live/time-picker-demo';
+import { postAuction } from '@/services/api';
+import { RegistrationType } from '@/types/types';
 
-type AuctionFormTypes = z.infer<typeof auctionFormSchema>;
-
-const defaultValues: Partial<AuctionFormTypes> = {
-  artTitle: '',
-  artImage: '',
-  artDetail: '',
-  artSize: '',
-  startDate: new Date(0),
-  endDate: new Date(0),
-  startPrice: 0,
-  receiveType: '',
-  notice: '',
+const defaultValues: Partial<RegistrationType> = {
+  artTitle: undefined,
+  artImage: undefined,
+  artDetail: undefined,
+  artSize: undefined,
+  startDate: undefined,
+  endDate: undefined,
+  startPrice: undefined,
+  receiveType: undefined,
+  notice: undefined,
 };
 
-export default function AuctionAdd() {
+export default function Registration() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const form = useForm<AuctionFormTypes>({
+  const form = useForm<RegistrationType>({
     resolver: zodResolver(auctionFormSchema),
     defaultValues,
   });
 
-  function onSubmit(data: AuctionFormTypes) {
+  function onSubmit(data: RegistrationType) {
     console.log(data);
+    postAuction(data);
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +55,7 @@ export default function AuctionAdd() {
   };
 
   return (
-    <div className='m-auto w-[120rem] pt-2'>
+    <div className='m-auto w-[100rem] pt-2 md:w-[60rem] sm:w-[40rem]'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <FormField
@@ -65,8 +63,8 @@ export default function AuctionAdd() {
             name='artTitle'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>작품 제목</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>작품 제목</FormLabel>
                 </div>
                 <div>
                   <FormControl>
@@ -83,23 +81,26 @@ export default function AuctionAdd() {
             name='artImage'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>대표 이미지</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>대표 이미지</FormLabel>
                 </div>
                 <div className='space-y-2'>
-                  {selectedImage && (
-                    <div className='relative h-[10rem]'>
-                      <Image src={selectedImage} alt='Preview' fill style={{ objectFit: 'contain' }} />
-                    </div>
-                  )}
                   <FormControl>
-                    <Input
-                      type='file'
-                      placeholder='대표 이미지'
-                      onInput={handleFileChange}
-                      accept='image/*'
-                      {...field}
-                    />
+                    <Button
+                      asChild
+                      style={{
+                        backgroundImage: `url(${selectedImage})`,
+                      }}
+                      className='h-[18rem] w-[32rem] bg-transparent bg-contain bg-center bg-no-repeat sm:h-[9rem] sm:w-[16rem]'
+                    >
+                      <Input
+                        type='file'
+                        placeholder='대표 이미지'
+                        onInput={handleFileChange}
+                        accept='image/*'
+                        {...field}
+                      />
+                    </Button>
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -112,8 +113,8 @@ export default function AuctionAdd() {
             name='artDetail'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>작품 상세</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>작품 상세</FormLabel>
                 </div>
                 <div>
                   <FormControl>
@@ -130,8 +131,8 @@ export default function AuctionAdd() {
             name='artSize'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>작품 규모</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>작품 규모</FormLabel>
                 </div>
                 <div>
                   <FormControl>
@@ -148,8 +149,8 @@ export default function AuctionAdd() {
             name='startDate'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>경매 기간</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>경매 기간</FormLabel>
                 </div>
                 <div>
                   <Popover>
@@ -157,12 +158,12 @@ export default function AuctionAdd() {
                       <Button
                         variant={'outline'}
                         className={cn(
-                          'w-[280px] justify-start text-left font-normal',
+                          'w-[36rem] justify-start text-left font-normal sm:w-[24rem]',
                           !field.value && 'text-muted-foreground',
                         )}
                       >
                         <CalendarIcon className='mr-2 h-4 w-4' />
-                        {field.value ? format(field.value, 'yyyy-MM-dd HH:mm:ss') : <span>경매 시작 일시</span>}
+                        {field.value ? format(field.value, 'yyyy년 MM월 dd일 HH:mm') : <span>경매 시작 일시</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className='w-auto p-0'>
@@ -173,8 +174,8 @@ export default function AuctionAdd() {
                         disabled={(date) => date < new Date()}
                         initialFocus
                       />
-                      <div className='border-t border-border p-3'>
-                        <TimePickerDemo setDate={field.onChange} date={field.value} />
+                      <div className='border-t border-border p-2'>
+                        <TimePickerDemo setDate={field.onChange} date={field.value} isSeconds={false} isIcon={false} />
                       </div>
                     </PopoverContent>
                   </Popover>
@@ -195,12 +196,12 @@ export default function AuctionAdd() {
                       <Button
                         variant={'outline'}
                         className={cn(
-                          'w-[280px] justify-start text-left font-normal',
+                          'sm:w-[24 w-[36rem] justify-start text-left font-normal',
                           !field.value && 'text-muted-foreground',
                         )}
                       >
                         <CalendarIcon className='mr-2 h-4 w-4' />
-                        {field.value ? format(field.value, 'yyyy-MM-dd HH:mm:ss') : <span>경매 종료 일시</span>}
+                        {field.value ? format(field.value, 'yyyy년 MM월 dd일 HH:mm') : <span>경매 종료 일시</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className='w-auto p-0'>
@@ -212,7 +213,7 @@ export default function AuctionAdd() {
                         initialFocus
                       />
                       <div className='border-t border-border p-3'>
-                        <TimePickerDemo setDate={field.onChange} date={field.value} />
+                        <TimePickerDemo setDate={field.onChange} date={field.value} isSeconds={false} isIcon={false} />
                       </div>
                     </PopoverContent>
                   </Popover>
@@ -221,21 +222,18 @@ export default function AuctionAdd() {
               </FormItem>
             )}
           />
-          {/* <input type='date' />
-          <input type='time' />
-          <input type='datetime-local' /> */}
           <Separator />
           <FormField
             control={form.control}
             name='startPrice'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>경매 시작가</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>경매 시작가</FormLabel>
                 </div>
                 <div>
                   <FormControl>
-                    <Input type='number' placeholder='경매 시작가' {...field} />
+                    <Input placeholder='경매 시작가' {...field} />
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -248,8 +246,8 @@ export default function AuctionAdd() {
             name='receiveType'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>수령 방법</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>수령 방법</FormLabel>
                 </div>
                 <div>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -275,8 +273,8 @@ export default function AuctionAdd() {
             name='notice'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div>
-                  <FormLabel>유의 사항</FormLabel>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>유의 사항</FormLabel>
                 </div>
                 <div>
                   <FormControl>
