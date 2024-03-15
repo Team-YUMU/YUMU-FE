@@ -7,7 +7,7 @@ interface PwdProps {
   height: number;
 }
 
-const Pwd = ({ className, color, width, height }: PwdProps) => {
+const PwdIcon = ({ className, color, width, height }: PwdProps) => {
   return (
     <svg
       width={`${width}`}
@@ -27,4 +27,4 @@ const Pwd = ({ className, color, width, height }: PwdProps) => {
   );
 };
 
-export default Pwd;
+export default PwdIcon;
