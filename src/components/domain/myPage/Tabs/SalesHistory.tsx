@@ -1,10 +1,21 @@
 import { Button } from '@/components/ui/button';
 import SalesHistoryData from '@/mocks/SalesHistory';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import React from 'react';
+import Members from '@/mocks/Member';
 
 export default function SalesHistory() {
   const salesHistory = SalesHistoryData;
-
+  const MembersInfo = Members;
   const historyBoxStyles =
     ' flex h-[13.5rem] w-[56.875rem] flex-shrink-0 flex-row justify-around gap-[20rem] rounded-[0.8rem] border-[0.1rem] border-red-F hover:border-2';
   return (
@@ -20,7 +31,23 @@ export default function SalesHistory() {
                 </p>
               </div>
               <p className='text-22.5-500'>{item.artTitle}</p>
-              <Button type='button'>낙찰자 : {item.artist}</Button>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button type='button'>낙찰자 : {item.artist}</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className='w-[34rem]'>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>낙찰자 정보</AlertDialogTitle>
+                    <AlertDialogDescription className='text-15-400 text-black-0'>
+                      <p>{MembersInfo[0].nickname}</p>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className='flex flex-col gap-2'>
+                    <AlertDialogAction>확인</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
             <div className='mt-[5rem] flex flex-col gap-[0.1rem]'>
               <p className='text-22.5-500'>{item.price + `원`}</p>
