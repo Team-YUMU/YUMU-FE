@@ -2,11 +2,11 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import { ReactNode } from 'react';
 
-type Props = {
+type LayoutProps = {
   children: ReactNode;
 };
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <div className='flex min-h-screen flex-col'>
       <Header />
