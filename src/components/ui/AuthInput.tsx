@@ -53,7 +53,7 @@ const AuthInput = forwardRef<HTMLInputElement, InputProps>(
         <p className='mt-2 flex items-center text-16-400'>{label}</p>
         <div className='relative'>
           <input
-            className={`${borderColor} h-[4rem] w-full rounded-[0.8rem] border-[0.1rem] px-[4rem]   py-[1.5rem] text-14-400 placeholder:text-gray-B`}
+            className={`${borderColor} h-[4rem] w-full rounded-[0.8rem] border-[0.1rem] px-[4rem]   py-[1.5rem] text-10-400 placeholder:text-gray-B`}
             type={inputType}
             name={inputName}
             onFocus={handleFocus}
@@ -65,18 +65,28 @@ const AuthInput = forwardRef<HTMLInputElement, InputProps>(
             }}
           />
           {inputName === 'email' || inputName === 'nickname' ? (
-            <EmailIcon width={15} height={15} color={iconColor} className={`absolute bottom-[1.3rem] left-[1.7rem]`} />
+            <EmailIcon
+              width={15}
+              height={15}
+              color={iconColor}
+              className={`absolute bottom-[1.3rem] left-[1.7rem] h-[1.25rem] w-[1.25rem]`}
+            />
           ) : null}
           {inputName === 'password' ||
           inputName === 'passwordCheck' ||
           inputName === 'newPassword' ||
           inputName === 'newPasswordCheck' ? (
-            <PwdIcon width={15} height={15} color={iconColor} className={`absolute bottom-[1.3rem] left-[1.7rem]`} />
+            <PwdIcon
+              width={15}
+              height={15}
+              color={iconColor}
+              className={`absolute bottom-[1.3rem] left-[1.7rem] h-[1.25rem] w-[1.25rem]`}
+            />
           ) : null}
           {hasToBeToggled && (
             <button type='button' onClick={handleClickToggle}>
               <Image
-                className='absolute bottom-[1.5rem] right-[1.7rem]'
+                className='absolute bottom-[1.5rem] right-[1.7rem] h-[1rem] w-[1rem]'
                 width={15}
                 height={15}
                 src={IMG_PATH[inputType]}
