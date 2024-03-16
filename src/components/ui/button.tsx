@@ -9,8 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-red-F text-white hover:bg-red-F/90',
-        outline: 'border  border-red-F hover:bg-white outline-red-F text-red-F hover:bg-white/90',
+        default: 'bg-red-F text-white hover:bg-red-F/90 focus:bg-red-F/80',
+        outline: 'border border-red-F hover:bg-white outline-red-F text-red-F hover:bg-white/90',
         sns: 'border border-yellow text-black-0 bg-yellow',
       },
       size: {
@@ -18,7 +18,7 @@ const buttonVariants = cva(
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
-        auth: 'w-[43.8rem] h-[6.4rem]',
+        auth: 'w-[27.375rem] h-[4rem]',
       },
     },
     defaultVariants: {

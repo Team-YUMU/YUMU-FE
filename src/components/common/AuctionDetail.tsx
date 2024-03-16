@@ -1,7 +1,7 @@
 import { useState, useRef, SyntheticEvent } from 'react';
 import { Button } from '../ui/button';
 
-type MenuType = '상세페이지' | '작가소개' | '유의사항' | '공지글';
+type MenuType = '상세페이지' | '작가소개' | '유의사항';
 
 export function AuctionDetail() {
   const scrollRef = useRef<HTMLDivElement[]>([]);
@@ -13,7 +13,6 @@ export function AuctionDetail() {
       상세페이지: 0,
       작가소개: 1,
       유의사항: 2,
-      공지글: 3,
     };
     scrollRef.current[menus[name]].scrollIntoView({ behavior: 'smooth' });
   };
@@ -27,7 +26,7 @@ export function AuctionDetail() {
       <div className='rounded-xl bg-slate-50 p-2'>
         유의사항 ex. 도서신간 배송 불가 / 실문배송이 아닌 이메일로 상품이 전달 됩니다.
       </div>
-      <div className='grid w-full grid-cols-4 gap-2'>
+      <div className='grid w-full grid-cols-3 gap-2'>
         <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
           상세페이지
         </Button>
@@ -37,14 +36,11 @@ export function AuctionDetail() {
         <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
           유의사항
         </Button>
-        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
-          공지글
-        </Button>
       </div>
       <div className={`relative bg-slate-50 p-2`}>
-        <div className={`overflow-hidden ${isMoreView ? 'h-full' : 'h-72'}`}>
+        <div className={`space-y-2 overflow-hidden ${isMoreView ? 'h-full' : 'h-72'}`}>
           <div ref={(el) => (scrollRef.current[0] = el!)} className={`overflow-hidden bg-slate-100`}>
-            <p>상세 페이지</p>
+            <h1 className='text-24-700'>상세 페이지</h1>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tortor eros, feugiat at semper eget,
               venenatis ut elit. Aliquam ornare id lorem at commodo. Donec non dignissim velit, vitae ullamcorper augue.
@@ -91,7 +87,7 @@ export function AuctionDetail() {
             </p>
           </div>
           <div ref={(el) => (scrollRef.current[1] = el!)} className={`overflow-hidden bg-slate-100`}>
-            <p>작가소개</p>
+            <h1 className='text-24-700'>작가소개</h1>
             <p>
               모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에
               노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 사면·감형 및 복권에 관한 사항은
@@ -103,19 +99,7 @@ export function AuctionDetail() {
             </p>
           </div>
           <div ref={(el) => (scrollRef.current[2] = el!)} className={`overflow-hidden bg-slate-100 `}>
-            <p>유의사항</p>
-            <p>
-              모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에
-              노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 사면·감형 및 복권에 관한 사항은
-              법률로 정한다. 재판의 전심절차로서 행정심판을 할 수 있다. 행정심판의 절차는 법률로 정하되, 사법절차가
-              준용되어야 한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한
-              사항에 관하여 대통령령을 발할 수 있다. 모든 국민은 종교의 자유를 가진다. 국무총리는 국무위원의 해임을
-              대통령에게 건의할 수 있다. 정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에
-              참여하는데 필요한 조직을 가져야 한다.
-            </p>
-          </div>
-          <div ref={(el) => (scrollRef.current[3] = el!)} className={`overflow-hidden bg-slate-100`}>
-            <p>공지글</p>
+            <h1 className='text-24-700'>유의사항</h1>
             <p>
               모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에
               노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 사면·감형 및 복권에 관한 사항은

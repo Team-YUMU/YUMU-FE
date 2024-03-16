@@ -15,7 +15,7 @@ export function LiveBids() {
   };
 
   return (
-    <div className='flex h-fit flex-col gap-2 rounded-xl bg-slate-50 p-2'>
+    <div className='sticky top-2 flex h-fit flex-col gap-2 rounded-xl bg-slate-50 p-2'>
       <div className='flex flex-row items-center justify-between'>
         <p className='bg-slate-100'>카테고리</p>
         <div className='space-x-2'>
