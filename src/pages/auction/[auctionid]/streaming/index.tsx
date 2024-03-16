@@ -1,11 +1,10 @@
 import { LiveBids } from '@/components/domain/live/livebids';
-import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import { LiveChatting } from '@/components/domain/live/livechatting';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 
-export default function Live() {
+export default function Streaming() {
   return (
     <div className='m-auto flex w-[80%] select-none flex-col items-center gap-2 py-2'>
       <div className='grid grid-cols-3 gap-2 px-2'>
@@ -20,7 +19,6 @@ export default function Live() {
         <LiveChatting />
         <AuctionDetail />
         <LiveBids />
-        <ExhibitionCarousel />
       </div>
     </div>
   );
