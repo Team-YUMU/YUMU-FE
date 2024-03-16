@@ -21,8 +21,20 @@ const config = {
     },
     fontSize: {
       // <p class="text-12-400 ...">The quick brown fox ...</p> 처럼 사용
+      '0.8-400': [
+        '0.875rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       '10-400': [
         '1rem',
+        {
+          fontWeight: '400',
+        },
+      ],
+      '11.1-400': [
+        '1.125rem',
         {
           fontWeight: '400',
         },
@@ -52,6 +64,12 @@ const config = {
           fontWeight: '700',
         },
       ],
+      '12.5-500': [
+        '1.25rem',
+        {
+          fontWeight: '500',
+        },
+      ],
 
       //fontsize: 14px
       '14-400': [
@@ -66,7 +84,13 @@ const config = {
           fontWeight: '500',
         },
       ],
-
+      //fontsize : 15px
+      '15-400': [
+        '1.5rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       //fontsize: 16px
       '16-400': [
         '1.6rem',
@@ -140,7 +164,12 @@ const config = {
           fontWeight: '700',
         },
       ],
-
+      '22.5-500': [
+        '2.25rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       //fontsize: 24px
       '24-700': [
         '2.4rem',
@@ -274,6 +303,7 @@ const config = {
           E: '#E0E0E0',
           F: '#FAFAFA',
           B: '#BDBDBD',
+          99: '#999',
         },
         white: {
           DEFAULT: '#FFFFFF',
