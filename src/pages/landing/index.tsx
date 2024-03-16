@@ -1,7 +1,9 @@
+import { LandingBanner } from '@/components/common/LandingBanner';
+
 export default function Landing() {
   return (
-    <>
-      <h1>랜딩</h1>
-    </>
+    <div className='flexCenter'>
+      <LandingBanner />
+    </div>
   );
 }
