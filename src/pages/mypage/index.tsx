@@ -81,11 +81,11 @@ export default function MyPage() {
               />
               <p
                 onClick={handleChangeUi}
-                className='text-15-400 flex items-center  justify-center  gap-2 border-red-F hover:border-b-[0.1rem]'
+                className='flex items-center justify-center  gap-2  border-red-F text-15-400 hover:border-b-[0.1rem]'
               >
                 {memberInfo.nickname} <FaUserPen />
               </p>
-              <div className='text-15-400 flexCenter gap-2'>
+              <div className='flexCenter gap-2 text-15-400'>
                 <p className='flex  items-center justify-center'>{MembersData[1].introduce}</p>
                 <Separator className='my-4 w-[27.625rem] bg-red-F' />
                 <p>{MembersData[1].email}</p>
