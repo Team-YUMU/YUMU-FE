@@ -20,7 +20,13 @@ TabsList.displayName = TabsPrimitive.List.displayName;
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => <TabsPrimitive.Trigger ref={ref} className={cn('flex', className)} {...props} />);
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={cn(' transition-all  data-[state=active]:border-red-F data-[state=active]:text-red-F', className)}
+    {...props}
+  />
+));
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 const TabsContent = React.forwardRef<
