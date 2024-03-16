@@ -10,7 +10,7 @@ export default function MyPageTabs() {
     'border-gray-99 border-b-2 text-gray-D hover:border-b-2 hover:border-red-F hover:text-red-F focus:border-red-F focus:text-red-F';
   return (
     <Tabs value={activeTab} defaultValue='account' className='flex flex-col gap-[3rem]'>
-      <TabsList className='text-15-400 flex flex-row bg-white '>
+      <TabsList className='flex flex-row bg-white text-15-400 '>
         <TabsTrigger
           onClick={() => {
             setActiveTab('buy history');
