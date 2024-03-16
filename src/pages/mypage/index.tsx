@@ -107,7 +107,7 @@ export default function MyPage() {
                     탈퇴 후 계정 복구는 불가능합니다.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter>
+                <AlertDialogFooter className='flex flex-col gap-2'>
                   <AlertDialogCancel>취소</AlertDialogCancel>
                   <AlertDialogAction onClick={handleDeleteUserClick}>탈퇴</AlertDialogAction>
                 </AlertDialogFooter>
