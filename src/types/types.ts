@@ -17,7 +17,7 @@ export type PurchaseHistoryType = {
   artist: string;
   price: number;
   artImage: string;
-  purchaseDate: Date;
+  purchaseDate: string;
 };
 
 export type SalesHistoryType = {
@@ -29,7 +29,7 @@ export type SalesHistoryType = {
   price: number;
   artImage: string;
   status: string;
-  saleDate: Date;
+  saleDate: string;
 };
 
 export type WishListType = {
