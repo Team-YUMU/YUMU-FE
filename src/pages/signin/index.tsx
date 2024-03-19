@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { schema } from '@/types/validation';
+import { schema } from '@/types/validator/signForm';
 import { Input } from '@/components/ui/input';
 
 export default function SignInPage() {

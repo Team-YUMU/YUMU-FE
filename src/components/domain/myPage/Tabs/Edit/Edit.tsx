@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -14,7 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { myPagePwEditSchema } from '@/types/newPwdValidation';
+import { myPagePwEditSchema } from '@/types/validator/myPageForm';
 import React from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';

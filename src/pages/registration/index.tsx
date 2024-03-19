@@ -13,7 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select';
-import { auctionFormSchema } from '@/types/validation';
+import { auctionFormSchema } from '@/types/validator/auctionForm';
 import { useState } from 'react';
 import { TimePickerDemo } from '@/components/domain/live/time-picker-demo';
 import { postAuction } from '@/services/api';

@@ -8,6 +8,7 @@
 - [ ] build: src 외부 코드 수정
 - [ ] remove: 파일 삭제
 - [ ] docs: 문서 작업 (README, pr 템플릿)
+- [ ] setting : 폴더 구조 세팅 
 - [ ] chore: 기타 작업
 
 ## 설명
