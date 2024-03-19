@@ -30,7 +30,7 @@ export default function SalesHistory() {
                   {item.status === 'Done' ? `${item.saleDate.slice(0, 10) + ` 낙찰`} ` : ''}
                 </p>
               </div>
-              <p className='text-22.5-500'>{item.artTitle}</p>
+              <p className='text-22.5-500'>{item.artName}</p>
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>
