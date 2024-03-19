@@ -1,5 +1,4 @@
 import PurchaseHistories from '@/mocks/PurchaseHistory';
-import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function BuyHistory() {
