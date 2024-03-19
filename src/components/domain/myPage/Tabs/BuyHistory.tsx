@@ -1,5 +1,4 @@
 import PurchaseHistories from '@/mocks/PurchaseHistory';
-import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function BuyHistory() {
@@ -17,7 +16,7 @@ export default function BuyHistory() {
           <div className={`${historyBoxStyles} items-center`} key={id}>
             <div className='w-[15rem]'>
               <span className='text.11.1-400'>배송중</span>
-              <p className='text-22.5-500'>{item.artTitle}</p>
+              <p className='text-22.5-500'>{item.artName}</p>
               <p className='text.11.1-400'>아티스트 : {item.artist}</p>
             </div>
             <div className='flex flex-col gap-[5rem]'>

@@ -17,9 +17,9 @@ import { auctionFormSchema } from '@/types/validation';
 import { useState } from 'react';
 import { TimePickerDemo } from '@/components/domain/live/time-picker-demo';
 import { postAuction } from '@/services/api';
-import { RegistrationType } from '@/types/types';
+import { RegistrationProps } from '@/types/types';
 
-const defaultValues: Partial<RegistrationType> = {
+const defaultValues: Partial<RegistrationProps> = {
   request: {
     artName: '',
     artDescription: '',
@@ -36,12 +36,12 @@ const defaultValues: Partial<RegistrationType> = {
 
 export default function Registration() {
   const [selectedImage, setSelectedImage] = useState<string>('');
-  const form = useForm<RegistrationType>({
+  const form = useForm<RegistrationProps>({
     resolver: zodResolver(auctionFormSchema),
     defaultValues,
   });
 
-  function onSubmit(data: RegistrationType) {
+  function onSubmit(data: RegistrationProps) {
     const formData = {
       request: data.request,
       image: selectedImage,

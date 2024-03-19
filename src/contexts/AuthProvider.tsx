@@ -1,10 +1,10 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-import { MemberType } from '@/types/types';
+import { UsersProps } from '@/types/types';
 
 interface AuthContextValue {
-  user: MemberType | null;
-  setUser: React.Dispatch<React.SetStateAction<MemberType | null>>;
+  user: UsersProps | null;
+  setUser: React.Dispatch<React.SetStateAction<UsersProps | null>>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -13,7 +13,7 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<MemberType | null>(null);
+  const [user, setUser] = useState<UsersProps | null>(null);
 
   return (
     <AuthContext.Provider

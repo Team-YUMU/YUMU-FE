@@ -21,7 +21,7 @@ export default function WishList() {
               />
               <div className='flex flex-col items-center justify-center gap-2'>
                 <Separator className='w-[17rem] bg-red-F' />
-                <p>{item.artTitle}</p>
+                <p>{item.artName}</p>
                 <p>{item.price}</p>
                 <p>{item.purchaseDate}</p>
               </div>

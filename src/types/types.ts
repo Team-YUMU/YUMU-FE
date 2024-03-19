@@ -1,4 +1,4 @@
-export type MemberType = {
+export interface UsersProps {
   id: number;
   email: string;
   nickname: string;
@@ -7,48 +7,55 @@ export type MemberType = {
   introduce: null | string;
   snsLink: null | string;
   address: null | string;
-};
+}
 
-export type PurchaseHistoryType = {
+export interface PurchaseHistoryProps {
   id: number;
   memberId: number;
   auctionId: number;
-  artTitle: string;
+  artName: string;
   artist: string;
   price: number;
   artImage: string;
   purchaseDate: string;
-};
+}
 
-export type SalesHistoryType = {
+export interface SalesHistoryProps {
   id: number;
   memberId: number;
   auctionId: number;
-  artTitle: string;
+  artName: string;
   artist: string;
   price: number;
   artImage: string;
   status: string;
   saleDate: string;
-};
+}
 
-export type WishListType = {
+export interface WishListProps {
   id: number;
   memberId: number;
   auctionId: number;
-};
+}
 
-export type ArtType = {
+export interface ArtPropsData {
+  page: number;
+  totalElements: number;
+  totalPages: number;
+  auctions: ArtProps[];
+}
+
+export interface ArtProps {
   id: number;
-  artTitle: string;
+  artName: string;
   artImage: string;
   artist: string;
   status: string;
-  postDate: Date;
+  createdAt: Date;
   wishCnt: number;
-};
+}
 
-export type AuctionType = {
+export interface AuctionProps {
   id: number;
   artId: number;
   artDetail: string;
@@ -61,9 +68,9 @@ export type AuctionType = {
   bidder: null | string;
   notice: null | string;
   receiveType: string;
-};
+}
 
-type RegistrationRequestType = {
+interface RegistrationRequestProps {
   artName: string;
   artDescription: string;
   artSize: string;
@@ -73,30 +80,36 @@ type RegistrationRequestType = {
   defaultBid?: number;
   notice: string;
   receiveType: string;
-};
+}
 
-export type RegistrationType = {
-  request: RegistrationRequestType;
+export interface RegistrationProps {
+  request: RegistrationRequestProps;
   image: string;
-};
+}
+export interface auctionCheckProps {
+  page?: number;
+  size?: number;
+  keyword?: string;
+}
 
-export interface UserInfo {
+export interface UserInfoProps {
   id: number;
   email: string;
   nickname: string;
-  profileImageUrl: null | string;
+  profileImage: null | string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface UserInfoWithToken {
+export interface UserInfoWithTokenProps {
   accessToken: string;
-  user: UserInfo;
+  user: UserInfoProps;
 }
 
-export interface putMemberProps {
+export interface putUserProps {
   nickname: string;
-  profileImageUrl: string | null;
+  introduce: string;
+  profileImage: string | null;
   password: string;
   newPassword: string;
 }
@@ -106,8 +119,9 @@ export interface postAuthLoginProps {
   password: string;
 }
 
-export interface postUsersProps {
-  email: string;
+export interface postAuthSignUpProps {
   nickname: string;
+  email: string;
   password: string;
+  checkPassword: string;
 }
