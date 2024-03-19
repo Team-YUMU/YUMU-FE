@@ -1,5 +1,4 @@
 import {
-  AuctionType,
   RegistrationType,
   UserInfo,
   UserInfoWithToken,
@@ -11,7 +10,7 @@ import { authInstance as authAxios, instance as axios } from './axios';
 const BASE_URL = `/api/v1/`;
 const MY_PAGE_BASE_URL = `${BASE_URL}mypage`;
 const MY_PAGE_MEMBERS_URL = `${BASE_URL}member`;
-const AUCTION_BASE_URL = `/api/v1/auction`;
+const AUCTION_BASE_URL = `${BASE_URL}auction`;
 
 // signIn-page API
 export async function postAuthLogin({ email, password }: postAuthLoginProps) {
@@ -64,26 +63,32 @@ export async function getBuyHistory() {
 
 // auction post API
 export async function postAuction({
-  artTitle,
-  artImage,
-  artDetail,
-  artSize,
-  startDate,
-  endDate,
-  startPrice,
-  receiveType,
-  notice,
+  request: {
+    artName,
+    artDescription,
+    artSize,
+    artCreatedDate,
+    auctionStartDate,
+    auctionEndDate,
+    defaultBid,
+    notice,
+    receiveType,
+  },
+  image,
 }: RegistrationType) {
   const res = await authAxios.post(`${AUCTION_BASE_URL}`, {
-    artTitle,
-    artImage,
-    artDetail,
-    artSize,
-    startDate,
-    endDate,
-    startPrice,
-    receiveType,
-    notice,
+    request: {
+      artName,
+      artDescription,
+      artSize,
+      artCreatedDate,
+      auctionStartDate,
+      auctionEndDate,
+      defaultBid,
+      notice,
+      receiveType,
+    },
+    image,
   });
   return res.data;
 }
