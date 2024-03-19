@@ -13,10 +13,10 @@ export interface PurchaseHistoryProps {
   id: number;
   memberId: number;
   auctionId: number;
-  artTitle: string;
+  artName: string;
   artist: string;
   price: number;
-  artImage: null | string;
+  artImage: string;
   purchaseDate: string;
 }
 
@@ -24,10 +24,10 @@ export interface SalesHistoryProps {
   id: number;
   memberId: number;
   auctionId: number;
-  artTitle: string;
+  artName: string;
   artist: string;
   price: number;
-  artImage: null | string;
+  artImage: string;
   status: string;
   saleDate: string;
 }
@@ -38,13 +38,20 @@ export interface WishListProps {
   auctionId: number;
 }
 
+export interface ArtPropsData {
+  page: number;
+  totalElements: number;
+  totalPages: number;
+  auctions: ArtProps[];
+}
+
 export interface ArtProps {
   id: number;
-  artTitle: string;
-  artImage: null | string;
+  artName: string;
+  artImage: string;
   artist: string;
   status: string;
-  postDate: Date;
+  createdAt: Date;
   wishCnt: number;
 }
 

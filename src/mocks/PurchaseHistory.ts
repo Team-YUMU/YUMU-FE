@@ -6,7 +6,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 1,
     memberId: 3,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -17,7 +17,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 2,
     memberId: 4,
     auctionId: 2,
-    artTitle: '풍경',
+    artName: '풍경',
     artist: 'user4',
     price: 1011000000,
     artImage:
@@ -28,7 +28,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 3,
     memberId: 3,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -39,7 +39,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 1,
     memberId: 3,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -50,7 +50,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 2,
     memberId: 4,
     auctionId: 2,
-    artTitle: '풍경',
+    artName: '풍경',
     artist: 'user4',
     price: 1011000000,
     artImage:
@@ -61,7 +61,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 3,
     memberId: 3,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -72,7 +72,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 1,
     memberId: 3,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -83,7 +83,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 2,
     memberId: 4,
     auctionId: 2,
-    artTitle: '풍경',
+    artName: '풍경',
     artist: 'user4',
     price: 1011000000,
     artImage:
@@ -94,7 +94,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 3,
     memberId: 3,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -105,7 +105,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 1,
     memberId: 3,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -116,7 +116,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 2,
     memberId: 4,
     auctionId: 2,
-    artTitle: '풍경',
+    artName: '풍경',
     artist: 'user4',
     price: 1011000000,
     artImage:
@@ -127,7 +127,7 @@ const PurchaseHistories: PurchaseHistoryProps[] = [
     id: 3,
     memberId: 3,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
