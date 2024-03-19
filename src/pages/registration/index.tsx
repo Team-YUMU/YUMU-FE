@@ -20,27 +20,36 @@ import { postAuction } from '@/services/api';
 import { RegistrationType } from '@/types/types';
 
 const defaultValues: Partial<RegistrationType> = {
-  artTitle: undefined,
-  artImage: undefined,
-  artDetail: undefined,
-  artSize: undefined,
-  startDate: undefined,
-  endDate: undefined,
-  startPrice: undefined,
-  receiveType: undefined,
-  notice: undefined,
+  request: {
+    artName: '',
+    artDescription: '',
+    artSize: '',
+    artCreatedDate: undefined,
+    auctionStartDate: undefined,
+    auctionEndDate: undefined,
+    defaultBid: undefined,
+    notice: '',
+    receiveType: '',
+  },
+  image: undefined,
 };
 
 export default function Registration() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string>('');
   const form = useForm<RegistrationType>({
     resolver: zodResolver(auctionFormSchema),
     defaultValues,
   });
 
   function onSubmit(data: RegistrationType) {
-    console.log(data);
-    postAuction(data);
+    const formData = {
+      request: data.request,
+      image: selectedImage,
+    };
+
+    console.log(formData);
+
+    postAuction(formData);
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,11 +69,13 @@ export default function Registration() {
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <FormField
             control={form.control}
-            name='artTitle'
+            name='request.artName'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div className='pt-3'>
-                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>작품 제목</FormLabel>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    작품 제목 <span className='text-red-F'>*</span>
+                  </FormLabel>
                 </div>
                 <div>
                   <FormControl>
@@ -78,11 +89,13 @@ export default function Registration() {
           <Separator />
           <FormField
             control={form.control}
-            name='artImage'
+            name='image'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div className='pt-3'>
-                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>대표 이미지</FormLabel>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    대표 이미지 <span className='text-red-F'>*</span>
+                  </FormLabel>
                 </div>
                 <div className='space-y-2'>
                   <FormControl>
@@ -110,11 +123,73 @@ export default function Registration() {
           <Separator />
           <FormField
             control={form.control}
-            name='artDetail'
+            name='request.artSize'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div className='pt-3'>
-                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>작품 상세</FormLabel>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    작품 규모 <span className='text-red-F'>*</span>
+                  </FormLabel>
+                </div>
+                <div>
+                  <FormControl>
+                    <Input placeholder='가로(cm) x 세로(cm) x 높이(cm)' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <Separator />
+          <FormField
+            control={form.control}
+            name='request.artCreatedDate'
+            render={({ field }) => (
+              <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    제작 일자 <span className='text-red-F'>*</span>
+                  </FormLabel>
+                </div>
+                <div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-[36rem] justify-start text-left font-normal sm:w-[24rem]',
+                          !field.value && 'text-muted-foreground',
+                        )}
+                      >
+                        <CalendarIcon className='mr-2 h-4 w-4' />
+                        {field.value ? format(field.value, 'yyyy년 MM월 dd일') : <span>제작 일자</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className='w-auto p-0'>
+                      <Calendar
+                        mode='single'
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) => date >= new Date()}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <Separator />
+          <FormField
+            control={form.control}
+            name='request.artDescription'
+            render={({ field }) => (
+              <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
+                <div className='pt-3'>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    작품 상세 <span className='text-red-F'>*</span>
+                  </FormLabel>
                 </div>
                 <div>
                   <FormControl>
@@ -128,29 +203,13 @@ export default function Registration() {
           <Separator />
           <FormField
             control={form.control}
-            name='artSize'
+            name='request.auctionStartDate'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div className='pt-3'>
-                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>작품 규모</FormLabel>
-                </div>
-                <div>
-                  <FormControl>
-                    <Input placeholder='가로 x 세로 x 높이' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-          <Separator />
-          <FormField
-            control={form.control}
-            name='startDate'
-            render={({ field }) => (
-              <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
-                <div className='pt-3'>
-                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>경매 기간</FormLabel>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    경매 기간 <span className='text-red-F'>*</span>
+                  </FormLabel>
                 </div>
                 <div>
                   <Popover>
@@ -171,7 +230,7 @@ export default function Registration() {
                         mode='single'
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) => date < new Date()}
+                        disabled={(date) => date <= new Date()}
                         initialFocus
                       />
                       <div className='border-t border-border p-2'>
@@ -186,7 +245,7 @@ export default function Registration() {
           />
           <FormField
             control={form.control}
-            name='endDate'
+            name='request.auctionEndDate'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div />
@@ -225,11 +284,13 @@ export default function Registration() {
           <Separator />
           <FormField
             control={form.control}
-            name='startPrice'
+            name='request.defaultBid'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div className='pt-3'>
-                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>경매 시작가</FormLabel>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    경매 시작가 <span className='text-red-F'>*</span>
+                  </FormLabel>
                 </div>
                 <div>
                   <FormControl>
@@ -243,11 +304,13 @@ export default function Registration() {
           <Separator />
           <FormField
             control={form.control}
-            name='receiveType'
+            name='request.receiveType'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div className='pt-3'>
-                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>수령 방법</FormLabel>
+                  <FormLabel className='text-24-700 font-extrabold tracking-tight'>
+                    수령 방법 <span className='text-red-F'>*</span>
+                  </FormLabel>
                 </div>
                 <div>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -257,9 +320,10 @@ export default function Registration() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value='대면수령'>대면 수령</SelectItem>
-                      <SelectItem value='택배배송'>택배 배송</SelectItem>
-                      <SelectItem value='이메일 수신'>이메일 수신</SelectItem>
+                      <SelectItem value='직접거래'>직접 거래</SelectItem>
+                      <SelectItem value='배송'>택배 배송</SelectItem>
+                      <SelectItem value='우편'>우편 배송</SelectItem>
+                      <SelectItem value='이메일'>이메일</SelectItem>
                       <SelectItem value='기타'>기타</SelectItem>
                     </SelectContent>
                   </Select>
@@ -270,7 +334,7 @@ export default function Registration() {
           <Separator />
           <FormField
             control={form.control}
-            name='notice'
+            name='request.notice'
             render={({ field }) => (
               <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                 <div className='pt-3'>
