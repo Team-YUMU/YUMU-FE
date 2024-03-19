@@ -1,6 +1,6 @@
-import { ArtType } from '@/types/types';
+import { ArtProps } from '@/types/types';
 
-const Arts: ArtType[] = [
+const Arts: ArtProps[] = [
   {
     id: 1,
     artTitle: '모나리자',

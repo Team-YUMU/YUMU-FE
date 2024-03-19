@@ -1,7 +1,7 @@
 import { getTodayTime } from '@/lib/Date';
-import { PurchaseHistoryType } from '@/types/types';
+import { PurchaseHistoryProps } from '@/types/types';
 
-const PurchaseHistories: PurchaseHistoryType[] = [
+const PurchaseHistories: PurchaseHistoryProps[] = [
   {
     id: 1,
     memberId: 3,
