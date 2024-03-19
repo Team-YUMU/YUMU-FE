@@ -1,130 +1,127 @@
 import {
-  RegistrationType,
-  UserInfo,
-  UserInfoWithToken,
+  RegistrationProps,
+  UserInfoProps,
+  UserInfoWithTokenProps,
+  auctionCheckProps,
   postAuthLoginProps,
-  postUsersProps,
-  putMemberProps,
+  postAuthSignUpProps,
+  putUserProps,
 } from '@/types/types';
 import { authInstance as authAxios, instance as axios } from './axios';
-const BASE_URL = `/api/v1/`;
-const MY_PAGE_BASE_URL = `${BASE_URL}mypage`;
-const MY_PAGE_MEMBERS_URL = `${BASE_URL}member`;
-const AUCTION_BASE_URL = `${BASE_URL}auction`;
+const BASE_URL = `/api/v1`;
+const MY_PAGE_BASE_URL = `${BASE_URL}/mypage`;
+const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
+const AUCTION_BASE_URL = `${BASE_URL}/auction`;
 
-// signIn-page API
-export async function postAuthLogin({ email, password }: postAuthLoginProps) {
-  const res = await axios.post<UserInfoWithToken>(`${BASE_URL}login`, {
-    email,
-    password,
-  });
-  return res.data;
-}
-// signUp-page API
-export async function postUsers(userInfo: postUsersProps) {
-  const res = await axios.post<UserInfo>(`${MY_PAGE_MEMBERS_URL}`, userInfo);
+// signIn-page API (로그인)
+export async function postAuthLogin(loginData: postAuthLoginProps) {
+  const res = await axios.post<UserInfoWithTokenProps>(`${BASE_URL}/auth/login`, loginData);
   return res.data;
 }
 
-// Logout API
+// SNS signIn API (SNS 로그인)
+
+// signUp-page API (회원가입)
+export async function postUsers(signUpData: postAuthSignUpProps) {
+  const res = await axios.post<UserInfoProps>(`${BASE_URL}/auth/signup`, signUpData);
+  return res.data;
+}
+
+// Logout API (로그아웃)
 export async function postAuthLogout() {
-  const res = await authAxios.post<UserInfo>(`${BASE_URL}logout`);
+  const res = await authAxios.post<UserInfoProps>(`${BASE_URL}/auth/logout`);
   return res.data;
 }
 
-// my-page put API
-export async function putMemberInfo({ nickname, profileImageUrl, password, newPassword }: putMemberProps) {
-  const response = await authAxios.put<string>(`${MY_PAGE_MEMBERS_URL}`, {
-    nickname,
-    profileImageUrl,
-    password,
-    newPassword,
-  });
-  return response.status;
+// my-page put API (회원 정보 수정)
+export async function putMemberInfo(userInfo: putUserProps) {
+  const res = await authAxios.put<string>(`${MY_PAGE_MEMBERS_URL}`, userInfo);
+  return res;
 }
-// my-page get API
+// my-page get API (내정보 조회)
 export async function getMemberInfo() {
   const res = await authAxios.get(`${MY_PAGE_MEMBERS_URL}`);
   return res.data;
 }
 
+// 내 작품 조회
 export async function getArts() {
   const res = await authAxios.get(`${MY_PAGE_BASE_URL}/arts`);
   return res.data;
 }
+
+// 판매내역 조회
 export async function getSalesHistory() {
   const res = await authAxios.get(`${MY_PAGE_BASE_URL}/sold`);
   return res.data;
 }
+// 구매내역 조회
 export async function getBuyHistory() {
   const res = await authAxios.get(`${MY_PAGE_BASE_URL}/buy`);
   return res.data;
 }
-
-// auction post API
-export async function postAuction({
-  request: {
-    artName,
-    artDescription,
-    artSize,
-    artCreatedDate,
-    auctionStartDate,
-    auctionEndDate,
-    defaultBid,
-    notice,
-    receiveType,
-  },
-  image,
-}: RegistrationType) {
-  const res = await authAxios.post(`${AUCTION_BASE_URL}`, {
-    request: {
-      artName,
-      artDescription,
-      artSize,
-      artCreatedDate,
-      auctionStartDate,
-      auctionEndDate,
-      defaultBid,
-      notice,
-      receiveType,
-    },
-    image,
-  });
+// 관심목록 조회
+export async function getWishHistory() {
+  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/wish`);
   return res.data;
 }
 
-// pagination get API
-export async function getAuctions(page: number) {
-  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}`);
+// auction post API (경매글 등록)
+export async function postAuction(auctionRegister: RegistrationProps) {
+  const res = await authAxios.post(`${AUCTION_BASE_URL}`, auctionRegister);
   return res.data;
 }
 
-// auction latest get  API
-export async function getLatestAuctions() {
-  const res = await axios.get(`${AUCTION_BASE_URL}/latest`);
+// auction Delete API (경매글 삭제)
+export async function deleteAuction(auctionId: number) {
+  const res = await authAxios.delete(`${AUCTION_BASE_URL}/${auctionId}`);
+  return res.status;
+}
+
+// auction put API (경매글 수정)
+export async function putAuction(auctionId: number, auctionRegister: RegistrationProps) {
+  const res = await authAxios.put(`${AUCTION_BASE_URL}/${auctionId}`, auctionRegister);
   return res.data;
 }
 
-// auction search get API
-export async function getSearchAuctions(keyword: string) {
-  const res = await axios.get(`${AUCTION_BASE_URL}/search?=${keyword}`);
+// auction get auctionNewData API (경매 조회(최신순))
+export async function getAuctionHistory({ keyword, size, page }: auctionCheckProps) {
+  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=latest&keyword=${keyword}`);
   return res.data;
 }
 
-// auction detail get API
-export async function getAuctionDetail(auction_id: number) {
-  const res = await axios.get(`${AUCTION_BASE_URL}/${auction_id}`);
+// auction get auctionPopularData API (인기 경매 조회)
+export async function getPopularAuction({ keyword, size, page }: auctionCheckProps) {
+  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=popular&keyword=${keyword}`);
   return res.data;
 }
 
-// auction wish post API
-export async function postAuctionWish(auction_id: number) {
-  const res = await authAxios.post(`${AUCTION_BASE_URL}/wish/${auction_id}`);
+// auction get auctionSearchData API (경매글 검색)
+export async function getSearchAuction({ keyword, size, page }: auctionCheckProps) {
+  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=&keyword="${keyword}"`);
   return res.data;
 }
 
-// auction now get API
-export async function getAuctionNow() {
-  const res = await axios.get(`${AUCTION_BASE_URL}/now`);
+// auction get liveAuctionData API (라이브 경매 조회)
+export async function getLiveAuction({ keyword, size, page }: auctionCheckProps) {
+  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=live&keyword=${keyword}`);
+  return res.data;
+}
+
+// auction get auctionDetails API (경매글 상세)
+export async function getAuctionDetails(auctionId: number) {
+  const res = await axios.get(`${AUCTION_BASE_URL}/${auctionId}`);
+  return res.data;
+}
+
+// auction post wishAuction API (경매글 찜)
+export async function postWishAuction(auctionId: number) {
+  const res = await authAxios.post(`${AUCTION_BASE_URL}/wish/${auctionId}`);
+  return res.data;
+}
+
+// auction get liveAuction API (라이브 경매)
+export async function getLiveAuctionList() {
+  const res = await authAxios.get(`${AUCTION_BASE_URL}/live`);
   return res.data;
 }
