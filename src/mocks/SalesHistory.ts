@@ -1,12 +1,12 @@
 import { getTodayTime } from '@/lib/Date';
-import { SalesHistoryType } from '@/types/types';
+import { SalesHistoryProps } from '@/types/types';
 
-const SalesHistories: SalesHistoryType[] = [
+const SalesHistories: SalesHistoryProps[] = [
   {
     id: 1,
     memberId: 1,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -18,7 +18,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 2,
     memberId: 1,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -30,7 +30,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 1,
     memberId: 1,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -42,7 +42,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 2,
     memberId: 1,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -54,7 +54,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 1,
     memberId: 1,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -66,7 +66,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 2,
     memberId: 1,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -78,7 +78,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 1,
     memberId: 1,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -90,7 +90,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 2,
     memberId: 1,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -102,7 +102,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 1,
     memberId: 1,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -114,7 +114,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 2,
     memberId: 1,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
@@ -126,7 +126,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 1,
     memberId: 1,
     auctionId: 1,
-    artTitle: '모나리자',
+    artName: '모나리자',
     artist: 'user3',
     price: 1000000000,
     artImage:
@@ -138,7 +138,7 @@ const SalesHistories: SalesHistoryType[] = [
     id: 2,
     memberId: 1,
     auctionId: 3,
-    artTitle: '색색의 벽돌 패턴',
+    artName: '색색의 벽돌 패턴',
     artist: 'user3',
     price: 2000000000,
     artImage:
