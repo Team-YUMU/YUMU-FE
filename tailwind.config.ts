@@ -39,12 +39,6 @@ const config = {
           fontWeight: '700',
         },
       ],
-      '10-700': [
-        '1rem',
-        {
-          fontWeight: '700',
-        },
-      ],
       '11.1-400': [
         '1.125rem',
         {
