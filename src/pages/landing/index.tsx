@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
-import Autoplay from 'embla-carousel-autoplay';
+// import Autoplay from 'embla-carousel-autoplay';
+import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 
 const BannerInformation = [
   {
@@ -64,16 +65,16 @@ export default function Landing() {
   };
   return (
     <>
-      <main className='mx-auto max-w-[137.5rem] bg-[pink]'>
+      <main className='mx-auto max-w-[137.5rem] bg-[pink] pt-[4rem]'>
         {/* 베너 */}
         <section>
           <Carousel
             className=' w-full'
-            plugins={[
-              Autoplay({
-                delay: 2000,
-              }),
-            ]}
+            // plugins={[
+            //   Autoplay({
+            //     delay: 2000,
+            //   }),
+            // ]}
             opts={{
               loop: true,
               watchDrag: false,
@@ -126,10 +127,11 @@ export default function Landing() {
             ))}
           </div>
         </section>
-        {/* 현재 라이브 경매 - 정적a */}
-
+        {/* 현재 라이브 경매 - 정적 */}
         {/* 인기경매 - 정적*/}
         {/* 기획전 */}
+        <ExhibitionCarousel />
+
         <div>
           <Carousel className=' w-full max-w-xs'>
             <CarouselContent>

@@ -127,7 +127,7 @@ export default function Header() {
             </>
           )}
           <Button size='header' className='mb-[1.1rem] mt-[1.3rem] text-[2rem] font-bold leading-5 text-white'>
-            <Link href='/pages/registration'>경매등록하기</Link>
+            <Link href='/registration'>경매등록하기</Link>
           </Button>
         </div>
       </div>
