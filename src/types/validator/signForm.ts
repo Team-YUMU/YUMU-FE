@@ -25,26 +25,3 @@ export const schema = z
     },
     { message: '비밀번호가 일치하지 않습니다.', path: ['passwordCheck'] },
   );
-
-export const auctionFormSchema = z.object({
-  artTitle: z.string().min(1, { message: '필수 항목입니다.' }).max(30, {
-    message: '30글자 이내로 작성해주세요.',
-  }),
-  artImage: z.string().min(1, { message: '필수 항목입니다.' }),
-  artDetail: z.string().min(1, { message: '필수 항목입니다.' }),
-  artSize: z.string().regex(/^\d+x\d+x\d+$/, { message: '가로x세로x높이 꼴로 입력해주세요' }),
-  startDate: z.date({ required_error: '필수 항목입니다.' }),
-  endDate: z.date({ required_error: '필수 항목입니다.' }),
-  startPrice: z
-    .number()
-    .min(1, { message: '필수 항목입니다.' })
-    .or(z.string().min(1, { message: '필수 항목입니다.' }))
-    .transform((startPrice) => (typeof startPrice === 'string' ? Number(startPrice) : startPrice)),
-  receiveType: z.string().min(1, { message: '필수 항목입니다.' }),
-  notice: z
-    .string()
-    .max(160, {
-      message: '160자 이내로 작성해주세요.',
-    })
-    .optional(),
-});

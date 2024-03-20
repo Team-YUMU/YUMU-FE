@@ -1,6 +1,6 @@
-import { MemberType } from '@/types/types';
+import { UsersProps } from '@/types/types';
 
-const Members: MemberType[] = [
+const Members: UsersProps[] = [
   {
     id: 1,
     email: 'example1@example.com',

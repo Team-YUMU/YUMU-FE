@@ -1,6 +1,6 @@
-import { AuctionType } from '@/types/types';
+import { AuctionProps } from '@/types/types';
 
-const Auctions: AuctionType[] = [
+const Auctions: AuctionProps[] = [
   {
     id: 1,
     artId: 1,

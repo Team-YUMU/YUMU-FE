@@ -9,12 +9,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage } from '../ui/avatar';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { IoIosNotifications } from 'react-icons/io';
-import { HiDotsVertical } from 'react-icons/hi';
+// import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+// import { IoIosNotifications } from 'react-icons/io';
+// import { HiDotsVertical } from 'react-icons/hi';
 import SearchForm from './SearchForm';
+import Image from 'next/image';
 // import getMembers from '@/mocks/Member';
 
 type userData = {
@@ -26,6 +27,7 @@ export default function Header() {
   const [memberData, setMemberData] = useState<userData | null>(null);
   const router = useRouter();
   const boardId = router.query.id;
+
   //데이터를 불러온다.
   const userMembersData = async () => {
     try {
@@ -46,7 +48,6 @@ export default function Header() {
     if (accessToken) {
       userMembersData();
     }
-    //의존성 배열 비워두면 안된다
   }, [boardId]);
 
   //로그아웃 클릭시 토큰 제거와 메인 페이지 이동
@@ -58,13 +59,15 @@ export default function Header() {
   };
 
   return (
-    <header>
-      <div className='container mx-auto flex justify-between bg-[pink]'>
-        <Link href='/'>로고</Link>
+    <header className=' bg-slate-50'>
+      <div className='container mx-auto flex items-center justify-between'>
+        <Link href='/'>
+          <Image src='/svgs/yumu-logo.svg' alt='로고 이미지' width={139} height={27} />
+        </Link>
         <div>
-          <Link href='#' className='mr-[2rem]'>
-            작품등록
-          </Link>
+          <SearchForm />
+        </div>
+        <div>
           {memberData ? (
             <div className='relative flex cursor-pointer items-center gap-[1.2rem]'>
               <Avatar>
@@ -91,15 +94,19 @@ export default function Header() {
             </div>
           ) : (
             <>
-              <Link href='/signin'>로그인</Link>
-              <HoverCard>
+              <Link href='/signin' className='mr-[2.5rem] text-[2rem] text-[#9E9E9E]'>
+                로그인
+              </Link>
+              <Link href='/signup' className='mr-[2.5rem] text-[2rem]  text-[#9E9E9E]'>
+                회원가입
+              </Link>
+              {/* <HoverCard> 알림기능
                 <HoverCardTrigger asChild>
                   <Button>
                     <IoIosNotifications />
                   </Button>
                 </HoverCardTrigger>
                 <HoverCardContent className='mr-[2rem] w-80 bg-[#ddd] pb-[0rem]'>
-                  {/* 데이터 갈아끼워지게 작업 컴포넌트화 */}
                   <div className='mb-4 flex justify-between space-x-4 rounded-[0.8rem] bg-[#fff] p-[0.4rem]'>
                     <div className='flex h-[2rem] w-[3rem] items-center justify-center rounded-full '>
                       <IoIosNotifications />
@@ -108,7 +115,6 @@ export default function Header() {
                       <h4 className='text-sm font-semibold'>경매 1시간전 </h4>
                       <p className='text-sm'>[백만불짜리]의 경매 시작 1시간전 입니다.</p>
                       <div className='flex items-center pt-2'>
-                        {/* 알림보낸 시간 */}
                         <span className='text-xs text-muted-foreground'>08:00</span>
                       </div>
                     </div>
@@ -117,14 +123,17 @@ export default function Header() {
                     </div>
                   </div>
                 </HoverCardContent>
-              </HoverCard>
+              </HoverCard> */}
             </>
           )}
+          <Button size='header' className='mb-[1.1rem] mt-[1.3rem] text-[2rem] font-bold leading-5 text-white'>
+            <Link href='/registration'>경매등록하기</Link>
+          </Button>
         </div>
       </div>
-      <div className='container mx-auto flex justify-end bg-[pink]'>
+      {/* <div className='bg-[ bg-slate-50] container mx-auto flex justify-end'>
         <SearchForm />
-      </div>
+      </div> */}
     </header>
   );
 }
