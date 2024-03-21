@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { postUsers } from '@/services/api';
-// import axios from 'axios';
+
 import Link from 'next/link';
 import { schema } from '@/types/validator/signForm';
 import {
@@ -18,14 +19,15 @@ import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
 
 export default function SignUpPage() {
-  // const router = useRouter();
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   type FormData = {
     nickname: string;
     email: string;
     password: string;
+
     checkPassword: string;
+
   };
 
   const {
@@ -34,6 +36,7 @@ export default function SignUpPage() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+
   const onSubmit = async (data: FormData) => {
     try {
       await postUsers(data);
@@ -41,9 +44,13 @@ export default function SignUpPage() {
       console.log('에러발생발생 오바오바', error);
     }
     console.log('submit');
+
   };
 
+  
+
   return (
+
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <div className='flex w-[43.8rem] flex-col  items-center gap-8 p-10'>
         <div className='flex flex-col items-center'>
@@ -123,5 +130,7 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
+
+ 
   );
 }

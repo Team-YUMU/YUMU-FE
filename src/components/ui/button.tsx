@@ -11,6 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-red-F text-white hover:bg-red-F/90 focus:bg-red-F/80',
         outline: 'border border-red-F hover:bg-white outline-red-F text-red-F hover:bg-white/90',
+        ghost: 'bg-transparent hover:bg-transparent focus:bg-transparent',
         sns: 'border border-yellow text-black-0 bg-yellow',
       },
       size: {
