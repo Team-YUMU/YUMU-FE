@@ -105,12 +105,7 @@ export default function SignInPage() {
                 카카오로 로그인
               </Button>
             </div>
-            <Button
-              variant='outline'
-              size='auth'
-              className='border border-red-F bg-white text-[2rem] text-red-F'
-              onClick={() => router.push('/signup')}
-            >
+            <Button variant='outline' size='auth' className='border border-red-F bg-white text-[2rem] text-red-F'>
               회원가입
             </Button>
           </div>
