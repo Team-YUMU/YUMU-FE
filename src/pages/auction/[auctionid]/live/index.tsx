@@ -1,4 +1,4 @@
-import { LiveBids } from '@/components/domain/live/livebids';
+import { BidHistories } from '@/components/domain/live/BidHistories';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import { LiveChatting } from '@/components/domain/live/LiveChatting';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
@@ -19,7 +19,7 @@ export default function Live() {
         </div>
         <LiveChatting />
         <AuctionDetail />
-        <LiveBids />
+        <BidHistories />
         <ExhibitionCarousel />
       </div>
     </div>

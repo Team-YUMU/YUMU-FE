@@ -168,6 +168,12 @@ const config = {
           fontWeight: '700',
         },
       ],
+      '20-900': [
+        '2rem',
+        {
+          fontWeight: '900',
+        },
+      ],
 
       //fontsize: 22px
       '22-500': [
