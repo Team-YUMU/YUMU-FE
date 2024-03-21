@@ -1,8 +1,8 @@
-import Landing from './landing';
+import Test from './test/test';
 export default function Home() {
   return (
     <>
-      <Landing />
+      <Test />
     </>
   );
 }

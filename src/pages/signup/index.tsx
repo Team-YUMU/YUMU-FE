@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import axios from 'axios';
+import { postUsers } from '@/services/api';
+// import axios from 'axios';
 import Link from 'next/link';
 import { schema } from '@/types/validator/signForm';
 import {
@@ -18,12 +19,12 @@ import { Button } from '@/components/ui/button';
 
 export default function SignUpPage() {
   // const router = useRouter();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   type FormData = {
+    nickname: string;
     email: string;
     password: string;
-    passwordCheck: string;
-    nickname: string;
+    checkPassword: string;
   };
 
   const {
@@ -32,19 +33,15 @@ export default function SignUpPage() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = () => {
-    console.log('onsubmit');
+  const onSubmit = async (data: FormData) => {
+    try {
+      await postUsers(data);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.log('에러발생발생 오바오바', error);
+    }
+    console.log('submit');
   };
-
-  // = async (data: FormData) => {
-  //   try {
-  //     await axios.post('/api/v1/auth/signup', data);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log('An error occurred:', error);
-  //   }
-  //   console.log('submit');
-  // };
 
   return (
     <AlertDialog>
@@ -55,7 +52,7 @@ export default function SignUpPage() {
             <h2 className='font-notosans text-[1.6rem] text-gray-9'>회원가입에 필요한 정보를 입력해주세요.</h2>``
           </div>
           <form
-            className='flex w-full flex-col items-center justify-center gap-[4rem] '
+            className={`flex w-full flex-col items-center justify-center ${errors.email ? 'gap-[3rem]' : 'gap-[3.5rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
             <AuthInput
@@ -90,10 +87,10 @@ export default function SignUpPage() {
 
             <AuthInput
               type='password'
-              required={!!errors.passwordCheck}
-              errorMessage={errors?.passwordCheck?.message}
+              required={!!errors.checkPassword}
+              errorMessage={errors?.checkPassword?.message}
               className='h-[3.9rem] w-[43.8rem]'
-              {...register('passwordCheck')}
+              {...register('checkPassword')}
               placeholder='비밀번호를 한번 더 적어주세요'
             />
             <AlertDialogTrigger>
@@ -110,16 +107,18 @@ export default function SignUpPage() {
           </div>
         </div>
 
-        <AlertDialogContent className='flex h-[17.9rem] flex-col items-center justify-around p-0'>
-          <div className='mt-[5rem]  '>
-            <AlertDialogHeader>
-              <AlertDialogTitle className='text-[1.6rem]'>회원가입이 완료되었습니다</AlertDialogTitle>
-            </AlertDialogHeader>
-            <AlertDialogAction className='rounded-[0.8rem mt-[4.1rem] h-[5rem] w-[32rem] border-t-2 bg-white text-[2rem] text-red-F hover:bg-white'>
-              닫기
-            </AlertDialogAction>
-          </div>
-        </AlertDialogContent>
+        {isModalOpen && (
+          <AlertDialogContent className='flex h-[17.9rem] flex-col items-center justify-around p-0'>
+            <div className='mt-[5rem]  '>
+              <AlertDialogHeader>
+                <AlertDialogTitle className='text-[1.6rem]'>회원가입이 완료되었습니다</AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogAction className='rounded-[0.8rem mt-[4.1rem] h-[5rem] w-[32rem] border-t-2 bg-white text-[2rem] text-red-F hover:bg-white'>
+                닫기
+              </AlertDialogAction>
+            </div>
+          </AlertDialogContent>
+        )}
       </div>
     </AlertDialog>
   );
