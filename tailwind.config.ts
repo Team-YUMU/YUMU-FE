@@ -122,6 +122,12 @@ const config = {
           fontWeight: '700',
         },
       ],
+      '16-900': [
+        '1.6rem',
+        {
+          fontWeight: '900',
+        },
+      ],
 
       //fontsize: 18px
       '18-400': [
