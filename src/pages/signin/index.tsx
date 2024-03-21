@@ -71,7 +71,7 @@ export default function SignInPage() {
             required={!!errors.email}
             placeholder='이메일을 입력해 주세요'
             errorMessage={errors?.email?.message}
-            className=' h-[3.9rem] w-[43.8rem]'
+            className=' h-[6.4rem] w-[43.8rem]'
             {...register('email')}
           />
 
@@ -79,7 +79,7 @@ export default function SignInPage() {
             type='password'
             required={!!errors.password}
             errorMessage={errors?.password?.message}
-            className='h-[3.9rem] w-[43.8rem]'
+            className='h-[6.4rem] w-[43.8rem]'
             {...register('password')}
             placeholder='비밀번호를 입력해주세요'
           />
@@ -105,7 +105,14 @@ export default function SignInPage() {
                 카카오로 로그인
               </Button>
             </div>
-            <Button variant='outline' size='auth' className='border border-red-F bg-white text-[2rem] text-red-F'>
+            <Button
+              onClick={() => {
+                router.push('/signup');
+              }}
+              variant='outline'
+              size='auth'
+              className='border border-red-F bg-white text-[2rem] text-red-F'
+            >
               회원가입
             </Button>
           </div>

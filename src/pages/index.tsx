@@ -1,8 +1,8 @@
-import SignInPage from './signup';
+import Test from './test/test';
 export default function Home() {
   return (
     <>
-      <SignInPage />
+      <Test />
     </>
   );
 }

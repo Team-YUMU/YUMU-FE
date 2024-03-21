@@ -32,15 +32,19 @@ export default function SignUpPage() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      await axios.post('/api/v1/auth/signup', data);
-      console.log(data);
-    } catch (error) {
-      console.log('An error occurred:', error);
-    }
-    console.log('submit');
+  const onSubmit = () => {
+    console.log('onsubmit');
   };
+
+  // = async (data: FormData) => {
+  //   try {
+  //     await axios.post('/api/v1/auth/signup', data);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log('An error occurred:', error);
+  //   }
+  //   console.log('submit');
+  // };
 
   return (
     <AlertDialog>
@@ -51,14 +55,14 @@ export default function SignUpPage() {
             <h2 className='font-notosans text-[1.6rem] text-gray-9'>회원가입에 필요한 정보를 입력해주세요.</h2>``
           </div>
           <form
-            className='flex w-full flex-col items-center justify-center gap-[2rem] '
+            className='flex w-full flex-col items-center justify-center gap-[4rem] '
             onSubmit={handleSubmit(onSubmit)}
           >
             <AuthInput
               formNoValidate
               type='text'
               placeholder='닉네임을 입력해주세요'
-              className=' h-[3.9rem] w-[43.8rem]'
+              className='h-[3.9rem] w-[43.8rem] placeholder:font-[2rem]'
               required={true}
               errorMessage={errors?.nickname?.message}
               {...register('nickname')}
