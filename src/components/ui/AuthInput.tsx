@@ -53,7 +53,7 @@ const AuthInput = forwardRef<HTMLInputElement, InputProps>(
         <p className='mt-2 flex items-center text-16-400'>{label}</p>
         <div className='relative'>
           <input
-            className={`${borderColor} h-[6.4rem] w-full rounded-[0.8rem] border-[0.1rem] px-[4rem]   py-[1.5rem] text-10-400 placeholder:text-gray-B`}
+            className={`${borderColor} h-[6.4rem] w-full rounded-[0.8rem] border-[0.1rem] px-[4rem]   py-[1.5rem] text-14-400 placeholder:text-gray-B`}
             type={inputType}
             name={inputName}
             onFocus={handleFocus}

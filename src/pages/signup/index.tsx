@@ -59,7 +59,6 @@ export default function SignUpPage() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <AuthInput
-              formNoValidate
               type='text'
               placeholder='닉네임을 입력해주세요'
               className='h-[3.9rem] w-[43.8rem] placeholder:font-[2rem]'
@@ -70,7 +69,6 @@ export default function SignUpPage() {
             {errors.nickname && <p></p>}
 
             <AuthInput
-              formNoValidate
               type='email'
               required={!!errors.email}
               placeholder='이메일을 입력해 주세요'
@@ -81,7 +79,6 @@ export default function SignUpPage() {
             {errors.email && <p></p>}
 
             <AuthInput
-              formNoValidate
               type='password'
               required={!!errors.password}
               errorMessage={errors?.password?.message}
@@ -92,7 +89,6 @@ export default function SignUpPage() {
             {errors.password && <p></p>}
 
             <AuthInput
-              formNoValidate
               type='password'
               required={!!errors.passwordCheck}
               errorMessage={errors?.passwordCheck?.message}
