@@ -86,7 +86,7 @@ export interface RegistrationProps {
   request: RegistrationRequestProps;
   image: string;
 }
-export interface auctionCheckProps {
+export interface AuctionCheckProps {
   page?: number;
   size?: number;
   keyword?: string;
@@ -97,7 +97,9 @@ export interface UserInfoProps {
   email: string;
   nickname: string;
   password: string;
-  profileImage?: null | string;
+  introduce: null | string;
+  snsLink: null | string;
+  profileImage: null | string;
 }
 
 export interface UserInfoWithTokenProps {
@@ -105,7 +107,7 @@ export interface UserInfoWithTokenProps {
   user: UserInfoProps;
 }
 
-export interface putUserProps {
+export interface PutUserProps {
   nickname: string;
   introduce: string;
   profileImage: string | null;
@@ -113,12 +115,12 @@ export interface putUserProps {
   newPassword: string;
 }
 
-export interface postAuthLoginProps {
+export interface PostAuthLoginProps {
   email: string;
   password: string;
 }
 
-export interface postAuthSignUpProps {
+export interface PostAuthSignUpProps {
   nickname: string;
   email: string;
   password: string;
