@@ -96,13 +96,12 @@ export interface UserInfoProps {
   id: number;
   email: string;
   nickname: string;
-  profileImage: null | string;
-  createdAt: string;
-  updatedAt: string;
+  password: string;
+  profileImage?: null | string;
 }
 
 export interface UserInfoWithTokenProps {
-  accessToken: string;
+  refreshToken: string;
   user: UserInfoProps;
 }
 
