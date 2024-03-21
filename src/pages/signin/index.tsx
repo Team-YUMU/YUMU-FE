@@ -22,10 +22,12 @@ export default function SignInPage() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = async (loginData: FormData) => {
+  const onSubmit = async (data: FormData) => {
+    const { email, password } = data;
+    console.log(data);
     try {
-      await postAuthLogin(loginData);
-      console.log(loginData);
+      await postAuthLogin({ email, password });
+      console.log(data);
       router.push('/');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
