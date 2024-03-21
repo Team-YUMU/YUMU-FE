@@ -50,14 +50,14 @@ export function LiveChatting() {
   }
 
   const handleBid = () => {
-    alert('응찰버튼');
+    alert('응찰');
   };
   const handleIcon = () => {
     alert('이모티콘');
   };
 
   return (
-    <div className='col-span-1 flex h-[63.8rem] flex-col gap-2 rounded-[1rem] border-2 bg-white'>
+    <div className='col-span-1 flex h-[63.8rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white'>
       <div className='flex h-full flex-col-reverse justify-start gap-[1.2rem] overflow-y-auto p-2 px-[2.3rem] pb-[1.1rem] pt-[2.8rem] scrollbar-hide'>
         <div className='flex w-full flex-row items-center gap-4'>
           <Separator className='shrink' color='#f3f3f3' />
@@ -78,7 +78,7 @@ export function LiveChatting() {
           <Separator className='shrink' color='#f3f3f3' />
         </div>
       </div>
-      <Separator color='#f3f3f3' className='h-1' />
+      <Separator className='h-1 bg-[#f3f3f3]' />
       <div className='relative p-2'>
         <Form {...form}>
           <form
