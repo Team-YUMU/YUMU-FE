@@ -1,9 +1,9 @@
 import { BidHistories } from '@/components/domain/live/BidHistories';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
-import { LiveChatting } from '@/components/domain/live/LiveChatting';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { LiveChatting } from '@/components/domain/live/LiveChatting';
 
 export default function Live() {
   return (

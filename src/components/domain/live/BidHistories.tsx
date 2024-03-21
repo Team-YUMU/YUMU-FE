@@ -46,7 +46,7 @@ function BidHistory({ username, bidprice, bidtime }: BidHistoryProps) {
       </div>
       <div className='flex flex-col'>
         <div className='grow' />
-        <p className='inline-block pb-[0.6rem] text-20-900   text-red-F'>{bidprice.toLocaleString()}원</p>
+        <p className='inline-block pb-[0.6rem] text-20-900 text-red-F'>{bidprice.toLocaleString()}원</p>
       </div>
     </li>
   );
