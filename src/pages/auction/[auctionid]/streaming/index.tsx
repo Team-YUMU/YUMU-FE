@@ -1,5 +1,5 @@
 import { BidHistories } from '@/components/domain/live/BidHistories';
-import { LiveChatting } from '@/components/domain/live/LiveChatting';
+import { LiveChatting } from '@/components/domain/live/livechatting';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { CircleAlert } from 'lucide-react';
