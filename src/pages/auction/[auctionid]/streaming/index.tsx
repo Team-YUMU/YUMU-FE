@@ -1,5 +1,5 @@
-import { LiveBids } from '@/components/domain/live/livebids';
-import { LiveChatting } from '@/components/domain/live/livechatting';
+import { BidHistories } from '@/components/domain/live/BidHistories';
+import { LiveChatting } from '@/components/domain/live/LiveChatting';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { CircleAlert } from 'lucide-react';
@@ -22,7 +22,7 @@ export default function Streaming() {
         </div>
         <LiveChatting />
         <AuctionDetail />
-        <LiveBids />
+        <BidHistories />
       </div>
     </div>
   );
