@@ -23,9 +23,6 @@ export function AuctionDetail() {
 
   return (
     <div className='col-span-2 space-y-2 bg-white'>
-      <div className='rounded-xl bg-slate-50 p-2'>
-        유의사항 ex. 도서신간 배송 불가 / 실문배송이 아닌 이메일로 상품이 전달 됩니다.
-      </div>
       <div className='grid w-full grid-cols-3 gap-2'>
         <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
           상세페이지

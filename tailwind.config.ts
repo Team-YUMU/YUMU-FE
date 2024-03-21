@@ -33,6 +33,12 @@ const config = {
           fontWeight: '400',
         },
       ],
+      '10-700': [
+        '1rem',
+        {
+          fontWeight: '700',
+        },
+      ],
       '11.1-400': [
         '1.125rem',
         {
@@ -108,6 +114,18 @@ const config = {
         '1.6rem',
         {
           fontWeight: '600',
+        },
+      ],
+      '16-700': [
+        '1.6rem',
+        {
+          fontWeight: '700',
+        },
+      ],
+      '16-900': [
+        '1.6rem',
+        {
+          fontWeight: '900',
         },
       ],
 
@@ -187,6 +205,12 @@ const config = {
       ],
 
       //fontsize: 36px
+      '36-400': [
+        '3.6rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       '36-700': [
         '3.6rem',
         {
