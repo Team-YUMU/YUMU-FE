@@ -1,116 +1,109 @@
-import { useState, useRef, SyntheticEvent } from 'react';
+import React, { useState, useRef, SyntheticEvent, useEffect } from 'react';
 import { Button } from '../ui/button';
+import { Separator } from '../ui/separator';
 
-type MenuType = '상세페이지' | '작가소개' | '유의사항';
+type MenuType = '공지' | '작품 소개' | '작가 소개' | '유의사항';
 
 export function AuctionDetail() {
   const scrollRef = useRef<HTMLDivElement[]>([]);
+  const [activeTab, setActiveTab] = useState<MenuType>('공지');
   const [isMoreView, setIsMoreView] = useState(false);
+
+  const tabMenus: Record<MenuType, number> = {
+    공지: 0,
+    '작품 소개': 1,
+    '작가 소개': 2,
+    유의사항: 3,
+  };
 
   const handleMenu = (event: SyntheticEvent<HTMLButtonElement>) => {
     const name = event.currentTarget.innerText as MenuType;
-    const menus: Record<MenuType, number> = {
-      상세페이지: 0,
-      작가소개: 1,
-      유의사항: 2,
-    };
-    scrollRef.current[menus[name]].scrollIntoView({ behavior: 'smooth' });
+    scrollRef.current[tabMenus[name]].scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleMore = () => {
     setIsMoreView(!isMoreView);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+
+      // 스크롤 위치에 따라 활성화된 탭 결정
+      let activeTab: MenuType = '공지';
+      (Object.keys(tabMenus) as MenuType[]).forEach((tab) => {
+        if (scrollRef.current[tabMenus[tab]].offsetTop <= scrollPosition) {
+          activeTab = tab as MenuType;
+        }
+      });
+      setActiveTab(activeTab);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [tabMenus]);
   return (
-    <div className='col-span-2 space-y-2 bg-white'>
-      <div className='grid w-full grid-cols-3 gap-2'>
-        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
-          상세페이지
-        </Button>
-        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
-          작가소개
-        </Button>
-        <Button variant={'default'} onClick={handleMenu} className='rounded-none'>
-          유의사항
-        </Button>
+    <div
+      className={`relative col-span-2 space-y-2 bg-white pb-[9.4rem] font-sans ${isMoreView ? 'h-fit' : 'h-[50.4rem]'}`}
+    >
+      <div className='flex h-[3.4rem] w-full flex-row gap-[1.6rem] text-18-500 '>
+        {Object.keys(tabMenus).map((tab) => (
+          <Button
+            key={tab}
+            variant={'ghost'}
+            onClick={handleMenu}
+            className={`h-full w-[12rem] border-b-[0.4rem] pb-[0.8rem] pt-0 ${
+              activeTab === tab ? 'border-[#686868] text-[#686868]' : 'border-white text-[#d9d9d9]'
+            }`}
+          >
+            {tab}
+          </Button>
+        ))}
       </div>
-      <div className={`relative bg-slate-50 p-2`}>
-        <div className={`space-y-2 overflow-hidden ${isMoreView ? 'h-full' : 'h-72'}`}>
-          <div ref={(el) => (scrollRef.current[0] = el!)} className={`overflow-hidden bg-slate-100`}>
-            <h1 className='text-24-700'>상세 페이지</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tortor eros, feugiat at semper eget,
-              venenatis ut elit. Aliquam ornare id lorem at commodo. Donec non dignissim velit, vitae ullamcorper augue.
-              Nunc elementum augue nec massa sagittis fermentum. Suspendisse et mollis ipsum, ac dignissim lacus. Ut id
-              quam mi. Nam viverra turpis sed odio posuere, sed scelerisque justo rutrum. Nunc sed sem sed ante finibus
-              viverra. Proin tincidunt convallis nisi at ultrices. Fusce lacinia, lorem non ullamcorper condimentum,
-              eros elit suscipit urna, et fringilla risus tellus a ex.
-            </p>
-            <p>
-              Integer tristique et turpis sit amet viverra. Etiam sodales imperdiet arcu, a commodo nisl maximus nec.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas neque eros. Donec et nisi justo.
-              Sed venenatis metus in magna scelerisque hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus
-              et ultrices posuere cubilia curae; Phasellus in tincidunt mi.
-            </p>
-            <p>
-              Maecenas viverra, massa vel sodales vehicula, enim magna molestie dolor, at ultrices odio nulla id risus.
-              Integer efficitur at elit sed sagittis. Etiam posuere porta tortor sed sagittis. Quisque consectetur
-              tempus est sed vehicula. Curabitur vel arcu enim. Phasellus eu viverra erat. Pellentesque habitant morbi
-              tristique senectus et netus et malesuada fames ac turpis egestas. Nunc vitae metus sit amet neque molestie
-              tincidunt at id risus. Fusce suscipit viverra dolor, ac porta justo vestibulum sit amet. In sed sagittis
-              ligula. Curabitur sit amet porta justo, eu egestas dui. Curabitur faucibus facilisis urna, ac gravida mi
-              gravida ut. Pellentesque rhoncus mauris vel quam posuere, eget suscipit quam molestie. Donec tempor felis
-              ante, at porta massa venenatis ac. Quisque at mi tristique, congue velit a, eleifend mauris.
-            </p>
-            <p>
-              Proin justo ligula, tempus vel ornare nec, scelerisque nec dolor. Pellentesque vel mollis ante. Morbi vel
-              volutpat sapien. Sed blandit venenatis purus, eget ullamcorper nibh ullamcorper sed. Vivamus vulputate
-              eros lacus, quis pretium nisi venenatis et. Quisque placerat turpis nec porta volutpat. Vivamus et ante
-              pulvinar, hendrerit arcu in, egestas purus. Curabitur blandit, ipsum eget feugiat molestie, purus enim
-              accumsan mauris, non malesuada tellus dui eu arcu. Nunc et mi nec dolor volutpat elementum et sed lorem.
-              Integer commodo justo augue, quis porttitor turpis lacinia quis. Cras vel justo posuere, consectetur nulla
-              quis, consectetur ante. Fusce sit amet arcu eget magna mattis fringilla in at turpis. Curabitur eu egestas
-              quam, et interdum purus. Ut efficitur felis magna, a eleifend ex luctus eu. Donec velit lorem, fermentum
-              vitae elit in, tristique euismod quam.
-            </p>
-            <p>
-              Donec leo dolor, fringilla ut feugiat sed, feugiat sit amet ex. Etiam porta est faucibus mattis blandit.
-              Phasellus orci libero, consectetur sit amet luctus quis, interdum eu urna. Integer varius ac felis ac
-              fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Phasellus suscipit massa vitae turpis aliquet, nec fringilla augue varius.
-              Quisque ut eros quis eros auctor aliquet vulputate ac orci. Maecenas nisl sem, dignissim convallis auctor
-              at, vestibulum sed sem. Vestibulum at porta lectus. Praesent convallis, nisi eu maximus facilisis, urna
-              ante tempus massa, id porta sem nibh et magna.
-            </p>
+      <div className={`h-full overflow-hidden p-[3rem]`}>
+        <div className={`space-y-[4rem] overflow-hidden`}>
+          <div
+            ref={(el) => (scrollRef.current[0] = el!)}
+            className='shrink-0 rounded-2xl border-2 border-[#f3f3f3] px-[3.9rem] py-[4.1rem] shadow-[0_9px_20px_0_rgba(0,0,0,0.04)]'
+          >
+            <div className='flex h-[3.2rem] w-[16rem] shrink-0 items-center justify-center rounded-xl bg-[#fff2ee] text-16-700'>
+              <p className='text-red-F'>아티스트 업데이트</p>
+            </div>
+            <h1 className='pb-[1.8rem] pt-[2rem] text-36-400 text-[#222222]'>공지 제목</h1>
+            <p className='text-18-500 text-[#999999]'>공지 내용</p>
           </div>
-          <div ref={(el) => (scrollRef.current[1] = el!)} className={`overflow-hidden bg-slate-100`}>
-            <h1 className='text-24-700'>작가소개</h1>
-            <p>
-              모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에
-              노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 사면·감형 및 복권에 관한 사항은
-              법률로 정한다. 재판의 전심절차로서 행정심판을 할 수 있다. 행정심판의 절차는 법률로 정하되, 사법절차가
-              준용되어야 한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한
-              사항에 관하여 대통령령을 발할 수 있다. 모든 국민은 종교의 자유를 가진다. 국무총리는 국무위원의 해임을
-              대통령에게 건의할 수 있다. 정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에
-              참여하는데 필요한 조직을 가져야 한다.
-            </p>
+          <div ref={(el) => (scrollRef.current[1] = el!)} className='flex flex-col gap-[3rem]'>
+            <div className='flex flex-row items-center gap-[1.6rem] p-0 text-[#686868]'>
+              <Separator orientation='vertical' className='h-[2.6rem] w-[0.4rem] bg-[#686868] p-0' />
+              <p className='p-0 text-18-500'>작품 소개</p>
+            </div>
+            <div>작품 소개 들어가는 자리</div>
           </div>
-          <div ref={(el) => (scrollRef.current[2] = el!)} className={`overflow-hidden bg-slate-100 `}>
-            <h1 className='text-24-700'>유의사항</h1>
-            <p>
-              모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에
-              노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다. 사면·감형 및 복권에 관한 사항은
-              법률로 정한다. 재판의 전심절차로서 행정심판을 할 수 있다. 행정심판의 절차는 법률로 정하되, 사법절차가
-              준용되어야 한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한
-              사항에 관하여 대통령령을 발할 수 있다. 모든 국민은 종교의 자유를 가진다. 국무총리는 국무위원의 해임을
-              대통령에게 건의할 수 있다. 정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에
-              참여하는데 필요한 조직을 가져야 한다.
-            </p>
+          <div ref={(el) => (scrollRef.current[2] = el!)} className='flex flex-col gap-[3rem]'>
+            <div className='flex flex-row items-center gap-[1.6rem] p-0 text-[#686868]'>
+              <Separator orientation='vertical' className='h-[2.6rem] w-[0.4rem] bg-[#686868] p-0' />
+              <p className='p-0 text-18-500'>아티스트 소개</p>
+            </div>
+            <div>아티스트 소개 들어가는 자리</div>
+          </div>
+          <div ref={(el) => (scrollRef.current[3] = el!)} className='flex flex-col gap-[3rem]'>
+            <div className='flex flex-row items-center gap-[1.6rem] p-0 text-[#686868]'>
+              <Separator orientation='vertical' className='h-[2.6rem] w-[0.4rem] bg-[#686868] p-0' />
+              <p className='p-0 text-18-500'>유의사항</p>
+            </div>
+            <div>유의사항 들어가는 자리</div>
           </div>
         </div>
-        <Button className='mt-2 w-full' variant={'default'} onClick={handleMore}>
-          {isMoreView ? '줄이기' : '더보기'}
-        </Button>
+        <div className='absolute bottom-0 left-0 mt-2 w-full'>
+          {!isMoreView && <div className='h-[10rem] bg-gradient-to-t from-white to-transparent' />}
+          <Button
+            className='h-[7.4rem] w-full shrink-0 border-[0.2rem] bg-white font-sans text-18-500 hover:bg-white hover:text-20-500 focus:bg-white'
+            variant={'outline'}
+            onClick={handleMore}
+          >
+            <p className='text-red-F'>{isMoreView ? '작품 설명 줄이기' : '작품 설명 더보기'}</p>
+          </Button>
+        </div>
       </div>
     </div>
   );
