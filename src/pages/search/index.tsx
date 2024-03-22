@@ -80,7 +80,7 @@ function SearchPage() {
   if (isError) return '에러가 발생했습니다.';
 
   return (
-    <div className='mx-auto my-0 w-[108rem]'>
+    <div className='mx-auto my-0 w-[136.8rem]'>
       <Head>
         <title>{keyword} 검색 결과 - YUMU</title>
       </Head>

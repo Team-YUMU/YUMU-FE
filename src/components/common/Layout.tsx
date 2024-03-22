@@ -10,7 +10,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className='flex min-h-screen flex-col'>
       <Header />
-      <main className='grow'>{children}</main>
+      <main className='grow py-20'>{children}</main>
       <Footer />
     </div>
   );
