@@ -4,10 +4,11 @@ import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { LiveChatting } from '@/components/domain/live/livechatting';
 import { CircleAlert } from 'lucide-react';
+import ScrollButtons from '@/components/common/ScrollButtons';
 
 export default function Live() {
   return (
-    <div className='m-auto flex w-[138rem] select-none flex-col items-center gap-2 py-2'>
+    <div className='relative m-auto flex w-[138rem] select-none items-center gap-2 py-2'>
       <div className='grid grid-cols-3 gap-[1.25rem] px-2'>
         <div className='col-span-3 bg-white text-36-400 font-[The_Jamsil]'>상품명(긴제목)</div>
         <div className='col-span-2 flex w-[91rem] flex-col gap-[1.13rem]'>
@@ -26,6 +27,7 @@ export default function Live() {
         <BidHistories />
         <ExhibitionCarousel />
       </div>
+      <ScrollButtons />
     </div>
   );
 }
