@@ -57,8 +57,8 @@ export function LiveChatting() {
   };
 
   return (
-    <div className='col-span-1 flex h-[63.8rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white'>
-      <div className='scrollbar-hide flex h-full flex-col-reverse justify-start gap-[1.2rem] overflow-y-auto p-2 px-[2.3rem] pb-[1.1rem] pt-[2.8rem]'>
+    <div className='col-span-1 flex h-[63.8rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white font-[notoKR]'>
+      <div className='flex h-full flex-col-reverse justify-start gap-[1.2rem] overflow-y-auto p-2 px-[2.3rem] pb-[1.1rem] pt-[2.8rem] scrollbar-hide'>
         <div className='flex w-full flex-row items-center gap-4'>
           <Separator className='shrink' color='#f3f3f3' />
           <p className='shrink-0 text-15-400 text-stone-300'>경매가 종료되었습니다.</p>
@@ -79,11 +79,11 @@ export function LiveChatting() {
         </div>
       </div>
       <Separator className='h-1 bg-[#f3f3f3]' />
-      <div className='relative p-2'>
+      <div className='relative px-[2.3rem] py-[1.7rem]'>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className='flex w-full flex-row items-center justify-center rounded-[36px] bg-zinc-100'
+            className='flex w-full flex-row items-center justify-center rounded-[36px] bg-zinc-100 py-[1.4rem] pl-[2.2rem] pr-[4.4rem]'
           >
             <FormField
               control={form.control}
@@ -94,7 +94,7 @@ export function LiveChatting() {
                     <Input
                       placeholder={logined ? '고운 채팅 쓰기' : '로그인이 필요합니다'}
                       variant={'chat'}
-                      className='h-12 rounded-[36px] border-none bg-zinc-100 px-4 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
+                      className='h-12 rounded-[36px] border-none bg-zinc-100 text-16-500 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
                       {...field}
                     />
                   </FormControl>
@@ -103,12 +103,12 @@ export function LiveChatting() {
             />
           </form>
         </Form>
-        <div className='absolute right-[1.6rem] top-[1.3rem] flex flex-row items-center gap-2'>
+        <div className='absolute right-[4.6rem] top-1/2 flex -translate-y-1/2 flex-row items-center gap-[0.8rem]'>
           <Button variant={'ghost'} className='h-fit rounded-full p-0' onClick={handleBid}>
-            <HandCoins size={15} color='#9e9e9e' />
+            <HandCoins color='#9e9e9e' className='size-[1.6rem]' />
           </Button>
           <Button variant={'ghost'} className='h-fit rounded-full p-0' onClick={handleIcon}>
-            <SmilePlus size={15} color='#9e9e9e' />
+            <SmilePlus color='#9e9e9e' className='size-[1.6rem]' />
           </Button>
         </div>
       </div>
