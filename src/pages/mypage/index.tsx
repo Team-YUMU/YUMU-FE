@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import MyPageTabs from '../../components/domain/myPage/Tabs/MyPageTabs';
 import Edit from '@/components/domain/myPage/Tabs/Edit/Edit';
@@ -21,7 +21,7 @@ import Members from '@/mocks/Member';
 // import { getMemberInfo } from '@/services/api';
 
 export default function MyPage() {
-  const [memberInfo, setMemberInfo] = useState({
+  const [memberInfo] = useState({
     password: '',
     newPassword: '',
     newPasswordCheck: '',
@@ -38,19 +38,6 @@ export default function MyPage() {
   const router = useRouter();
 
   const MembersData = Members;
-
-  // const getMembersData = async () => {
-  //   try {
-  //     const data = await getMemberInfo();
-  //     const { email, nickname, profileImage } = data;
-  //     setMemberInfo({ email, nickname, profileImage });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getMembersData();
-  // }, []);
 
   const handleChangeUi = () => {
     setChangeUi(!changeUi);

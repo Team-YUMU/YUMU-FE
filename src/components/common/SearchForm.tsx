@@ -17,7 +17,7 @@ function SearchForm() {
     if (!keyword) {
       return router.push('/');
     }
-    return router.push(`/search?q=${keyword}`);
+    return router.push(`/search?keyword=${keyword}`);
   };
 
   return (

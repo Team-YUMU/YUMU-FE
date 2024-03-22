@@ -2,10 +2,10 @@ import {
   RegistrationProps,
   UserInfoProps,
   UserInfoWithTokenProps,
-  auctionCheckProps,
-  postAuthLoginProps,
-  postAuthSignUpProps,
-  putUserProps,
+  AuctionCheckProps,
+  PostAuthLoginProps,
+  PostAuthSignUpProps,
+  PutUserProps,
 } from '@/types/types';
 import { authInstance as authAxios, instance as axios } from './axios';
 const BASE_URL = `/api/v1`;
@@ -14,7 +14,7 @@ const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
 const AUCTION_BASE_URL = `${BASE_URL}/auction`;
 
 // signIn-page API (로그인)
-export async function postAuthLogin(loginData: postAuthLoginProps) {
+export async function postAuthLogin(loginData: PostAuthLoginProps) {
   const res = await axios.post<UserInfoWithTokenProps>(`${BASE_URL}/auth/login`, loginData);
   return res.data;
 }
@@ -22,7 +22,7 @@ export async function postAuthLogin(loginData: postAuthLoginProps) {
 // SNS signIn API (SNS 로그인)
 
 // signUp-page API (회원가입)
-export async function postUsers(signUpData: postAuthSignUpProps) {
+export async function postUsers(signUpData: PostAuthSignUpProps) {
   const res = await axios.post<UserInfoProps>(`${BASE_URL}/auth/signup`, signUpData);
   return res.data;
 }
@@ -34,7 +34,7 @@ export async function postAuthLogout() {
 }
 
 // my-page put API (회원 정보 수정)
-export async function putMemberInfo(userInfo: putUserProps) {
+export async function putMemberInfo(userInfo: PutUserProps) {
   const res = await authAxios.put<string>(`${MY_PAGE_MEMBERS_URL}`, userInfo);
   return res;
 }
@@ -85,25 +85,25 @@ export async function putAuction(auctionId: number, auctionRegister: Registratio
 }
 
 // auction get auctionNewData API (경매 조회(최신순))
-export async function getAuctionHistory({ keyword, size, page }: auctionCheckProps) {
+export async function getAuctionHistory({ keyword, size, page }: AuctionCheckProps) {
   const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=latest&keyword=${keyword}`);
   return res.data;
 }
 
 // auction get auctionPopularData API (인기 경매 조회)
-export async function getPopularAuction({ keyword, size, page }: auctionCheckProps) {
+export async function getPopularAuction({ keyword, size, page }: AuctionCheckProps) {
   const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=popular&keyword=${keyword}`);
   return res.data;
 }
 
 // auction get auctionSearchData API (경매글 검색)
-export async function getSearchAuction({ keyword, size, page }: auctionCheckProps) {
+export async function getSearchAuction({ keyword, size, page }: AuctionCheckProps) {
   const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=&keyword="${keyword}"`);
   return res.data;
 }
 
 // auction get liveAuctionData API (라이브 경매 조회)
-export async function getLiveAuction({ keyword, size, page }: auctionCheckProps) {
+export async function getLiveAuction({ keyword, size, page }: AuctionCheckProps) {
   const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=live&keyword=${keyword}`);
   return res.data;
 }
