@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import axios from 'axios';
 import Link from 'next/link';
+import axios from 'axios';
 import { schema } from '@/types/validator/signForm';
 import {
   AlertDialog,
@@ -32,19 +31,15 @@ export default function SignUpPage() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = () => {
-    console.log('onsubmit');
+  const onSubmit = async (data: FormData) => {
+    try {
+      await axios.post('/api/v1/auth/signup', data);
+      console.log(data);
+    } catch (error) {
+      console.log('An error occurred:', error);
+    }
+    console.log('submit');
   };
-
-  // = async (data: FormData) => {
-  //   try {
-  //     await axios.post('/api/v1/auth/signup', data);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log('An error occurred:', error);
-  //   }
-  //   console.log('submit');
-  // };
 
   return (
     <AlertDialog>
