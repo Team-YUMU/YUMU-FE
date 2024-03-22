@@ -66,7 +66,7 @@ export function BidHistories() {
   return (
     <div className='sticky top-2 flex h-fit max-h-[79.5rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white p-[2.3rem] font-sans text-[#686868]'>
       <p className='pl-[0.3rem] text-18-500'>지난 내역</p>
-      <div className='overflow-y-scroll scrollbar-hide'>
+      <div className='scrollbar-hide overflow-y-scroll'>
         <ul className='flex flex-col-reverse gap-0'>
           {testBidList.slice(showAll).map((testBid, index) => (
             <div key={index}>

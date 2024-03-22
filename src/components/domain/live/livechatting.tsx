@@ -58,7 +58,7 @@ export function LiveChatting() {
 
   return (
     <div className='col-span-1 flex h-[63.8rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white'>
-      <div className='flex h-full flex-col-reverse justify-start gap-[1.2rem] overflow-y-auto p-2 px-[2.3rem] pb-[1.1rem] pt-[2.8rem] scrollbar-hide'>
+      <div className='scrollbar-hide flex h-full flex-col-reverse justify-start gap-[1.2rem] overflow-y-auto p-2 px-[2.3rem] pb-[1.1rem] pt-[2.8rem]'>
         <div className='flex w-full flex-row items-center gap-4'>
           <Separator className='shrink' color='#f3f3f3' />
           <p className='shrink-0 text-15-400 text-stone-300'>경매가 종료되었습니다.</p>
