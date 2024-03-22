@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import Layout from '@/components/common/Layout';
 import SubLayout from '@/components/common/SubLayout';
 import { useRouter } from 'next/router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -23,12 +25,17 @@ export default function App({ Component, pageProps }: AppProps) {
     );
   }
 
+  const queryClient = new QueryClient();
+
   return (
     <Layout>
       <Head>
         <title>YUMU 유무</title>
       </Head>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </Layout>
   );
 }
