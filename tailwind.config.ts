@@ -282,8 +282,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        // 예시) <p className="text-pretendard">
-        pretendard: ['Pretendard Variable'],
+        // 예시) <p className="font-['TheJamsil']">
+        TheJamsil: ['TheJamsil'],
+        notoKR: ['Noto Sans KR'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -392,7 +393,6 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide'), require('@tailwindcss/line-clamp')],
 } satisfies Config;
 
 export default config;
