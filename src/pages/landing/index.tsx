@@ -127,11 +127,52 @@ export default function Landing() {
             ))}
           </div>
         </section>
-        {/* 현재 라이브 경매 - 정적 */}
+        {/* ⭐️⭐️⭐️현재 라이브 경매 - 정적 */}
+        <section className='mx-auto flex max-w-[136.9rem] justify-between bg-[red]'>
+          {/* 최신경매 */}
+          <div>
+            <div>
+              <p className='text-36-400 mb-[1rem] font-[TheJamsil5Bold] text-[#222]'>현재 Live 경매</p>
+              <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>지금 경매가 진행되고 있어요!</p>
+            </div>
+            <div className='relative bg-[blue]'>
+              {/* map을 통해 가져오기 */}
+              {/* 이미지 박스 */}
+              <div className='relative right-[-2rem] z-10'>
+                <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem]'>
+                  {/* 이미지 대체 */}
+                  <div className='h-full w-full bg-gray-800'></div>
+                </div>
+                <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
+                  <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
+                  <p className='flex h-[2.8rem] w-[11rem] items-center justify-center rounded-[.8rem] rounded-t-none bg-[#FF7751] text-18-700 text-[#fff]'>
+                    00:00
+                  </p>
+                  <Image src='/svgs/m1-timeNear-r.svg' width={16.39} height={14} alt='' />
+                </div>
+              </div>
+              {/* text박스 */}
+              <div className='relative top-[-5.7rem] h-[22.8rem] w-[28rem] rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
+                {/* 데이터 가져오기 */}
+                <div className='ml-[2rem] mt-[8.2rem]'>
+                  <p className='text-18-500 text-[#999]'>아티스트이름</p>
+                  <p className='mt-[.5rem] text-20-700'>국내 스마트 워치 타니 프로 2</p>
+                  <p className='mt-[.5rem] max-w-[19.1rem] text-18-500 text-[#999]'>
+                    국내앱 국내개발 국내 보안 국내최적화
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 인기경매 */}
+          <div className='h-[2rem] max-w-[43.9rem] bg-[pink]'>
+            <p>나는 인기경매입니다</p>
+          </div>
+        </section>
         {/* 인기경매 - 정적*/}
         {/* 기획전 */}
         <ExhibitionCarousel />
-
         <div>
           <Carousel className=' w-full max-w-xs'>
             <CarouselContent>
