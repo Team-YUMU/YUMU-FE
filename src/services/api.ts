@@ -11,7 +11,7 @@ const BASE_URL = `/api/v1`;
 const MY_PAGE_BASE_URL = `${BASE_URL}/mypage`;
 const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
 const AUCTION_BASE_URL = `${BASE_URL}/auction`;
-axios.defaults.withCredentials = true;
+
 // signIn-page API (로그인)
 export async function postAuthLogin(loginData: PostAuthLoginProps) {
   const res = await axios.post(`${BASE_URL}/auth/login`, loginData);
