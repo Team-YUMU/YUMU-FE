@@ -9,6 +9,7 @@ const nextConfig = {
     return config;
   },
   images: {
+    domains: ['yumu-image.s3.ap-northeast-2.amazonaws.com/', 'yu-mu.vercel.app/'],
     remotePatterns: [
       {
         protocol: 'https',
