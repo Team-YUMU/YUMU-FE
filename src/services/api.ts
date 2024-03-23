@@ -8,6 +8,7 @@ import {
   PutUserProps,
 } from '@/types/types';
 import { authInstance as authAxios, instance as axios } from './axios';
+
 const BASE_URL = `/api/v1`;
 const MY_PAGE_BASE_URL = `${BASE_URL}/mypage`;
 const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
