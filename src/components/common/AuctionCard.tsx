@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import LikeButton from './LikeButton';
 
 // 테스트용
 type Art = {
@@ -13,13 +13,6 @@ type Art = {
 };
 
 export default function AuctionCard({ artName, artImage, artist }: Art) {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleToggleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsLiked((prevState) => !prevState);
-  };
-
   return (
     <div className='relative'>
       <div className='group relative h-[20rem] w-full overflow-hidden rounded-[0.6rem] bg-gray-100'>
@@ -31,15 +24,7 @@ export default function AuctionCard({ artName, artImage, artist }: Art) {
         <p className='truncate text-18-500 text-gray-99'>{artist}</p>
       </div>
 
-      <button type='button' className='absolute right-[1.5rem] top-[1.4rem]' onClick={handleToggleLike}>
-        <div className='relative h-[3rem] w-[3.5rem]'>
-          <Image
-            src={isLiked ? '/images/heart_on.png' : '/images/heart_off.png'}
-            alt={isLiked ? '찜 해제' : '찜 하기'}
-            fill
-          />
-        </div>
-      </button>
+      <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
     </div>
   );
 }
