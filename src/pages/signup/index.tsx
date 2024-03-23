@@ -18,7 +18,6 @@ import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
 
 export default function SignUpPage() {
-  // const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   type FormData = {
@@ -38,7 +37,8 @@ export default function SignUpPage() {
     console.log('submit');
     try {
       setIsModalOpen(true);
-      await postUsers(data);
+      const response = await postUsers(data);
+      console.log(response);
     } catch (error) {
       console.log('에러발생발생 오바오바', error);
     }
@@ -95,12 +95,12 @@ export default function SignUpPage() {
               placeholder='비밀번호를 한번 더 적어주세요'
               className=' h-[6.4rem] w-[43.8rem]'
             />
+            <AlertDialogTrigger asChild>
+              <Button variant='default' className='  mt-7 bg-red-F text-[2rem]' type='submit' size='auth'>
+                회원가입
+              </Button>
+            </AlertDialogTrigger>
           </form>
-          <AlertDialogTrigger asChild>
-            <Button variant='default' className='  mt-7 bg-red-F text-[2rem]' type='submit' size='auth'>
-              회원가입
-            </Button>
-          </AlertDialogTrigger>
 
           {isModalOpen && (
             <div className='flex flex-col items-center justify-center gap-8'>
