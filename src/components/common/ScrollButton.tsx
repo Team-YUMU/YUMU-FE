@@ -30,6 +30,7 @@ export default function ScrollButton({ direction, onClick, isAble = true }: Scro
   return (
     <Button
       onClick={onClick}
+      disabled={!isAble}
       className='size-[7.7rem] shrink-0 rounded-full border bg-white p-0 hover:bg-white focus:bg-white'
     >
       {icon}
