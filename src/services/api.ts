@@ -21,9 +21,9 @@ export async function postAuthLogin(loginData: PostAuthLoginProps) {
 }
 
 // SNS signIn API (SNS 로그인)
-export async function KakaoUsers() {
-  const res = await axios.post(`${BASE_URL}/auth/kakao/callback`);
-  return res.data;
+export function KakaoUsers() {
+  const res = `${BASE_URL}/auth/kakao/callback`;
+  return res;
 }
 
 // signUp-page API (회원가입)

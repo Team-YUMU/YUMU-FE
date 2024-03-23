@@ -8,6 +8,7 @@ import { postAuthLogin } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import axios from 'axios';
+import { KakaoUsers } from '@/services/api';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -38,42 +39,20 @@ export default function SignInPage() {
     console.log('button clicked');
   };
 
-  const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
-
-  const redirect_uri = 'http://localhost:3000/';
+  const redirect_uri = 'http://localhost:5000/api/v1/auth/kakao/callback';
   const client_id = '2ddd4adce2c2202ed86dcf98ce65602a';
   const response_type = 'code';
 
-  // const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
-
   const handleKakaoLogin = async () => {
-    // axios.post(KAKAO_AUTH_URI);
-    const authParam = new URLSearchParams({
-      client_id,
-      redirect_uri,
-      response_type,
-    });
-    // window.location.href = KAKAO_AUTH_URI; // url 주소 변경
-    router.push(`https://kauth.kakao.com/oauth/authorize?${authParam.toString()}`);
+    router.push(
+      `https://kauth.kakao.com/oauth/authorize?response_type=${response_type}&client_id=${client_id}&redirect_uri=${redirect_uri}`,
+    );
   };
-  // const code = new URL(window.location.href).searchParams.get('code');
 
-  // useEffect(() => {
-  //   axios
-  //     .post(`http://43.200.219.117:8080/signin?code=${code}`, {
-  //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log('error', error);
-  //     });
-  // });
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
-      <div className='0 flex w-[43.8rem] flex-col items-center gap-[4.8rem] p-10'>
-        <div className='flex flex-col items-center'>
+      <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
+        <div className=' mb-10 flex flex-col items-center'>
           <h1 className='font-jamsil text-[4.6rem]'>로그인</h1>
           <h2 className='font-notosans text-[1.6rem] text-gray-9'>YUMU에 방문해주셔서 감사합니다.</h2>
         </div>
@@ -104,7 +83,7 @@ export default function SignInPage() {
           </Button>
         </form>
 
-        <div className='mt-[2.8rem] flex flex-col gap-[1.2rem]'>
+        <div className=' flex flex-col gap-[1.2rem]'>
           <div className='relative'>
             <Image
               src='/svgs/kakao-icon.svg'
