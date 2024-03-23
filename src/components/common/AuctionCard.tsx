@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import { Card, CardDescription, CardTitle } from '@/components/ui/card';
-import { ArtProps } from '@/types/types';
+import { useState } from 'react';
 
 // 테스트용
 type Art = {
@@ -13,25 +12,34 @@ type Art = {
   wishCnt: number;
 };
 
-function formatDate(value: number) {
-  const date = new Date(value);
-  return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
-}
+export default function AuctionCard({ artName, artImage, artist }: Art) {
+  const [isLiked, setIsLiked] = useState(false);
 
-export default function AuctionCard({ artName, artImage, artist, createdAt, wishCnt }: Art) {
+  const handleToggleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsLiked((prevState) => !prevState);
+  };
+
   return (
-    <Card className='rounded-none border-none shadow-none'>
-      <div className='group relative aspect-card-image w-full overflow-hidden bg-gray-100 '>
-        <Image fill src={artImage} alt={artName} className='transition-transform group-hover:scale-125' />
+    <div className='relative'>
+      <div className='group relative h-[20rem] w-full overflow-hidden rounded-[0.6rem] bg-gray-100'>
+        <Image src={artImage} alt={artName} className='transition-transform group-hover:scale-125' fill />
       </div>
+
       <div className='py-7'>
-        <CardTitle className='mb-3 truncate text-16-500'>{artName}</CardTitle>
-        <CardDescription className='truncate text-14-400'>{artist}</CardDescription>
+        <h3 className='mb-[0.5rem] truncate text-20-700'>{artName}</h3>
+        <p className='truncate text-18-500 text-gray-99'>{artist}</p>
       </div>
-      <div>
-        <span>{formatDate(createdAt)}</span> <br />
-        <span>찜{wishCnt}</span>
-      </div>
-    </Card>
+
+      <button type='button' className='absolute right-[1.5rem] top-[1.4rem]' onClick={handleToggleLike}>
+        <div className='relative h-[3rem] w-[3.5rem]'>
+          <Image
+            src={isLiked ? '/images/heart_on.png' : '/images/heart_off.png'}
+            alt={isLiked ? '찜 해제' : '찜 하기'}
+            fill
+          />
+        </div>
+      </button>
+    </div>
   );
 }
