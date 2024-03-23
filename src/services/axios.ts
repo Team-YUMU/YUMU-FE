@@ -1,5 +1,4 @@
 import axios from 'axios';
-axios.defaults.withCredentials = true;
 
 export const instance = axios.create({
   baseURL: 'http://43.200.219.117:8080/',
