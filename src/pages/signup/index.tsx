@@ -13,11 +13,13 @@ import {
   AlertDialogTitle,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
+import { useRouter } from 'next/router';
 
 import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   type FormData = {
@@ -94,7 +96,13 @@ export default function SignUpPage() {
               className=' h-[6.4rem] w-[43.8rem]'
             />
             <AlertDialogTrigger asChild>
-              <Button variant='default' className='  mt-7 bg-red-F text-[2rem]' type='submit' size='auth'>
+              <Button
+                onClick={() => router.push('/signin')}
+                variant='default'
+                className=' mt-7 bg-red-F text-[2rem]'
+                type='submit'
+                size='auth'
+              >
                 회원가입
               </Button>
             </AlertDialogTrigger>
@@ -103,7 +111,7 @@ export default function SignUpPage() {
           {isModalOpen && (
             <div className='flex flex-col items-center justify-center gap-8'>
               <AlertDialogContent className='flex h-[17.9rem] flex-col items-center justify-around p-0'>
-                <div className='mt-[5rem]  '>
+                <div className='mt-[5rem] '>
                   <AlertDialogHeader>
                     <AlertDialogTitle className='text-[1.6rem]'>회원가입이 완료되었습니다</AlertDialogTitle>
                   </AlertDialogHeader>
