@@ -27,9 +27,10 @@ export default function SignInPage() {
   const onSubmit = async (loginData: FormData) => {
     try {
       const response = await postAuthLogin(loginData);
-      const authToken = response.data.refreshToken;
-      setToken(authToken);
-      sessionStorage.setItem('token', authToken);
+      console.log(response);
+      // const authToken = response.data.refreshToken;
+      // setToken(authToken);
+      // sessionStorage.setItem('token', authToken);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
         console.log('가입되지 않은 사용자 입니다.');
