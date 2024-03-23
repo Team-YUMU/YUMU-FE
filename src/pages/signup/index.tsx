@@ -34,13 +34,11 @@ export default function SignUpPage() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: FormData) => {
-    console.log('submit');
     try {
       setIsModalOpen(true);
-      const response = await postUsers(data);
-      console.log(response);
+      await postUsers(data);
     } catch (error) {
-      console.log('에러발생발생 오바오바', error);
+      console.log('error', error);
     }
   };
 

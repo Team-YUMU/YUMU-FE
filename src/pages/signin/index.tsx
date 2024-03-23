@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { schema } from '@/types/validator/signForm';
 import AuthInput from '@/components/ui/AuthInput';
 import { postAuthLogin } from '@/services/api';
@@ -10,7 +10,6 @@ import Image from 'next/image';
 import axios from 'axios';
 
 export default function SignInPage() {
-  const [token, setToken] = useState(null);
   const router = useRouter();
 
   type FormData = {
@@ -39,20 +38,38 @@ export default function SignInPage() {
     console.log('button clicked');
   };
 
-  const client_id = '2ddd4adce2c2202ed86dcf98ce65602a';
+  const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
+
   const redirect_uri = 'http://localhost:3000/';
+  const client_id = '2ddd4adce2c2202ed86dcf98ce65602a';
   const response_type = 'code';
 
+  // const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+
   const handleKakaoLogin = async () => {
+    // axios.post(KAKAO_AUTH_URI);
     const authParam = new URLSearchParams({
       client_id,
       redirect_uri,
       response_type,
     });
-    const KAKAO_BASE_URL = `https://kauth.kakao.com/oauth/authorize?${authParam.toString()}`;
-    router.push(KAKAO_BASE_URL);
+    // window.location.href = KAKAO_AUTH_URI; // url 주소 변경
+    router.push(`https://kauth.kakao.com/oauth/authorize?${authParam.toString()}`);
   };
+  // const code = new URL(window.location.href).searchParams.get('code');
 
+  // useEffect(() => {
+  //   axios
+  //     .post(`http://43.200.219.117:8080/signin?code=${code}`, {
+  //       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log('error', error);
+  //     });
+  // });
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <div className='0 flex w-[43.8rem] flex-col items-center gap-[4.8rem] p-10'>
