@@ -64,9 +64,9 @@ export function BidHistories() {
   };
 
   return (
-    <div className='sticky top-2 flex h-fit max-h-[79.5rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white p-[2.3rem] font-sans text-[#686868]'>
+    <div className='sticky top-2 flex h-fit max-h-[79.5rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white p-[2.3rem] font-[notoKR] text-[#686868]'>
       <p className='pl-[0.3rem] text-18-500'>지난 내역</p>
-      <div className='scrollbar-hide overflow-y-scroll'>
+      <div className='overflow-y-scroll scrollbar-hide'>
         <ul className='flex flex-col-reverse gap-0'>
           {testBidList.slice(showAll).map((testBid, index) => (
             <div key={index}>
@@ -76,12 +76,14 @@ export function BidHistories() {
           ))}
         </ul>
       </div>
-      <Button
-        onClick={handleShowAll}
-        className='h[4.8rem] mx-auto mb-[0.8rem] w-[28rem] shrink-0 rounded-[3.7rem] border border-[#dfdfdf] bg-white text-16-500 text-[#999999] hover:bg-white focus:bg-white'
-      >
-        {showAll ? '지난 내역 더보기' : '지난 내역 감추기'}
-      </Button>
+      <div className='flex text-[#999999]'>
+        <Button
+          onClick={handleShowAll}
+          className='mx-auto mb-[0.8rem] h-[4.8rem] w-[28rem] shrink-0 rounded-[3.7rem] border border-[#dfdfdf] bg-white text-16-500 hover:bg-white focus:bg-white'
+        >
+          {showAll ? '지난 내역 더보기' : '지난 내역 감추기'}
+        </Button>
+      </div>
     </div>
   );
 }
