@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { schema } from '@/types/validator/signForm';
 import AuthInput from '@/components/ui/AuthInput';
 import { postAuthLogin } from '@/services/api';
@@ -9,6 +10,7 @@ import Image from 'next/image';
 import axios from 'axios';
 
 export default function SignInPage() {
+  const [token, setToken] = useState(null);
   const router = useRouter();
 
   type FormData = {
@@ -20,13 +22,14 @@ export default function SignInPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>();
 
   const onSubmit = async (loginData: FormData) => {
     try {
-      await postAuthLogin(loginData);
-      console.log(loginData);
-      router.push('/');
+      const response = await postAuthLogin(loginData);
+      const authToken = response.data.refreshToken;
+      setToken(authToken);
+      sessionStorage.setItem('token', authToken);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
         console.log('가입되지 않은 사용자 입니다.');

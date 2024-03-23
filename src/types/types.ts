@@ -103,6 +103,7 @@ export interface UserInfoProps {
 }
 
 export interface UserInfoWithTokenProps {
+  data: string;
   refreshToken: string;
   user: UserInfoProps;
 }

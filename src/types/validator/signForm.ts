@@ -8,11 +8,11 @@ export const schema = z
       .min(2, { message: '이메일을 입력해 주세요.' }),
     password: z
       .string()
-      .min(6, { message: '최소 6자 이상 입력해 주세요.' })
+      .min(8, { message: '최소 8자 이상 입력해 주세요.' })
       .regex(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/, {
         message: '비밀번호는 영문 대/소 문자,숫자,특수기호를 조합해서 사용하세요.',
       }),
-    passwordCheck: z.string(),
+    checkPassword: z.string(),
     nickname: z
       .string()
       .min(2, { message: '최소 2자 이상 입력해 주세요.' })
@@ -21,7 +21,7 @@ export const schema = z
   })
   .refine(
     (value) => {
-      return value.password === value.passwordCheck;
+      return value.password === value.checkPassword;
     },
-    { message: '비밀번호가 일치하지 않습니다.', path: ['passwordCheck'] },
+    { message: '비밀번호가 일치하지 않습니다.', path: ['checkPassword'] },
   );
