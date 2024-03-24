@@ -45,13 +45,14 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className='justify-cente flex min-h-screen flex-col items-center'>
+    <div className='flex min-h-screen flex-col items-center justify-center'>
       <AlertDialog>
-        <div className='items-cente flex w-[43.8rem] flex-col gap-8 p-10'>
-          <div className='flex flex-col items-center'>
-            <h1 className='font-jamsil text-[4.6rem]'>회원가입</h1>
-            <h2 className='font-notosans text-[1.6rem] text-gray-9'>회원가입에 필요한 정보를 입력해주세요.</h2>
+        <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
+          <div className=' mb-[2.6rem] flex flex-col items-center'>
+            <h1 className='font-[TheJamsil]-400 text-[4.6rem] text-[#222]'>회원가입</h1>
+            <h2 className='font-notoKR text-[1.6rem] text-gray-9'>회원가입에 필요한 정보를 입력해주세요.</h2>
           </div>
+
           <form
             noValidate
             className='flex w-full flex-col items-center justify-center gap-5'
@@ -96,13 +97,7 @@ export default function SignUpPage() {
               className=' h-[6.4rem] w-[43.8rem]'
             />
             <AlertDialogTrigger asChild>
-              <Button
-                onClick={() => router.push('/signin')}
-                variant='default'
-                className=' mt-7 bg-red-F text-[2rem]'
-                type='submit'
-                size='auth'
-              >
+              <Button variant='default' className=' mt-7 bg-red-F text-[2rem]' type='submit' size='auth'>
                 회원가입
               </Button>
             </AlertDialogTrigger>
@@ -115,7 +110,12 @@ export default function SignUpPage() {
                   <AlertDialogHeader>
                     <AlertDialogTitle className='text-[1.6rem]'>회원가입이 완료되었습니다</AlertDialogTitle>
                   </AlertDialogHeader>
-                  <AlertDialogAction className='rounded-[0.8rem mt-[4.1rem] h-[5rem] w-[32rem] border-t-2 bg-white text-[2rem] text-red-F hover:bg-white'>
+                  <AlertDialogAction
+                    onClick={() => {
+                      router.push('/signin');
+                    }}
+                    className='rounded-[0.8rem mt-[4.1rem] h-[5rem] w-[32rem] border-t-2 bg-white text-[2rem] text-red-F hover:bg-white'
+                  >
                     닫기
                   </AlertDialogAction>
                 </div>

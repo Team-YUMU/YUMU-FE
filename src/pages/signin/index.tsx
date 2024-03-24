@@ -1,15 +1,13 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { schema } from '@/types/validator/signForm';
 import AuthInput from '@/components/ui/AuthInput';
 import { postAuthLogin } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import axios from 'axios';
-import { KakaoUsers } from '@/services/api';
-
 import { Checkbox } from '@/components/ui/checkbox';
 
 export default function SignInPage() {
@@ -44,29 +42,22 @@ export default function SignInPage() {
   const redirect_uri = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
   const client_id = '13bdd01071b6ae98539fc226a0d9db08';
   const response_type = 'code';
-  //const client_secret = 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL';
 
   const handleKakaoLogin = async () => {
-    const Code = router.push(
-      `https://kauth.kakao.com/oauth/authorize?response_type=${response_type}&client_id=${client_id}&redirect_uri=${redirect_uri}`,
-    );
-    if (await Code) {
-      router.push('https//localhost:3000/');
-    }
-  };
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const handleCredentialEmail = (event: any) => {
-    setEmail(event.target.value);
-  };
-  const handleCredentialPassword = (event: any) => {
-    setPassword(event.target.value);
-  };
+    const CodeRequest = `https://kauth.kakao.com/oauth/authorize?response_type=${response_type}&client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}`;
 
-  const handleRemember = () => {
-    console.log('Email', email);
-    console.log('Password', password);
+    router.push(CodeRequest);
   };
+  const { code } = router.query;
+
+  useEffect(() => {
+    if (code) {
+      const redirectUrl = `${redirect_uri}?code=${code.toString()}`;
+      router.push(redirectUrl);
+    }
+  }, [code]);
+
+  const handleRemember = () => {};
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
@@ -87,7 +78,6 @@ export default function SignInPage() {
             errorMessage={errors?.email?.message}
             className=' h-[6.4rem] w-[43.8rem]'
             {...register('email')}
-            onChange={handleCredentialEmail}
           />
 
           <AuthInput
@@ -97,8 +87,8 @@ export default function SignInPage() {
             className='h-[6.4rem] w-[43.8rem]'
             {...register('password')}
             placeholder='비밀번호를 입력해주세요'
-            onChange={handleCredentialPassword}
           />
+
           <div className='flex-start mb-[4rem] mt-3 flex items-center gap-2'>
             <Checkbox onClick={handleRemember} className='size-[2rem]' />
             <label className='text-[1.6rem] text-[notoKR] text-gray-9'>이메일, 비밀번호 저장 </label>
