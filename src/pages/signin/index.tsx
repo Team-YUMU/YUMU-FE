@@ -8,6 +8,7 @@ import { postAuthLogin } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import axios from 'axios';
+import { KakaoUsers } from '@/services/api';
 
 import { Checkbox } from '@/components/ui/checkbox';
 
