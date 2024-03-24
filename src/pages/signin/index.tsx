@@ -90,7 +90,7 @@ export default function SignInPage() {
             placeholder='비밀번호를 입력해주세요'
           />
 
-          <Button variant='default' className=' bg-red-F text-[2rem]' type='submit' size='auth'>
+          <Button variant='default' className='mt-[2rem] bg-red-F text-[2rem]' type='submit' size='auth'>
             로그인
           </Button>
         </form>
