@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import { schema } from '@/types/validator/signForm';
 import AuthInput from '@/components/ui/AuthInput';
 import { postAuthLogin } from '@/services/api';
@@ -10,7 +11,6 @@ import Image from 'next/image';
 import axios from 'axios';
 
 export default function SignInPage() {
-  const [token, setToken] = useState(null);
   const router = useRouter();
 
   type FormData = {
@@ -22,7 +22,7 @@ export default function SignInPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (loginData: FormData) => {
     try {
@@ -39,30 +39,37 @@ export default function SignInPage() {
     console.log('button clicked');
   };
 
-  const client_id = '2ddd4adce2c2202ed86dcf98ce65602a';
-  const redirect_uri = 'http://localhost:3000/';
+  const redirect_uri = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
+  const client_id = '13bdd01071b6ae98539fc226a0d9db08';
   const response_type = 'code';
+  //const client_secret = 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL';
 
   const handleKakaoLogin = async () => {
-    const authParam = new URLSearchParams({
-      client_id,
-      redirect_uri,
-      response_type,
-    });
-    const KAKAO_BASE_URL = `https://kauth.kakao.com/oauth/authorize?${authParam.toString()}`;
-    router.push(KAKAO_BASE_URL);
-  };
+    const CodeRequest = `https://kauth.kakao.com/oauth/authorize?response_type=${response_type}&client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}`;
 
+    router.push(CodeRequest);
+  };
+  const { code } = router.query;
+
+  useEffect(() => {
+    if (code) {
+      const redirectUrl = `${redirect_uri}?code=${code.toString()}`;
+      router.push(redirectUrl);
+    }
+  }, [code]);
+
+  const handleRemember = () => {};
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
-      <div className='0 flex w-[43.8rem] flex-col items-center gap-[4.8rem] p-10'>
-        <div className='flex flex-col items-center'>
-          <h1 className='font-jamsil text-[4.6rem]'>로그인</h1>
-          <h2 className='font-notosans text-[1.6rem] text-gray-9'>YUMU에 방문해주셔서 감사합니다.</h2>
+      <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
+        <div className=' mb-[2.6rem] flex flex-col items-center'>
+          <h1 className='font-[TheJamsil]-400 text-[4.6rem] text-[#222] '>로그인</h1>
+          <h2 className='font-notoKR  text-[1.6rem] text-gray-9'>YUMU에 방문해주셔서 감사합니다.</h2>
         </div>
 
         <form
-          className={`flex w-full flex-col items-center justify-center ${errors.email ? 'gap-[4.5rem]' : 'gap-[1.5rem]'}`}
+          noValidate
+          className={`flex w-full flex-col items-center justify-center ${errors.email ? 'gap-[4.5rem]' : 'gap-[0.6rem]'}`}
           onSubmit={handleSubmit(onSubmit)}
         >
           <AuthInput
@@ -82,12 +89,13 @@ export default function SignInPage() {
             {...register('password')}
             placeholder='비밀번호를 입력해주세요'
           />
+
           <Button variant='default' className=' bg-red-F text-[2rem]' type='submit' size='auth'>
             로그인
           </Button>
         </form>
 
-        <div className='mt-[2.8rem] flex flex-col gap-[1.2rem]'>
+        <div className=' flex flex-col gap-[1.2rem]'>
           <div className='relative'>
             <Image
               src='/svgs/kakao-icon.svg'
