@@ -2,49 +2,53 @@ type PaginationProps = {
   totalPage: number;
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  startPage: number;
+  endPage: number;
 };
 
-export default function Pagination({ totalPage, currentPage, setCurrentPage }: PaginationProps) {
+export default function Pagination({ totalPage, currentPage, setCurrentPage, startPage, endPage }: PaginationProps) {
   return (
     <div className='flex'>
-      <button
-        type='button'
-        onClick={() => {
-          setCurrentPage((prev) => prev - 1);
-        }}
-        disabled={currentPage === 1}
-        className='cursor p-4 text-14-500 disabled:text-gray-7'
-      >
-        &lt;
-      </button>
+      {currentPage !== 1 && (
+        <button
+          type='button'
+          onClick={() => {
+            setCurrentPage((prev) => prev - 1);
+          }}
+          className='cursor p-4 text-14-500'
+        >
+          &lt;
+        </button>
+      )}
 
       <ol className='flex'>
-        {Array(totalPage)
+        {Array(endPage - startPage + 1)
           .fill(0)
           .map((_, i) => (
-            <li key={i + 1}>
+            <li key={startPage + i}>
               <button
                 type='button'
-                onClick={() => setCurrentPage(i + 1)}
-                aria-current={currentPage === i + 1 ? 'page' : undefined}
+                onClick={() => setCurrentPage(startPage + i)}
+                aria-current={currentPage === startPage + i ? 'page' : undefined}
                 className='p-4 text-14-500 text-gray-7 aria-[current]:text-[#000]'
               >
-                {i + 1}
+                {startPage + i}
               </button>
             </li>
           ))}
       </ol>
 
-      <button
-        type='button'
-        onClick={() => {
-          setCurrentPage((prev) => prev + 1);
-        }}
-        disabled={currentPage === totalPage}
-        className='cursor p-4 text-14-500 disabled:text-gray-7'
-      >
-        &gt;
-      </button>
+      {currentPage !== totalPage && (
+        <button
+          type='button'
+          onClick={() => {
+            setCurrentPage((prev) => prev + 1);
+          }}
+          className='cursor p-4 text-14-500'
+        >
+          &gt;
+        </button>
+      )}
     </div>
   );
 }

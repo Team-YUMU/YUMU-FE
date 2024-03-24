@@ -1,22 +1,20 @@
 import axios from 'axios';
-import { Cookies } from 'react-cookie';
-
-const cookies = new Cookies();
-
-const showCookies = (name: string) => {
-  return cookies.get(name);
-};
-
-const refreshToken = showCookies('refreshToken');
 
 export const instance = axios.create({
   baseURL: 'http://43.200.219.117:8080/',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8',
+  },
 });
 
 export const authInstance = axios.create({
   baseURL: 'http://43.200.219.117:8080/',
   headers: {
-    Authorization: refreshToken ? `${refreshToken}` : '',
+    Accept: 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8',
+    Authorization: typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : '',
+    Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
   },
 });
 
@@ -24,7 +22,8 @@ export const authInstance = axios.create({
 export const authInstanceWithMedia = axios.create({
   baseURL: 'http://43.200.219.117:8080/',
   headers: {
-    'Content-Type': 'multipart/form-data',
-    Authorization: refreshToken ? `${refreshToken}` : '',
+    'Content-Type': 'application/json; charset=UTF-8',
+    Authorization: typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : '',
+    Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
   },
 });

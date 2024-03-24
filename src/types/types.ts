@@ -102,10 +102,12 @@ export interface UserInfoProps {
   profileImage: null | string;
 }
 
+
 export interface UserInfoWithTokenProps {
   refreshToken: string;
   user: UserInfoProps;
 }
+
 
 export interface PutUserProps {
   nickname: string;
