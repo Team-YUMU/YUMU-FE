@@ -80,17 +80,26 @@
     /* thejamsil */
     font-family: 'TheJamsil';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
-}
+  }
 
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-.notosanskr * { 
- font-family: 'Noto Sans KR', sans-serif;
-}
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400; /* Regular 두께 */
+    src: url('https://fonts.gstatic.com/s/inter/v4/UcC71Cn0VJ8wAjbYGo7TtA.woff2') format('woff2'); /* "Inter" Regular 파일의 URL */
+  }
+
+
+  @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    .notosanskr * { 
+    font-family: 'Noto Sans KR', sans-serif;
+  }
 
   :root {
     font-size: 62.5%;
     font-family: "Noto Sans KR", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   }
+  
 }
 
 @layer components {
