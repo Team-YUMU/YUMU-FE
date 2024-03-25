@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
-
-import { schema } from '@/types/validator/signForm';
+import { schemaSignin } from '@/types/validator/signForm';
 import AuthInput from '@/components/ui/AuthInput';
 import { postAuthLogin } from '@/services/api';
 import { Button } from '@/components/ui/button';
@@ -22,12 +20,13 @@ export default function SignInPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({ resolver: zodResolver(schemaSignin) });
 
   const onSubmit = async (loginData: FormData) => {
     try {
       const response = await postAuthLogin(loginData);
       console.log(response);
+      router.push('/');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
         console.log('가입되지 않은 사용자 입니다.');
@@ -39,21 +38,25 @@ export default function SignInPage() {
     console.log('button clicked');
   };
 
-  const redirect_url = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
-
+  const redirect_uri = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
+  const client_secret = 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL';
   const client_id = '35db98ff4af114997aed8f7d44938cfd';
   const response_type = 'code';
   const KakaoLoginBaseURL = 'https://kauth.kakao.com/oauth/authorize';
 
   const authParam = new URLSearchParams({
     client_id,
-    redirect_url,
+    redirect_uri,
     response_type,
+    client_secret,
   });
 
   const handleKakaoLogin = async () => {
-    const CodeRequest = `${KakaoLoginBaseURL}?${authParam.toString()}`;
-    router.push(CodeRequest);
+    try {
+      router.push(`${KakaoLoginBaseURL}?${authParam.toString()}`);
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   // const { code } = router.query;
 

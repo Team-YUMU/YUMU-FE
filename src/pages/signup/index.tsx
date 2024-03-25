@@ -4,7 +4,7 @@ import { postUsers } from '@/services/api';
 import { useState } from 'react';
 // import axios from 'axios';
 import Link from 'next/link';
-import { schema } from '@/types/validator/signForm';
+import { schemaSignup } from '@/types/validator/signForm';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -33,7 +33,7 @@ export default function SignUpPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({ resolver: zodResolver(schemaSignup) });
 
   const onSubmit = async (data: FormData) => {
     try {
