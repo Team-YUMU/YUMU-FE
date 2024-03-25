@@ -1,5 +1,5 @@
 import { AuctionDetail } from '@/components/common/AuctionDetail';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
@@ -10,16 +10,23 @@ import testArts from '@/mocks/testArts.json';
 import InfoBox from '@/components/common/InfoBox';
 import LikeButton from '@/components/common/LikeButton';
 
-const today = new Date().toLocaleString();
-
 export default function AuctionDetailPage() {
   const artData = testArts.results;
   const [arts, setArts] = useState(artData);
+  const [today, setToday] = useState('');
+
+  useEffect(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    setToday(year + '.' + month + '.' + day);
+  }, []);
 
   return (
     <div className='mx-auto my-0 flex w-[136.8rem] flex-col gap-20'>
       <h2 className='font-[TheJamsil] text-36-400 text-black-2'>문은주 Moon Eunjoo 이불 밖은 위험해 2, 2023</h2>
-
       <div className='flex gap-5'>
         <section>
           <div className='relative mb-[1.8rem] h-[54rem] w-[91rem] overflow-hidden rounded-[1rem] bg-gray-100'>
@@ -87,15 +94,11 @@ export default function AuctionDetailPage() {
           </div>
         </section>
       </div>
-
+      s
       <section className='flex flex-col gap-10'>
         <div>
           <h2 className='mb-[1rem] font-[TheJamsil] text-36-400 text-black-2'>인기 경매</h2>
-          {/* <p className='text-18-500 text-gray-9'>{today} 기준</p> */}
-          {/* NOTE:
-           * LikeButton 누르고 새로고침 하면, Text content does not match server-rendered HTML. 에러가 남.
-           * 리액트 쿼리 타이머로 자동으로 리패칭 되도록 구현해야할 것 같음.
-           * */}
+          <p className='text-18-500 text-gray-9'>{today} 기준</p>
         </div>
 
         <Carousel className='w-full'>
@@ -110,7 +113,6 @@ export default function AuctionDetailPage() {
           </CarouselContent>
         </Carousel>
       </section>
-
       <section>
         <h2 className='sr-only'>기획전</h2>
         <ExhibitionCarousel />
