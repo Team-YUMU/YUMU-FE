@@ -51,8 +51,6 @@ export default function SignInPage() {
     response_type,
   });
 
-  //`${KakaoLoginBaseURL}?${authParam.toString()}`;
-
   const handleKakaoLogin = async () => {
     const CodeRequest = `${KakaoLoginBaseURL}?${authParam.toString()}`;
     router.push(CodeRequest);
