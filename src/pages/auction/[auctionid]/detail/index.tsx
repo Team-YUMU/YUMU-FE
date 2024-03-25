@@ -1,28 +1,17 @@
-import { AuctionDetail } from '@/components/common/AuctionDetail';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Separator } from '@/components/ui/separator';
+import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import AuctionCard from '@/components/common/AuctionCard';
-import testArts from '@/mocks/testArts.json';
+import { Separator } from '@/components/ui/separator';
 import InfoBox from '@/components/common/InfoBox';
 import LikeButton from '@/components/common/LikeButton';
+import { BestAuction } from '@/components/common/BestAuction';
+import testArts from '@/mocks/testArts.json';
 
 export default function AuctionDetailPage() {
   const artData = testArts.results;
   const [arts, setArts] = useState(artData);
-  const [today, setToday] = useState('');
-
-  useEffect(() => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-
-    setToday(year + '.' + month + '.' + day);
-  }, []);
 
   return (
     <div className='mx-auto my-0 flex w-[136.8rem] flex-col gap-20'>
@@ -94,27 +83,12 @@ export default function AuctionDetailPage() {
           </div>
         </section>
       </div>
-      s
-      <section className='flex flex-col gap-10'>
-        <div>
-          <h2 className='mb-[1rem] font-[TheJamsil] text-36-400 text-black-2'>인기 경매</h2>
-          <p className='text-18-500 text-gray-9'>{today} 기준</p>
-        </div>
 
-        <Carousel className='w-full'>
-          <CarouselContent className='-ml-4'>
-            {arts.map((item) => (
-              <CarouselItem key={item.id} className='basis-1/4 pl-[1.6rem]'>
-                <Link href={`/auction/${item.id}/detail`}>
-                  <AuctionCard {...item} />
-                </Link>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </section>
+      <BestAuction />
+
       <section>
         <h2 className='sr-only'>기획전</h2>
+
         <ExhibitionCarousel />
       </section>
     </div>
