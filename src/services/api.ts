@@ -6,7 +6,7 @@ import {
   PostAuthSignUpProps,
   PutUserProps,
 } from '@/types/types';
-import { authInstance as authAxios, instance as axios } from './axios';
+import { authInstance as authAxios, instance as axios, authInstanceForRegist as authRegist } from './axios';
 const BASE_URL = `/api/v1`;
 const MY_PAGE_BASE_URL = `${BASE_URL}/mypage`;
 const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
@@ -75,7 +75,7 @@ export async function getWishHistory() {
 
 // auction post API (경매글 등록)
 export async function postAuction(auctionRegister: RegistrationProps) {
-  const res = await authAxios.post(`${AUCTION_BASE_URL}`, auctionRegister);
+  const res = await authRegist.post(`${AUCTION_BASE_URL}`, auctionRegister);
   return res.data;
 }
 
