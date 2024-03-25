@@ -39,26 +39,33 @@ export default function SignInPage() {
     console.log('button clicked');
   };
 
-  const redirect_uri = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
-  const client_id = '13bdd01071b6ae98539fc226a0d9db08';
+  const redirect_url = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
+
+  const client_id = '35db98ff4af114997aed8f7d44938cfd';
   const response_type = 'code';
-  //const client_secret = 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL';
+  const KakaoLoginBaseURL = 'https://kauth.kakao.com/oauth/authorize';
+
+  const authParam = new URLSearchParams({
+    client_id,
+    redirect_url,
+    response_type,
+  });
+
+  //`${KakaoLoginBaseURL}?${authParam.toString()}`;
 
   const handleKakaoLogin = async () => {
-    const CodeRequest = `https://kauth.kakao.com/oauth/authorize?response_type=${response_type}&client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}`;
-
+    const CodeRequest = `${KakaoLoginBaseURL}?${authParam.toString()}`;
     router.push(CodeRequest);
   };
-  const { code } = router.query;
+  // const { code } = router.query;
 
-  useEffect(() => {
-    if (code) {
-      const redirectUrl = `${redirect_uri}?code=${code.toString()}`;
-      router.push(redirectUrl);
-    }
-  }, [code]);
+  // useEffect(() => {
+  //   if (code) {
+  //     const redirectUrl = `${redirect_uri}?code=${code.toString()}`;
+  //     router.push(redirectUrl);
+  //   }
+  // }, [code]);
 
-  const handleRemember = () => {};
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
