@@ -148,13 +148,24 @@ const config = {
           fontWeight: '500',
         },
       ],
+      '18-600': [
+        '1.8rem',
+        {
+          fontWeight: '600',
+        },
+      ],
       '18-700': [
         '1.8rem',
         {
           fontWeight: '700',
         },
       ],
-
+      '20-400': [
+        '2rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       //fontsize: 20px
       '20-500': [
         '2rem',
@@ -215,7 +226,12 @@ const config = {
           fontWeight: '700',
         },
       ],
-
+      '32-700': [
+        '3.2rem',
+        {
+          fontWeight: '700',
+        },
+      ],
       //fontsize: 36px
       '36-400': [
         '3.6rem',
@@ -297,6 +313,7 @@ const config = {
         // 예시) <p className="font-TheJamsil">
         TheJamsil: ['TheJamsil5Bold'],
         notoKR: ['Noto Sans KR'],
+        Inter: ['Inter'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -342,6 +359,7 @@ const config = {
         gray: {
           7: '#787486',
           9: '#9E9E9E',
+          C: '#CCC',
           D: '#D9D9D9',
           DF: '#DFDFDF',
           E: '#E0E0E0',

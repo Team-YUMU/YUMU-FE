@@ -77,7 +77,13 @@
   }
 
   
- 
+   @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400; /* Regular 두께 */
+    src: url('https://fonts.gstatic.com/s/inter/v4/UcC71Cn0VJ8wAjbYGo7TtA.woff2') format('woff2'); /* "Inter" Regular 파일의 URL */
+  }
+
 @font-face {
     font-family: 'TheJamsil5Bold';
     font-weight: 100;
