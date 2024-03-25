@@ -94,10 +94,10 @@ export default function Header() {
             </div>
           ) : (
             <>
-              <Link href='/signin' className='mr-[2.5rem] text-[2rem] text-[#9E9E9E]'>
+              <Link href='/signin' className='mr-[2.5rem] text-[1.6rem] text-[#9E9E9E]'>
                 로그인
               </Link>
-              <Link href='/signup' className='mr-[2.5rem] text-[2rem]  text-[#9E9E9E]'>
+              <Link href='/signup' className='mr-[2.5rem] text-[1.6rem]  text-[#9E9E9E]'>
                 회원가입
               </Link>
               {/* <HoverCard> 알림기능
@@ -126,8 +126,10 @@ export default function Header() {
               </HoverCard> */}
             </>
           )}
-          <Button size='header' className='mb-[1.1rem] mt-[1.3rem] text-[2rem] font-bold leading-5 text-white'>
-            <Link href='/registration'>경매등록하기</Link>
+          <Button size='header' className='mb-[1.1rem] mt-[1.3rem] font-bold leading-5 text-white'>
+            <Link href='/registration' className='text-[1.6rem]'>
+              경매등록하기
+            </Link>
           </Button>
         </div>
       </div>

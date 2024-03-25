@@ -27,7 +27,7 @@ function SearchForm() {
         value={keyword}
         onChange={handleKeywordChange}
         placeholder='작품명 또는 작가 이름을 검색해보세요'
-        className='header'
+        variant='header'
       />
       <Button type='submit' variant={null} size={null} className='absolute right-[1.6rem] top-[1.4rem]'>
         <Image src='/svgs/search-icon.svg' alt='돋보기 이미지' width={19} height={18} />

@@ -45,8 +45,13 @@ function SearchPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 12;
   const totalCount = 200;
+  const indexSize = 10;
 
   const totalPage = Math.ceil(totalCount / pageSize);
+  const currentPageGroup = Math.ceil(currentPage / indexSize);
+
+  const startPage = (currentPageGroup - 1) * indexSize + 1;
+  const endPage = Math.min(startPage + indexSize - 1, totalPage);
 
   const {
     data: todos,
@@ -80,7 +85,7 @@ function SearchPage() {
   if (isError) return '에러가 발생했습니다.';
 
   return (
-    <div className='mx-auto my-0 w-[108rem]'>
+    <div className='mx-auto my-0 w-[136.8rem]'>
       <Head>
         <title>{keyword} 검색 결과 - YUMU</title>
       </Head>
@@ -119,7 +124,13 @@ function SearchPage() {
           <EmptyView text={'검색어를 찾을 수 없습니다.'} />
         )}
 
-        <Pagination totalPage={totalPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <Pagination
+          totalPage={totalPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          startPage={startPage}
+          endPage={endPage}
+        />
       </div>
     </div>
   );

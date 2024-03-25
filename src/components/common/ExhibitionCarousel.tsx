@@ -1,22 +1,34 @@
-import { Card, CardContent } from '../ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import Image from 'next/image';
+
+const ExhibitionInformation = [
+  {
+    src: '/svgs/exhibitions.svg',
+  },
+  {
+    src: '/svgs/exhibitions.svg',
+  },
+  {
+    src: '/svgs/exhibitions.svg',
+  },
+];
 
 export function ExhibitionCarousel() {
   return (
-    <div className='col-span-3 flex justify-center'>
-      <Carousel className='w-2/3' plugins={[Autoplay({ delay: 4000 })]}>
+    <div className='col-span-3 mx-auto flex h-[20rem] w-[117.3rem]'>
+      <Carousel plugins={[Autoplay({ delay: 4000 })]}>
         <CarouselPrevious />
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {ExhibitionInformation.map((item, index) => (
             <CarouselItem key={index}>
-              <div className='p-1'>
-                <Card className='rounded-full border-none bg-slate-50'>
-                  <CardContent className='flex items-center justify-center p-6'>
-                    <span className='text-4xl font-semibold'>기획전 {index + 1}</span>
-                  </CardContent>
-                </Card>
-              </div>
+              <Image
+                src={item.src}
+                alt={`기획전 이미지 ${index}`}
+                width={1173}
+                height={200}
+                className='h-full w-full'
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
