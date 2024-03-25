@@ -33,6 +33,12 @@ const config = {
           fontWeight: '400',
         },
       ],
+      '10-500': [
+        '1rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '10-700': [
         '1rem',
         {
@@ -217,6 +223,12 @@ const config = {
           fontWeight: '400',
         },
       ],
+      '36-500': [
+        '3.6rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '36-700': [
         '3.6rem',
         {
@@ -282,8 +294,8 @@ const config = {
     },
     extend: {
       fontFamily: {
-        // 예시) <p className="font-['TheJamsil']">
-        TheJamsil: ['TheJamsil'],
+        // 예시) <p className="font-TheJamsil">
+        TheJamsil: ['TheJamsil5Bold'],
         notoKR: ['Noto Sans KR'],
       },
       colors: {
@@ -331,6 +343,7 @@ const config = {
           7: '#787486',
           9: '#9E9E9E',
           D: '#D9D9D9',
+          DF: '#DFDFDF',
           E: '#E0E0E0',
           F: '#FAFAFA',
           B: '#BDBDBD',
