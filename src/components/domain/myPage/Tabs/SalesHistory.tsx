@@ -8,7 +8,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import React from 'react';
-import Members from '@/mocks/Member';
 import Image from 'next/image';
 
 export default function SalesHistory() {
