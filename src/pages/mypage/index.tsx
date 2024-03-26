@@ -37,7 +37,9 @@ export default function MyPage() {
 
   return (
     <main className='flex h-full min-h-[60vh] w-full flex-col justify-center gap-[8.2rem]'>
-      <p className='ml-[28rem] mt-[8rem] font-TheJamsil text-36-500 text-black-2'>마이페이지</p>
+      <p className='ml-[28rem] mt-[8rem] font-TheJamsil text-36-500 text-black-2 md:ml-[14rem] sm:ml-[16rem]'>
+        마이페이지
+      </p>
       <div className='flex items-center justify-center'>
         <div className='flex flex-row gap-[10.5rem]'>
           {changeUi === true ? (
