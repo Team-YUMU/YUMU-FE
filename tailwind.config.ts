@@ -324,8 +324,7 @@ const config = {
       fontFamily: {
         // 예시) <p className="font-TheJamsil">
         TheJamsil: ['TheJamsil5Bold'],
-        notoKR: ['Noto Sans KR'],
-        Inter: ['Inter'],
+        NotoSansKR: ['NotoSansKR'],
       },
       colors: {
         border: 'hsl(var(--border))',
