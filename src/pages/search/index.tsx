@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import AuctionCard from '@/components/common/AuctionCard';
 import testArts from '@/mocks/testArts.json';
 import { QueryClient, useQuery, keepPreviousData } from '@tanstack/react-query';
 import Pagination from '@/components/common/Pagination';
 import AuctionList from '@/components/domain/search/AuctionList';
 import EmptyView from '@/components/common/EmptyView';
+import SelectBox from '@/components/common/SortSelect';
 
 type Todo = {
   id: number;
@@ -40,10 +40,11 @@ function SearchPage() {
   const [arts, setArts] = useState(artData);
 
   const [order, setOrder] = useState('createdAt');
+
   const sortedItems = arts.sort((a, b) => Number(b[order as keyof Art]) - Number(a[order as keyof Art]));
 
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 12;
+  const pageSize = 16;
   const totalCount = 200;
   const indexSize = 10;
 
@@ -76,10 +77,6 @@ function SearchPage() {
     }
   }, [currentPage, queryClient]);
 
-  const handleNewestClick = () => setOrder('createdAt');
-
-  const handleBestClick = () => setOrder('wishCount');
-
   if (isPending) return '로딩 중입니다...';
 
   if (isError) return '에러가 발생했습니다.';
@@ -90,24 +87,17 @@ function SearchPage() {
         <title>{keyword} 검색 결과 - YUMU</title>
       </Head>
 
-      <div className='flex items-center'>
-        <h2 className='flex-1 text-14-400'>
-          <strong>{keyword}</strong>에 대한 검색 결과
+      <div className='mb-[6rem] flex items-center'>
+        <h2 className='flex-1 text-18-500 text-gray-9'>
+          &apos;<strong>{keyword}</strong>&apos;에 대한 검색 결과
         </h2>
 
-        <div className='flex'>
-          <Button type='button' variant={'default'} className='rounded-none' onClick={handleNewestClick}>
-            최신순
-          </Button>
-          <Button type='button' variant={'default'} className='rounded-none' onClick={handleBestClick}>
-            인기순
-          </Button>
-        </div>
+        <SelectBox setOrder={setOrder} />
       </div>
 
       {/* UI 테스트용 */}
-      <div>
-        <ul className='grid w-full grid-cols-4 gap-x-6 gap-y-8'>
+      <div className='flex flex-col items-center'>
+        <ul className='grid w-full grid-cols-4 gap-x-[3rem] gap-y-[6rem]'>
           {sortedItems?.map((item) => (
             <li key={item.id}>
               <Link href={`/auction/${item.id}/detail`}>
@@ -117,13 +107,6 @@ function SearchPage() {
           ))}
         </ul>
 
-        {/* API 테스트용 */}
-        {todos && todos.length !== 0 ? (
-          <AuctionList todos={todos} />
-        ) : (
-          <EmptyView text={'검색어를 찾을 수 없습니다.'} />
-        )}
-
         <Pagination
           totalPage={totalPage}
           currentPage={currentPage}
@@ -131,6 +114,13 @@ function SearchPage() {
           startPage={startPage}
           endPage={endPage}
         />
+
+        {/* API 테스트용 */}
+        {todos && todos.length !== 0 ? (
+          <AuctionList todos={todos} />
+        ) : (
+          <EmptyView text={'검색어를 찾을 수 없습니다.'} />
+        )}
       </div>
     </div>
   );
