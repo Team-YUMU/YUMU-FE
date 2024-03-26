@@ -20,7 +20,7 @@ const buttonVariants = cva(
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 wp-10',
         auth: 'w-[43.8rem] h-[6.4rem]',
-        header: 'w-[16rem] h-[4.8rem] bg-red-F rounded-[0.6rem]',
+        header: 'w-[16rem] h-[4.8rem] rounded-[0.6rem]',
       },
     },
     defaultVariants: {
