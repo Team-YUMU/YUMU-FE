@@ -37,7 +37,8 @@ export default function SignInPage() {
     }
     console.log('button clicked');
   };
-
+  //http://43.200.219.117:8080/api/v1/auth/kakao/callback
+  //http://localhost:8080/api/v1/auth/kakao/callback
   const redirect_uri = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
   const client_secret = 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL';
   const client_id = '35db98ff4af114997aed8f7d44938cfd';
@@ -53,19 +54,17 @@ export default function SignInPage() {
 
   const handleKakaoLogin = async () => {
     try {
-      router.push(`${KakaoLoginBaseURL}?${authParam.toString()}`);
+      const res = await axios.get(`${KakaoLoginBaseURL}?${authParam.toString()}`);
+      const accessToken = res.headers['authorization'];
+      const refreshToken = res.headers['refresh'];
+      sessionStorage.setItem('accessToken', accessToken);
+      sessionStorage.setItem('refreshToken', refreshToken);
+      return res.data;
     } catch (error) {
       console.log('error', error);
     }
+    console.log('카카오버튼 클릭');
   };
-  // const { code } = router.query;
-
-  // useEffect(() => {
-  //   if (code) {
-  //     const redirectUrl = `${redirect_uri}?code=${code.toString()}`;
-  //     router.push(redirectUrl);
-  //   }
-  // }, [code]);
 
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
