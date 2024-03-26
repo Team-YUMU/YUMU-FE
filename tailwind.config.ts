@@ -33,6 +33,12 @@ const config = {
           fontWeight: '400',
         },
       ],
+      '10-500': [
+        '1rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '10-700': [
         '1rem',
         {
@@ -142,13 +148,24 @@ const config = {
           fontWeight: '500',
         },
       ],
+      '18-600': [
+        '1.8rem',
+        {
+          fontWeight: '600',
+        },
+      ],
       '18-700': [
         '1.8rem',
         {
           fontWeight: '700',
         },
       ],
-
+      '20-400': [
+        '2rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       //fontsize: 20px
       '20-500': [
         '2rem',
@@ -201,6 +218,12 @@ const config = {
           fontWeight: '700',
         },
       ],
+      '28-500': [
+        '2.8rem',
+        {
+          fontWeight: '500',
+        },
+      ],
 
       //fontsize: 28px
       '28-700': [
@@ -209,7 +232,12 @@ const config = {
           fontWeight: '700',
         },
       ],
-
+      '32-700': [
+        '3.2rem',
+        {
+          fontWeight: '700',
+        },
+      ],
       //fontsize: 36px
       '36-400': [
         '3.6rem',
@@ -217,10 +245,22 @@ const config = {
           fontWeight: '400',
         },
       ],
+      '36-500': [
+        '3.6rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '36-700': [
         '3.6rem',
         {
           fontWeight: '700',
+        },
+      ],
+      '36-900': [
+        '3.6rem',
+        {
+          fontWeight: '900',
         },
       ],
 
@@ -282,9 +322,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        // 예시) <p className="font-['TheJamsil']">
-        TheJamsil: ['TheJamsil'],
-        notoKR: ['Noto Sans KR'],
+        // 예시) <p className="font-TheJamsil">
+        TheJamsil: ['TheJamsil5Bold'],
+        NotoSansKR: ['NotoSansKR'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -330,7 +370,10 @@ const config = {
         gray: {
           7: '#787486',
           9: '#9E9E9E',
+          C: '#CCC',
+          C5: '#C5C5C5',
           D: '#D9D9D9',
+          DF: '#DFDFDF',
           E: '#E0E0E0',
           F: '#FAFAFA',
           B: '#BDBDBD',

@@ -11,5 +11,5 @@ export const getTodayTime = () => {
   const hours = now.get('h') < 12 ? '오전' : '오후';
   const hoursAmPm = hours + (now.get('h') % 12);
 
-  return dayjs().format(`YYYY-MM-DD dddd ${hoursAmPm}:mm:ss`);
+  return dayjs().format(`YYYY.MM.DD dddd ${hoursAmPm}:mm:ss`);
 };

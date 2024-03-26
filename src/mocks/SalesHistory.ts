@@ -8,7 +8,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 1,
     artName: '모나리자',
     artist: 'user3',
-    price: 1000000000,
+    price: '1,000,000',
     artImage:
       'https://images.unsplash.com/photo-1423742774270-6884aac775fa?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Done',
@@ -20,7 +20,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 3,
     artName: '색색의 벽돌 패턴',
     artist: 'user3',
-    price: 2000000000,
+    price: '2,000,000',
     artImage:
       'https://images.unsplash.com/photo-1558244661-d248897f7bc4?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Before Pay',
@@ -32,7 +32,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 1,
     artName: '모나리자',
     artist: 'user3',
-    price: 1000000000,
+    price: '1,000,000',
     artImage:
       'https://images.unsplash.com/photo-1423742774270-6884aac775fa?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Done',
@@ -44,7 +44,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 3,
     artName: '색색의 벽돌 패턴',
     artist: 'user3',
-    price: 2000000000,
+    price: '1,000,000',
     artImage:
       'https://images.unsplash.com/photo-1558244661-d248897f7bc4?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Before Pay',
@@ -56,7 +56,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 1,
     artName: '모나리자',
     artist: 'user3',
-    price: 1000000000,
+    price: '1,000,000',
     artImage:
       'https://images.unsplash.com/photo-1423742774270-6884aac775fa?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Done',
@@ -68,7 +68,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 3,
     artName: '색색의 벽돌 패턴',
     artist: 'user3',
-    price: 2000000000,
+    price: '2,000,000',
     artImage:
       'https://images.unsplash.com/photo-1558244661-d248897f7bc4?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Before Pay',
@@ -80,7 +80,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 1,
     artName: '모나리자',
     artist: 'user3',
-    price: 1000000000,
+    price: '1,000,000',
     artImage:
       'https://images.unsplash.com/photo-1423742774270-6884aac775fa?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Done',
@@ -92,7 +92,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 3,
     artName: '색색의 벽돌 패턴',
     artist: 'user3',
-    price: 2000000000,
+    price: '2,000,000',
     artImage:
       'https://images.unsplash.com/photo-1558244661-d248897f7bc4?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Before Pay',
@@ -104,7 +104,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 1,
     artName: '모나리자',
     artist: 'user3',
-    price: 1000000000,
+    price: '1,000,000',
     artImage:
       'https://images.unsplash.com/photo-1423742774270-6884aac775fa?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Done',
@@ -116,7 +116,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 3,
     artName: '색색의 벽돌 패턴',
     artist: 'user3',
-    price: 2000000000,
+    price: '2,000,000',
     artImage:
       'https://images.unsplash.com/photo-1558244661-d248897f7bc4?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Before Pay',
@@ -128,7 +128,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 1,
     artName: '모나리자',
     artist: 'user3',
-    price: 1000000000,
+    price: '1,000,000',
     artImage:
       'https://images.unsplash.com/photo-1423742774270-6884aac775fa?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Done',
@@ -140,7 +140,7 @@ const SalesHistories: SalesHistoryProps[] = [
     auctionId: 3,
     artName: '색색의 벽돌 패턴',
     artist: 'user3',
-    price: 2000000000,
+    price: '2,000,000',
     artImage:
       'https://images.unsplash.com/photo-1558244661-d248897f7bc4?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     status: 'Before Pay',

@@ -13,6 +13,9 @@ const buttonVariants = cva(
         outline: 'border border-red-F hover:bg-white outline-red-F text-red-F hover:bg-white/90',
         ghost: 'bg-transparent hover:bg-transparent focus:bg-transparent',
         sns: 'border border-yellow text-black-0 bg-yellow',
+        myPage: 'rounded-[3.7rem] border-[0.1rem] bg-white border-gray-DF',
+        myPageModal: 'absolute left-[35.5rem] top-[3.5rem] w-[3rem] h-[3rem]',
+        myPageWish: 'absolute left-[24.4rem]  top-[1.4rem] bottom-[15.6rem] right-[1.3rem] w-[3.5rem] h-[3rem]',
       },
       size: {
         default: 'h-10 px-4 py-2',
@@ -20,7 +23,9 @@ const buttonVariants = cva(
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 wp-10',
         auth: 'w-[43.8rem] h-[6.4rem]',
-        header: 'w-[16rem] h-[4.8rem] rounded-[0.6rem]',
+        header: 'w-[16rem] h-[4.8rem] bg-red-F rounded-[0.6rem]',
+        myPage: 'w-[28rem] h-[4.8rem] flex-shrink-0',
+        myPageWish: 'absolute left-[24.4rem]  top-[1.4rem] bottom-[15.6rem] right-[1.3rem] w-[3.5rem] h-[3rem]',
       },
     },
     defaultVariants: {
