@@ -218,6 +218,12 @@ const config = {
           fontWeight: '700',
         },
       ],
+      '28-500': [
+        '2.8rem',
+        {
+          fontWeight: '500',
+        },
+      ],
 
       //fontsize: 28px
       '28-700': [
@@ -249,6 +255,12 @@ const config = {
         '3.6rem',
         {
           fontWeight: '700',
+        },
+      ],
+      '36-900': [
+        '3.6rem',
+        {
+          fontWeight: '900',
         },
       ],
 
@@ -360,6 +372,7 @@ const config = {
           7: '#787486',
           9: '#9E9E9E',
           C: '#CCC',
+          C5: '#C5C5C5',
           D: '#D9D9D9',
           DF: '#DFDFDF',
           E: '#E0E0E0',
