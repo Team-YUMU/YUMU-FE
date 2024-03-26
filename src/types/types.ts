@@ -26,7 +26,7 @@ export interface SalesHistoryProps {
   auctionId: number;
   artName: string;
   artist: string;
-  price: number;
+  price: string;
   artImage: string;
   status: string;
   saleDate: string;
