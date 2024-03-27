@@ -218,14 +218,19 @@ const config = {
           fontWeight: '700',
         },
       ],
+      //fontsize: 28px
+      '28-400': [
+        '2.8rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       '28-500': [
         '2.8rem',
         {
           fontWeight: '500',
         },
       ],
-
-      //fontsize: 28px
       '28-700': [
         '2.8rem',
         {

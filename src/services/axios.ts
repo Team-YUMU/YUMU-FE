@@ -27,3 +27,14 @@ export const authInstanceWithMedia = axios.create({
     Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
   },
 });
+
+// 그 뭐냐 경매글 등록할 때 쓸 에이시오스 그거 이름 알아서 정해라 미래의 나
+// 폼 데이터로 수정하기!
+export const authInstanceForRegist = axios.create({
+  baseURL: 'http://43.200.219.117:8080/',
+  headers: {
+    'Content-Type': 'multipart/form-data; charset=UTF-8',
+    Authorization: typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : '',
+    Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
+  },
+});

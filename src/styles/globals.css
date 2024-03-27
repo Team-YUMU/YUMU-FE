@@ -77,6 +77,11 @@
     box-sizing: border-box;
   }
 
+  /* Hide file input button */
+  input[type='file']::-webkit-file-upload-button {
+    display: none;
+  }
+
  @font-face {
     font-family: 'NotoSansKR';
     font-weight: 100;
@@ -247,3 +252,4 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
