@@ -70,7 +70,7 @@ export default function SignInPage() {
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
         <div className=' mb-[2.6rem] flex flex-col items-center'>
-          <h1 className='font-[TheJamsil]-400 text-[4.6rem] text-[#222] '>로그인</h1>
+          <h1 className='font-TheJamsil text-[4.6rem] text-[#222] '>로그인</h1>
           <h2 className='font-notoKR  text-[1.6rem] text-gray-9'>YUMU에 방문해주셔서 감사합니다.</h2>
         </div>
 
