@@ -6,7 +6,7 @@ import testArts from '@/mocks/testArts.json';
 
 type BestAuctionProps = {
   className?: string;
-  popularRef: React.RefObject<HTMLDivElement>;
+  popularRef?: React.RefObject<HTMLDivElement>;
 };
 
 export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
