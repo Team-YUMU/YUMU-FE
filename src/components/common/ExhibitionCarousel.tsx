@@ -1,4 +1,4 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, MainCarouselNext, MainCarouselPrevious } from '../ui/mainCarousel';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 
@@ -18,7 +18,6 @@ export function ExhibitionCarousel() {
   return (
     <div className='col-span-3 mx-auto flex h-[20rem] w-[117.3rem]'>
       <Carousel plugins={[Autoplay({ delay: 4000 })]}>
-        <CarouselPrevious />
         <CarouselContent>
           {ExhibitionInformation.map((item, index) => (
             <CarouselItem key={index}>
@@ -32,7 +31,8 @@ export function ExhibitionCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselNext />
+        <MainCarouselPrevious variant='exhibitionArrow' className='-left-36 h-[7.7rem] w-[7.7rem]  ' />
+        <MainCarouselNext variant='exhibitionArrow' className='-right-36 h-[7.7rem] w-[7.7rem]  ' />
       </Carousel>
     </div>
   );

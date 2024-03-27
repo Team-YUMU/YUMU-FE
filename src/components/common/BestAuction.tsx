@@ -6,9 +6,10 @@ import testArts from '@/mocks/testArts.json';
 
 type BestAuctionProps = {
   className?: string;
+  popularRef?: React.RefObject<HTMLDivElement>;
 };
 
-export function BestAuction({ className = '' }: BestAuctionProps) {
+export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
   const artData = testArts.results;
   const [arts, setArts] = useState(artData);
   const [today, setToday] = useState('');
@@ -29,7 +30,7 @@ export function BestAuction({ className = '' }: BestAuctionProps) {
         <p className='text-18-500 text-gray-9'>{today} 기준</p>
       </div>
 
-      <Carousel className='w-full'>
+      <Carousel className='w-full' ref={popularRef}>
         <CarouselContent className='-ml-4'>
           {arts.map((item) => (
             <CarouselItem key={item.id} className='basis-1/4 pl-[1.6rem]'>

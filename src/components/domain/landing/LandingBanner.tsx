@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  MainCarouselPrevious,
+  MainCarouselNext,
+} from '@/components/ui/mainCarousel';
 import Image from 'next/image';
 // import Autoplay from 'embla-carousel-autoplay';
 
@@ -99,12 +105,12 @@ export default function LandingBanner() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious
+        <MainCarouselPrevious
           type='button'
           onClick={prevSlide}
           className='h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
         />
-        <CarouselNext
+        <MainCarouselNext
           type='button'
           onClick={nextSlide}
           className='h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
