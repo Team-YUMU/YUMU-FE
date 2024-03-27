@@ -4,7 +4,7 @@ function mypagePassWordSchema() {
   return z
     .string()
     .min(6, { message: '최소 6자 이상 입력해 주세요.' })
-    .regex(/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/, {
+    .regex(/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/, {
       message: '비밀번호는 영문 대/소 문자,숫자,특수기호를 조합해서 사용하세요.',
     });
 }
