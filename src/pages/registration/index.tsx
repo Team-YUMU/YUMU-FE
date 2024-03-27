@@ -19,10 +19,12 @@ import { TimePickerDemo } from '@/components/domain/live/time-picker-demo';
 import { postAuction } from '@/services/api';
 import { RegistrationProps } from '@/types/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Image from 'next/image';
 
 const defaultValues: Partial<RegistrationProps> = {
   request: {
     artName: '',
+    artSubTitle: '',
     artDescription: '',
     artSize: '',
     artCreatedDate: undefined,
@@ -80,11 +82,11 @@ export default function Registration() {
   };
 
   return (
-    <div className='m-auto w-[100rem] pt-2 font-[TheJamsil] text-[#222] md:w-[60rem] sm:w-[40rem]'>
+    <div className='m-auto w-[137.6rem] pt-2 font-[TheJamsil] text-[#222] md:w-[60rem] sm:w-[40rem]'>
       <h1 className='mb-[8rem] p-0 text-36-400 '>작품등록</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Tabs defaultValue='기본등록' className='w-full'>
+          <Tabs defaultValue='기본등록' className=' w-full'>
             <TabsList className='mb-[9.6rem] flex h-[3.7rem] w-full flex-row gap-[2rem] text-[#c5c5c5]'>
               {Object.keys(tabMenus).map((tab) => (
                 <TabsTrigger
@@ -106,7 +108,7 @@ export default function Registration() {
                 </Button>
               </div>
             </TabsList>
-            <TabsContent value='기본등록' className='px-[8.8rem]'>
+            <TabsContent value='기본등록' className='m-auto w-[120rem] px-[8.8rem]'>
               <FormField
                 control={form.control}
                 name='request.artName'
@@ -146,6 +148,43 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
+                name='request.artSubTitle'
+                render={({ field }) => (
+                  <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
+                    <div className='space-y-[1.2rem] pt-3'>
+                      <FormLabel className='text-28-400'>
+                        작품 요약 <span className='text-red-F'>*</span>
+                      </FormLabel>
+                      <SecondLabel>
+                        <p>
+                          작품을 빠르고 쉽게 이해할 수 있도록
+                          <br />
+                          명확하고 간략하게 소개해주세요!
+                        </p>
+                      </SecondLabel>
+                    </div>
+                    <div className='space-y-[1.2rem]'>
+                      <div>
+                        <ThirdLabel>
+                          <p>작품 요약</p>
+                        </ThirdLabel>
+                        <ForthLabel>*메인페이지에 나오는 안내글입니다.</ForthLabel>
+                      </div>
+                      <FormControl>
+                        <Input
+                          placeholder='작품 제목을 입력해주세요.'
+                          className='font-[NotoSansKR] text-16-500'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <Separator className='my-[8rem]' />
+              <FormField
+                control={form.control}
                 name='image'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
@@ -169,27 +208,27 @@ export default function Registration() {
                         <ForthLabel>*상세페이지에 나오는 이미지입니다.</ForthLabel>
                       </div>
                       <FormControl>
-                        <div
-                          style={{
-                            backgroundImage: `url(${selectedImage})`,
-                          }}
-                          className='h-[18rem] w-full bg-[#fafafa] bg-contain bg-center bg-no-repeat p-0 hover:bg-[#fafafa] focus:bg-[#fafafa] sm:h-[9rem]'
-                        >
+                        <div className='h-[18rem] w-full bg-[#fafafa] p-0 hover:bg-[#fafafa] focus:bg-[#fafafa] sm:h-[9rem]'>
                           <div className='relative m-0 h-full w-full p-0'>
                             <Input
+                              style={{
+                                backgroundImage: `url(${selectedImage})`,
+                              }}
                               type='file'
                               onInput={handleFileChange}
                               accept='image/*'
-                              className='z-20 h-full  w-full border-none p-0 font-[NotoSansKR] text-16-500 text-[#fafafa]'
+                              className='z-20 h-full w-full border-none bg-contain bg-center bg-no-repeat p-0 font-[NotoSansKR] text-16-500 text-[#fafafa]'
                               {...field}
                             />
-                            <div className='font-[NotoSansKR absolute bottom-1/2 right-1/2 z-10 flex translate-x-1/2 translate-y-1/2 flex-col items-center justify-center text-20-700 text-[#9e9e9e]'>
-                              <Upload color='#ff7752' className='mb-[0.8rem] size-[2rem]' />
-                              <p className='text-[#686868]'>이미지 업로드</p>
-                              <p className='text-16-500'>파일형식 : jpg 또는 png</p>
-                              <p className='text-16-500'>사이즈 : 910px ⨯ 540px</p>
-                              <p className='text-nowrap text-16-500'>*작품 상세에서 가장 먼저 보이는 이미지입니다.</p>
-                            </div>
+                            {!selectedImage && (
+                              <div className='absolute bottom-1/2 right-1/2 z-10 flex translate-x-1/2 translate-y-1/2 flex-col items-center justify-center font-[NotoSansKR] text-20-700 text-[#9e9e9e]'>
+                                <Upload color='#ff7752' className='mb-[0.8rem] size-[2rem]' />
+                                <p className='text-[#686868]'>이미지 업로드</p>
+                                <p className='text-16-500'>파일형식 : jpg 또는 png</p>
+                                <p className='text-16-500'>사이즈 : 910px ⨯ 540px</p>
+                                <p className='textnowrap text-16-500'>*작품 상세에서 가장 먼저 보이는 이미지입니다.</p>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </FormControl>
@@ -526,7 +565,7 @@ export default function Registration() {
                 )}
               />
             </TabsContent>
-            <TabsContent value='작품상세' className='flex flex-col gap-[8rem] px-[8.8rem]'>
+            <TabsContent value='작품상세' className='m-autoflex w-[120rem] flex-col gap-[8rem] px-[8.8rem]'>
               <FormField
                 control={form.control}
                 name='request.artDescription'

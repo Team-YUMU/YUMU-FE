@@ -72,6 +72,7 @@ export interface AuctionProps {
 
 interface RegistrationRequestProps {
   artName: string;
+  artSubTitle: string;
   artDescription: string;
   artSize: string;
   artCreatedDate?: Date;
