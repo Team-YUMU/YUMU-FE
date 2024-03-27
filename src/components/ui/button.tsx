@@ -19,6 +19,8 @@ const buttonVariants = cva(
         myPageEditImageDelete: 'flex rounded-md  border-b-2 leading-[2rem] text-gray-9',
         myPageEditButton: 'inline-flex',
         myPageUserDelete: 'text-center',
+        arrow: 'disabled:opacity-1 text-red-F disabled:text-gray-300 disabled:bg-white',
+        exhibitionArrow: 'disabled:opacity-1 text-red-F hover:text-[#E0E0E0] disabled:text-gray-300',
       },
       size: {
         default: 'h-10 px-4 py-2',
