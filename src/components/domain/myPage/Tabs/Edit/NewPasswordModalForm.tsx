@@ -55,78 +55,66 @@ export default function NewPasswordModalForm() {
     console.log(data);
   };
   return (
-    <>
-      {' '}
-      <div className='h-[2.3rem] w-[28rem] flex-shrink-0'>
-        <label className='text-12-500 leading-[2rem] text-gray-9'>아이디 정보</label>
-      </div>
-      <Separator orientation='vertical' className='h-[0.1rem] w-full bg-[#686868] p-0' />
-      <p className='h-[6rem] w-[28rem] flex-shrink-0 text-16-500 leading-[2rem] text-gray-9'>
-        {memberInfo.provider === null ? memberInfo.email : '카카오로 로그인 되었습니다.'}
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <AlertDialog>
-          <AlertDialogTrigger className='flex flex-row-reverse' asChild>
-            <Button type='button' size='myPage' variant='myPage'>
-              <span className='text-center text-16-500  text-gray-9'>비밀번호 변경하기</span>
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent className=' h-[55.6rem] max-w-[46rem] flex-shrink-0 items-center justify-center'>
-            <AlertDialogHeader className='h-[3.9rem] w-[24.9rem] flex-shrink-0'>
-              <span className='  pt-[2.5rem] text-24-700 text-gray-9'>비밀번호 변경하기</span>
-            </AlertDialogHeader>
-            <AlertDialogDescription className=' mt-[6.9rem] inline-flex w-[38.8rem] flex-shrink-0 flex-col gap-[2rem]'>
-              <AuthInput
-                type='password'
-                required={!!errors.password}
-                placeholder={INPUT_SETTING.placeholder.password}
-                errorMessage={errors?.password?.message}
-                {...register('password')}
-              />
-              <AuthInput
-                type='password'
-                required={!!errors.newPassword}
-                placeholder={INPUT_SETTING.placeholder.newPassword}
-                errorMessage={errors?.newPassword?.message}
-                {...register('newPassword')}
-              />
-              <div className='flex flex-row items-center text-center text-14-400'>
-                {errors?.newPassword?.message ? (
-                  errors?.newPassword?.message
-                ) : (
-                  <>
-                    <label className='text-red-E'>* </label>
-                    <label className='text-gray-9'>
-                      6~16자, 영문 대·소문자, 숫자, 특수문자 중 2개 이상 사용하세요.
-                    </label>
-                  </>
-                )}
-              </div>
-              <AuthInput
-                type='password'
-                required={!!errors.newPasswordCheck}
-                placeholder={INPUT_SETTING.placeholder.newPasswordCheck}
-                errorMessage={errors?.newPasswordCheck?.message}
-                {...register('newPasswordCheck')}
-              />
-              <AlertDialogFooter className='flex flex-row items-center justify-center gap-2'>
-                <AlertDialogCancel className='left-[40rem]'>
-                  <Image
-                    src={'svgs/my-page-modal-close-icon.svg'}
-                    width={30}
-                    height={30}
-                    className='absolute h-[3rem] w-[3rem] flex-shrink-0'
-                    alt='모달 닫기 버튼 아이콘'
-                  />
-                </AlertDialogCancel>
-                <Button className=' h-[6.4rem] w-full' type='button'>
-                  확인
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogDescription>
-          </AlertDialogContent>
-        </AlertDialog>
-      </form>
-    </>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <AlertDialog>
+        <AlertDialogTrigger className='flex flex-row-reverse' asChild>
+          <Button type='button' size='myPage' variant='myPage'>
+            <span className='text-center text-16-500  text-gray-9'>비밀번호 변경하기</span>
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent className=' h-[55.6rem] max-w-[46rem] flex-shrink-0 items-center justify-center'>
+          <AlertDialogHeader className='h-[3.9rem] w-[24.9rem] flex-shrink-0 space-y-0 text-start '>
+            <span className='  pt-[2.5rem] text-24-700 text-gray-9'>비밀번호 변경하기</span>
+          </AlertDialogHeader>
+          <AlertDialogDescription className=' mt-[6.9rem] inline-flex w-[38.8rem] flex-shrink-0 flex-col gap-[2rem]'>
+            <AuthInput
+              type='password'
+              required={!!errors.password}
+              placeholder={INPUT_SETTING.placeholder.password}
+              errorMessage={errors?.password?.message}
+              {...register('password')}
+            />
+            <AuthInput
+              type='password'
+              required={!!errors.newPassword}
+              placeholder={INPUT_SETTING.placeholder.newPassword}
+              errorMessage={errors?.newPassword?.message}
+              {...register('newPassword')}
+            />
+            <div className='flex flex-row items-center text-center text-14-400'>
+              {errors?.newPassword?.message ? (
+                errors?.newPassword?.message
+              ) : (
+                <>
+                  <label className='text-red-E'>* </label>
+                  <label className='text-gray-9'>6~16자, 영문 대·소문자, 숫자, 특수문자 중 2개 이상 사용하세요.</label>
+                </>
+              )}
+            </div>
+            <AuthInput
+              type='password'
+              required={!!errors.newPasswordCheck}
+              placeholder={INPUT_SETTING.placeholder.newPasswordCheck}
+              errorMessage={errors?.newPasswordCheck?.message}
+              {...register('newPasswordCheck')}
+            />
+            <AlertDialogFooter className='flex flex-row items-center justify-center gap-2'>
+              <AlertDialogCancel className='left-[40rem]'>
+                <Image
+                  src={'svgs/my-page-modal-close-icon.svg'}
+                  width={30}
+                  height={30}
+                  className='absolute h-[3rem] w-[3rem] flex-shrink-0'
+                  alt='모달 닫기 버튼 아이콘'
+                />
+              </AlertDialogCancel>
+              <Button className=' h-[6.4rem] w-full' type='button'>
+                확인
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogDescription>
+        </AlertDialogContent>
+      </AlertDialog>
+    </form>
   );
 }

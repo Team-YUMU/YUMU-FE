@@ -8,15 +8,20 @@ import NickNameEditForm from './NickNameEditForm';
 import IntroEditForm from './IntroEditForm';
 import NewPasswordModalForm from './NewPasswordModalForm';
 import UserDeleteModal from './UserDeleteModal';
+import { Separator } from '@/components/ui/separator';
 
 interface FormData {
+  email: string;
   profileImage: string;
+  provider: string;
 }
 
 export default function Edit() {
   const { register, handleSubmit, setValue, watch } = useForm<FormData>();
   const [memberInfo, setMemberInfo] = useState({
+    email: 'jackgg12322@yumu.com',
     profileImage: 'svgs/profile-image.svg',
+    provider: 'DEFAULT',
   });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +51,7 @@ export default function Edit() {
     console.log(data);
   };
   return (
-    <div className='flex flex-col gap-5'>
+    <div className='flex flex-col gap-[4rem]'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col items-center justify-center gap-[2.1rem]'>
           {memberInfo.profileImage ? (
@@ -100,6 +105,13 @@ export default function Edit() {
         <NickNameEditForm />
         <IntroEditForm />
         <div className='flex flex-col items-center gap-[1.2rem]'>
+          <div className='h-[2.3rem] w-[28rem] flex-shrink-0'>
+            <label className='text-12-500 leading-[2rem] text-gray-9'>아이디 정보</label>
+          </div>
+          <Separator orientation='vertical' className='h-[0.1rem] w-full bg-[#686868] p-0' />
+          <p className='h-[6rem] w-[28rem] flex-shrink-0 text-16-500 leading-[2rem] text-gray-9'>
+            {memberInfo.provider === 'DEFAULT' ? memberInfo.email : '카카오로 로그인 되었습니다.'}
+          </p>
           <NewPasswordModalForm />
           <Button type='button' size='myPage' variant='myPage'>
             <span className='text-center text-16-500  text-gray-9'>로그아웃</span>
