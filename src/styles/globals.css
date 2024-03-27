@@ -75,6 +75,7 @@
     font-family: 'NotoSansKR';
     src:url('https://webfontworld.github.io/Noto/NotoSansKR.css');
     box-sizing: border-box;
+     font-size: 62.5%;
   }
 
   /* Hide file input button */

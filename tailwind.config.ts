@@ -394,6 +394,7 @@ const config = {
         red: {
           DEFAULT: '#D6173A',
           F: '#FF7752',
+          E: '#E75852',
         },
         green: {
           DEFAULT: '#7AC555',
