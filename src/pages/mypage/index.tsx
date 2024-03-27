@@ -5,18 +5,6 @@ import { Separator } from '@/components/ui/separator';
 import MyPageTabs from '../../components/domain/myPage/Tabs/MyPageTabs';
 import Edit from '@/components/domain/myPage/Tabs/Edit/Edit';
 import { useRouter } from 'next/router';
-import { FaUserPen } from 'react-icons/fa6';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import Members from '@/mocks/Member';
 // import { getMemberInfo } from '@/services/api';
 
@@ -28,7 +16,7 @@ export default function MyPage() {
     file: '',
     id: 2,
     email: 'example2@example.com',
-    nickname: 'user2',
+    nickname: '홍길동',
     profileImageUrl: '',
     introduce: '안녕하세요. 저는 유저2입니다.',
     snsLink: 'https://www.example.com/user2',
@@ -47,65 +35,60 @@ export default function MyPage() {
     router.push('/');
   };
 
-  const handleDeleteUserClick = () => {
-    // deleteMembersData();
-    router.push('/');
-  };
   return (
-    <main className='flex h-full min-h-[80vh] w-full items-center justify-center gap-[8rem] '>
-      {changeUi === true ? (
-        <Edit setChangeUi={setChangeUi} />
-      ) : (
-        <article className='flex flex-row gap-[1rem]'>
-          <section className='flex flex-col gap-[1rem]'>
-            <div className='flex flex-col items-center justify-center gap-5'>
-              <Image
-                src='svgs/email-icon.svg'
-                width={183}
-                height={183}
-                alt='회원 이미지'
-                className='h-[11.4375rem] w-[11.4375rem] rounded-[50rem] border-[0.1rem] border-red-F bg-gray-D'
-              />
-              <p
-                onClick={handleChangeUi}
-                className='flex items-center justify-center  gap-2  border-red-F text-15-400 hover:border-b-[0.1rem]'
-              >
-                {memberInfo.nickname} <FaUserPen />
-              </p>
-              <div className='flexCenter gap-2 text-15-400'>
-                <p className='flex  items-center justify-center'>{MembersData[1].introduce}</p>
-                <Separator className='my-4 w-[27.625rem] bg-red-F' />
-                <p>{MembersData[1].email}</p>
-              </div>
-              <Button onClick={handleLogoutClick} size='auth'>
-                로그아웃
-              </Button>
-            </div>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant='outline' size='auth' className='hover:bg-red-F hover:text-white'>
-                  탈퇴하기
+    <main className='flex h-full min-h-[60vh] w-full flex-col justify-center gap-[8.2rem]'>
+      <p className='ml-[28rem] mt-[8rem] font-TheJamsil text-36-500 text-black-2'>마이페이지</p>
+      <div className='flex items-center justify-center'>
+        <div className='flex flex-row gap-[10.5rem]'>
+          {changeUi === true ? (
+            <Edit setChangeUi={setChangeUi} />
+          ) : (
+            <>
+              {' '}
+              <div className='inline-flex flex-col items-center gap-[3rem]'>
+                <Image
+                  src='svgs/profile-image.svg'
+                  width={183}
+                  height={183}
+                  alt='회원 이미지'
+                  className='h-[20rem] w-[20rem] rounded-[20rem] bg-no-repeat'
+                />
+                <div className='inline-flex gap-[0.6rem] py-[1rem] pr-0' onClick={handleChangeUi}>
+                  <p className='text-center text-36-500 leading-[2rem] text-black-2 '>{memberInfo.nickname}</p>
+                  <div className='flex h-[1.5556rem] w-[1.5556rem] items-center justify-center'>
+                    <Image
+                      src={'/svgs/my-page-arrow-icon.svg'}
+                      width={15.556}
+                      height={15.556}
+                      alt='정보 수정 화살표 아이콘'
+                    />
+                  </div>
+                </div>
+                <p className='h-[6.3rem] w-[22rem] text-center text-16-500 leading-[2rem] text-gray-9'>
+                  작가설명을 이렇게 넣어요! 최대 3줄이 들어가요! 이렇게!
+                </p>
+
+                <Separator className='w-full' />
+                <p className='h-[2.3rem] w-[28rem] text-center text-16-400 leading-[2rem] text-gray-9'>
+                  {MembersData[1].email}
+                </p>
+
+                <Button
+                  onClick={handleLogoutClick}
+                  className='  text-center text-16-500  text-gray-9'
+                  size={'myPage'}
+                  variant={'myPage'}
+                >
+                  로그아웃
                 </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent className='w-[34rem]'>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>정말 탈퇴하시겠습니까?</AlertDialogTitle>
-                  <AlertDialogDescription className='text-15-400 text-black-0'>
-                    탈퇴 후 계정 복구는 불가능합니다.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter className='flex flex-col gap-2'>
-                  <AlertDialogCancel>취소</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleDeleteUserClick}>탈퇴</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </section>
-          <section>
-            <MyPageTabs />
-          </section>
-        </article>
-      )}
+              </div>
+              <section>
+                <MyPageTabs />
+              </section>
+            </>
+          )}
+        </div>
+      </div>
     </main>
   );
 }

@@ -126,7 +126,7 @@ export default function Header() {
               </HoverCard> */}
             </>
           )}
-          <Button size='header' className='mb-[1.1rem] mt-[1.3rem] font-bold leading-5 text-white'>
+          <Button size='header' className='mb-[1.1rem] mt-[1.3rem] bg-red-F font-bold leading-5 text-white '>
             <Link href='/registration' className='text-[1.6rem]'>
               경매등록하기
             </Link>

@@ -8,21 +8,27 @@ export default function BuyHistory() {
     router.push('mypage/detail');
   };
   const historyBoxStyles =
-    ' flex h-[13.5rem] w-[56.875rem] flex-shrink-0 flex-row justify-around gap-[20rem] rounded-[0.8rem] border-[0.1rem] border-red-F hover:border-2';
+    ' flex h-[18rem] w-[90.8rem] flex-shrink-0 flex-row justify-around gap-[35rem] rounded-[1rem] border-[0.1rem] border-gray-C hover:border-2';
   return (
-    <div className='flex h-[40rem] w-full flex-col gap-3 overflow-scroll'>
+    <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll'>
       {buyHistory.map((item, id) => {
         return (
           <div className={`${historyBoxStyles} items-center`} key={id}>
-            <div className='w-[15rem]'>
-              <span className='text.11.1-400'>배송중</span>
-              <p className='text-22.5-500'>{item.artName}</p>
-              <p className='text.11.1-400'>아티스트 : {item.artist}</p>
+            <div className='ml-[4.8rem]'>
+              <span className='  h-[1.8333rem] w-[5rem] flex-shrink-0 text-18-700 text-gray-9'>배송중</span>
+              <div className='flex flex-col gap-[2.48rem]'>
+                <p className='h-[3.9rem] w-[24.9rem] flex-shrink-0 text-32-700 text-black-2'>{item.artName}</p>
+                <p className='h-[1.8333rem] w-[18.3rem] flex-shrink-0 text-18-700 text-gray-9'>
+                  아티스트 : {item.artist}
+                </p>
+              </div>
             </div>
-            <div className='flex flex-col gap-[5rem]'>
-              <p className='text.11.1-400'>{item.purchaseDate.slice(0, 10) + ` 낙찰`}</p>
+            <div className='ml-[5rem] flex flex-col gap-[6.85rem]'>
+              <p className='  h-[1.8rem] w-[16.5rem] flex-shrink-0 text-18-700 text-gray-9'>
+                {item.purchaseDate.slice(0, 10) + ` 낙찰`}
+              </p>
               <p
-                className='text.11.1-400 flex flex-row items-center justify-center hover:border-b-[0.1rem] hover:border-red-F'
+                className=' ml-[5rem]  h-[1.8333rem] w-[8.8rem] flex-shrink-0 text-right text-18-700 text-gray-9'
                 onClick={handleBuyListDetail}
               >
                 자세히 보기

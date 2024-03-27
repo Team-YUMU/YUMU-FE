@@ -4,11 +4,15 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from '@/components/ui/card';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import LandingBanner from '@/components/domain/landing/LandingBanner';
-import { getLiveAuction } from '@/services/api';
+import { getLiveAuction, getPopularAuction } from '@/services/api';
+import { Heart } from 'lucide-react';
+import { useRouter } from 'next/router';
+import { Button } from '@/components/ui/button';
 
-interface ArtProps {
+interface liveProps {
   id: number;
   artName: string;
+  artSubTitle: string;
   artImage: string;
   artist: string;
   status: string;
@@ -16,22 +20,64 @@ interface ArtProps {
   wishCnt: number;
 }
 
+interface Date {
+  currentTime: string;
+}
+
+export async function getServerSideProps() {
+  const currentTime = new Date().toLocaleString();
+  console.log(currentTime);
+  return { props: { currentTime } };
+}
+
 export default function Landing() {
-  const [auctionsData, setAuctionsData] = useState<ArtProps[]>([]);
+  const [liveData, setLiveData] = useState<liveProps[]>([]);
+  const [popularData, setPopularData] = useState<liveProps[]>([]);
+  // const [currentTime, setCurrentTime] = useState<Date>(new Date());
+  const router = useRouter();
+  const LiveKeyword = 'live';
 
   const loadLiveAuctionData = async () => {
     try {
       const data = await getLiveAuction({ keyword: '', size: 3, page: 0 });
-      const auctionData = data.auctions;
-      console.log(auctionData);
-      setAuctionsData(auctionData);
+      const auctionLiveData = data.auctions;
+      console.log(auctionLiveData);
+      setLiveData(auctionLiveData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const defaultItem = {
+    id: null,
+    artName: '',
+    artSubTitle: '',
+    artImage: '',
+    artist: '',
+    status: '',
+    createdAt: '',
+    wishCnt: 0,
+  };
+
+  const displayData = liveData.length === 3 ? liveData : [...liveData, defaultItem, defaultItem].slice(0, 3);
+
+  useEffect(() => {
+    loadLiveAuctionData();
+  }, []);
+
+  const loadPopularAuctionData = async () => {
+    try {
+      const data = await getPopularAuction({ keyword: '', size: 3, page: 0 });
+      const auctionPopularData = data.auctions;
+      console.log(auctionPopularData);
+      setPopularData(auctionPopularData);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    loadLiveAuctionData();
+    loadPopularAuctionData();
   }, []);
 
   return (
@@ -43,22 +89,39 @@ export default function Landing() {
           <div>
             <div>
               <p className='mb-[1rem] font-[TheJamsil] text-36-400 text-[#222]'>현재 Live 경매</p>
-              <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>지금 경매가 진행되고 있어요!</p>
+              <div className='flex justify-between'>
+                <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>지금 경매가 진행되고 있어요!</p>
+                <div
+                  onClick={() => {
+                    router.push(`/search?keyword=${encodeURIComponent(LiveKeyword)}`);
+                  }}
+                  className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] '
+                >
+                  <span className='mr-[.7rem] '>더보기</span>
+                  <Image
+                    src='/svgs/main1-moreArrow.svg'
+                    alt=''
+                    width={18}
+                    height={6}
+                    className='h-[.6rem] w-[1.86rem]'
+                  />
+                </div>
+              </div>
             </div>
-            <div className='relative flex bg-[blue]'>
-              {auctionsData.length === 3 ? (
-                <>
-                  {auctionsData.map((item, index) => (
+            <div className='relative flex'>
+              <>
+                {displayData.map((item, index) =>
+                  item.id !== null ? (
                     <>
                       <div key={index} className='mr-[1.6rem]'>
                         <div className='relative right-[-2rem] z-10'>
-                          <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem]'>
-                            {/* 이미지 대체 */}
+                          <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem] shadow-md'>
                             <Image className='h-full w-full' src={item.artImage} width={24} height={32} alt='' />
                           </div>
                           <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
                             <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
                             <p className='flex h-[2.8rem] w-[11rem] items-center justify-center rounded-[.8rem] rounded-t-none bg-[#FF7751] text-18-700 text-[#fff]'>
+                              {/* 타이머 기능 */}
                               {item.createdAt}
                             </p>
                             <Image src='/svgs/m1-timeNear-r.svg' width={16.39} height={14} alt='' />
@@ -67,25 +130,24 @@ export default function Landing() {
                         <div className='relative top-[-5.7rem] h-[22.8rem] w-[28rem] rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
                           <div className='ml-[2rem] mt-[8.2rem]'>
                             <span className='mr-[1.5rem] text-18-500 text-[#999]'>{item.artist}</span>
-                            {/* 이모티콘 */}
-                            <span className='font-[Inter] text-16-500 text-[#999]'>{item.wishCnt}</span>
-                            <p className='mt-[.5rem] text-20-700'>{item.artName}</p>
-                            <p className='mt-[.5rem] max-w-[19.1rem] text-18-500 text-[#999]'>
-                              어떤 데이터를 불러올지 정하기
-                            </p>
+                            <span className='font-[Inter] text-16-500 text-[#999] opacity-40'>
+                              <Heart strokeWidth={3.5} size={12} className='mr-[.6rem] inline ' />
+                              {item.wishCnt.toLocaleString()}
+                            </span>
+                            <p className='mt-[.5rem] text-20-700 '>{item.artName}</p>
+                            <p className='mt-[.5rem] max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
                           </div>
                         </div>
                       </div>
                     </>
-                  ))}
-                </>
-              ) : (
-                <>
-                  {[...Array(3 - auctionsData.length)].map((_, index) => (
+                  ) : (
                     <div key={index} className='mr-[1.6rem]'>
                       <div className='relative right-[-2rem] z-10'>
-                        <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem]'>
-                          <div className='h-full w-full bg-gray-800'></div>
+                        <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem] shadow-md'>
+                          <div className='flex h-full w-full flex-col items-center justify-center bg-[#FFFAEC]'>
+                            <Image src='svgs/m1-microphone.svg' alt='' width={55} height={104} />
+                            <p className='mt-[1.2rem] text-12-500 text-[#FF7752]'>라이브가 준비중입니다!</p>
+                          </div>
                         </div>
                         <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
                           <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
@@ -93,42 +155,55 @@ export default function Landing() {
                           <Image src='/svgs/m1-timeNear-r.svg' width={16.39} height={14} alt='' />
                         </div>
                       </div>
-                      <div className='relative top-[-5.7rem] h-[22.8rem] w-[28rem] rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
-                        <div className='ml-[2rem] mt-[8.2rem]'>
-                          <span className='mr-[1.5rem] text-18-500 text-[#999]'>준비중입니다</span>
+                      <div className='relative top-[-5.7rem] flex h-[22.8rem] w-[28rem] justify-center rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
+                        <div className='max-w-[17.3rem] pt-[8.5rem] text-center'>
+                          <span className=' mb-[1.9rem] text-14-500 text-[#999]'>
+                            매력적인 상품을 <br /> 곧 Live에서 보실 수 있습니다.
+                          </span>
+                          <Button
+                            variant='outline'
+                            size='header'
+                            className='mt-[1.9rem] text-[1.6rem] font-bold leading-[2rem] '
+                          >
+                            오픈예정 경매보기
+                          </Button>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </>
-              )}
+                  ),
+                )}
+              </>
             </div>
           </div>
           {/* 인기경매 */}
-          <div className='h-[2rem] w-[43.9rem] bg-[pink]'>
+          <div className='h-[2rem] w-[43.9rem]'>
             <div>
               <p className='mb-[1rem] font-[TheJamsil] text-36-400 text-[#222]'>인기 경매</p>
-              <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>00000기준</p>
+              <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'></p>
             </div>
-            <div className='text-center'>
+            <div className=''>
               {/* map으로 돌릴부분 */}
-              <div className='flex justify-between bg-[blue]'>
-                <Image src='/svgs/banner-1.svg' alt='' width={18} height={12} className='h-[12rem] w-[18rem]' />
-                <p className='text-18-500 text-[#FF7752]'>1</p>
-                <div>
-                  <p className='max-w-[20rem] text-20-700'>어머 이건 꼭 사야해 로판에 나오는 한복</p>
-                  <div className='mt-[3.4rem] text-end'>
-                    <span className='text-16-500 text-[#999]'>경매마감</span>
-                    <span className='ml-[1.2rem] text-20-700 text-[#FF7752]'>00:30:59</span>
+              {popularData.map((item, index) => (
+                <div key={index} className='mb-[2rem] flex justify-between'>
+                  <Image src={item.artImage} alt='' width={18} height={12} className='h-[12rem] w-[18rem]' />
+                  <div className='w-[24.1rem]'>
+                    <span className='mr-[1.4rem] text-18-500 text-[#FF7752]'>{index + 1}</span>
+                    <span className='max-w-[20rem] text-20-700'>{item.artSubTitle}</span>
+                    <div className='mt-[3.4rem] text-end'>
+                      <span className='text-16-500 text-[#999]'>경매마감</span>
+                      <span className='ml-[1.2rem] text-20-700 text-[#FF7752]'>00:30:59</span>
+                    </div>
                   </div>
                 </div>
+              ))}
+              <div className='text-center'>
+                <button
+                  type='button'
+                  className='mt-[2rem] h-[4.8rme] w-[28rem] rounded-[3.7rem] border border-[#dfdfdf] px-[8.4rem] py-[1.3rem] text-16-500 text-[#999] hover:border-[#FF7752] hover:text-red-F/90'
+                >
+                  인기경매 더보기
+                </button>
               </div>
-              <button
-                type='button'
-                className='mt-[4.3rem] h-[4.8rme] w-[28rem] rounded-[3.7rem] border border-[#dfdfdf] px-[8.4rem] py-[1.3rem] text-16-500 text-[#999]'
-              >
-                인기경매 더보기
-              </button>
             </div>
           </div>
         </section>

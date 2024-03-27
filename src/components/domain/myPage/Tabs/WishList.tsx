@@ -1,31 +1,40 @@
 import PurchaseHistories from '@/mocks/PurchaseHistory';
-import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import artImage from '@/../public/images/artImage.png';
 
 export default function WishList() {
   const WishListData = PurchaseHistories;
-  const WishListCardStyle = `flexCenter  w-[17.168rem] h-[21.45994rem] flex-shrink-0 rounded-[0.8rem] border-[0.1rem] border-red-F hover:border-2`;
+
+  const handleWishClick = () => {};
   return (
-    <div className='grid h-[40rem] w-[56.875rem] grid-cols-3 gap-[1.72rem]  overflow-scroll'>
+    <div className='grid h-[73rem] w-[90.8rem] grid-cols-3 gap-[1.72rem] overflow-scroll'>
       {WishListData.map((item, id) => {
         return (
           <div key={id}>
-            <div className={`${WishListCardStyle} gap-[5rem]`}>
+            <form className={`relative gap-[5rem]`}>
               <Image
-                className='flex items-center justify-center'
-                width={56}
-                height={40}
-                src={'svgs/yumu-logo.svg'}
+                className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem]'
+                width={292}
+                height={200}
+                src={artImage}
                 alt='관심경매 이미지'
               />
-              <div className='flex flex-col items-center justify-center gap-2'>
-                <Separator className='w-[17rem] bg-red-F' />
+              <Button type='button' variant='myPageWish' size='myPageWish' onClick={handleWishClick}>
+                <Image
+                  width={35}
+                  height={30}
+                  className='absolute'
+                  src={'svgs/my-page-wish-gray-icon.svg'}
+                  alt='관심목록 찜 버튼'
+                />
+              </Button>
+              <div className='pt-[1.5rem] text-20-700 text-black-0'>
                 <p>{item.artName}</p>
-                <p>{item.price}</p>
-                <p>{item.purchaseDate}</p>
+                <p className='h-[5.4rem] w-[19.1rem] text-18-500 text-gray-9'>국내앱 국내개발 국내보안 국내최적화</p>
               </div>
-            </div>
+            </form>
           </div>
         );
       })}

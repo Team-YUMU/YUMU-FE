@@ -1,17 +1,20 @@
 import { z } from 'zod';
 
-export const schema = z
-  .object({
-    email: z
-      .string()
-      .email({ message: '이메일 형식에 맞지 않는 메일 주소입니다.' })
-      .min(2, { message: '이메일을 입력해 주세요.' }),
-    password: z
-      .string()
-      .min(6, { message: '최소 6자 이상 입력해 주세요.' })
-      .regex(/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/, {
-        message: '비밀번호는 영문 대/소 문자,숫자,특수기호를 조합해서 사용하세요.',
-      }),
+export const schemaSignin = z.object({
+  email: z
+    .string()
+    .email({ message: '이메일 형식에 맞지 않는 메일 주소입니다.' })
+    .min(2, { message: '이메일을 입력해 주세요.' }),
+  password: z
+    .string()
+    .min(6, { message: '최소 6자 이상 입력해 주세요.' })
+    .regex(/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/, {
+      message: '비밀번호는 영문 대/소 문자,숫자,특수기호를 조합해서 사용하세요.',
+    }),
+});
+
+export const schemaSignup = schemaSignin
+  .extend({
     checkPassword: z.string(),
     nickname: z
       .string()
