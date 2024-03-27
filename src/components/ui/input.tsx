@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-
 import { cn } from '@/lib/utils';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-const InputVariants = cva(`file:text-sm container file:border-0 file:bg-transparent file:font-medium `, {
+const InputVariants = cva(`file:text-sm container file:border-none file:bg-transparent file:font-medium`, {
   variants: {
     variant: {
       default:
@@ -24,6 +23,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>,
 const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type, variant, ...props }, ref) => {
   return <input type={type} className={cn(InputVariants({ variant, className }))} ref={ref} {...props} />;
 });
+
 Input.displayName = 'Input';
 
 export { Input, InputVariants };
