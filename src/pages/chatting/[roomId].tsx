@@ -23,7 +23,10 @@ const Chating: React.FC = () => {
   const router = useRouter();
   const { roomId } = router.query;
   // username을 엑세스 토큰처럼 사용(임시)
-  const username = localStorage.getItem('username') || undefined;
+  let username: string;
+  if (typeof window !== 'undefined') {
+    username = localStorage.getItem('username') || '';
+  }
   const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([
     { type: 'chat', memberId: '654321', message: `It's Test Message` },
   ]);
@@ -106,7 +109,7 @@ const Chating: React.FC = () => {
       </div>
       <div className='flex flex-row items-center'>
         <p className='w-1/2 grow border-r border-white p-2 text-right'>Room : {roomId}</p>
-        <p className='w-1/2 grow text-nowrap border-l border-white p-2 text-left'>your name : {username}</p>
+        <p className='w-1/2 grow text-nowrap border-l border-white p-2 text-left'>your name : Me</p>
       </div>
       <div className='flex h-full w-full flex-col items-center justify-center gap-1 border bg-white p-2'>
         {chatHistory.map((chat, index) => (
