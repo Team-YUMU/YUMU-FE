@@ -22,9 +22,6 @@ const memberId = '123456';
 const Chating: React.FC = () => {
   const router = useRouter();
   const { roomId } = router.query;
-  const accessToken = sessionStorage.getItem('accessToken');
-  const refreshToken = sessionStorage.getItem('refreshToken');
-
   // username을 엑세스 토큰처럼 사용(임시)
   const username = localStorage.getItem('username') || undefined;
   const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([
@@ -50,8 +47,8 @@ const Chating: React.FC = () => {
     console.log('connect success');
     client.current.connect(
       {
-        Authorization: `Bearer ${accessToken}`,
-        Refresh: `${refreshToken}`,
+        Authorization: `Bearer ${typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}`,
+        Refresh: `${typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}`,
       },
       () => {
         client.current?.subscribe(
@@ -60,8 +57,8 @@ const Chating: React.FC = () => {
             console.log('connect', message);
           },
           {
-            Authorization: `Bearer ${accessToken}`,
-            Refresh: `${refreshToken}`,
+            Authorization: `Bearer ${typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}`,
+            Refresh: `${typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}`,
           },
         );
       },
@@ -104,8 +101,8 @@ const Chating: React.FC = () => {
   return (
     <main className={`flex min-h-screen w-full flex-col items-center justify-center gap-2 p-2`}>
       <div>
-        <p>{accessToken}</p>
-        <p>{refreshToken}</p>
+        <p>{typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}</p>
+        <p>{typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}</p>
       </div>
       <div className='flex flex-row items-center'>
         <p className='w-1/2 grow border-r border-white p-2 text-right'>Room : {roomId}</p>
