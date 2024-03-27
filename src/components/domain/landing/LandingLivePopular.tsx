@@ -74,7 +74,7 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
     <>
       <div>
         <div>
-          <p className='mb-[1rem] font-[TheJamsil] text-36-400 text-[#222]'>현재 Live 경매</p>
+          <p className='mb-[1rem] font-TheJamsil text-36-400 text-[#222]'>현재 Live 경매</p>
           <div className='flex justify-between'>
             <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>지금 경매가 진행되고 있어요!</p>
             <div
@@ -161,7 +161,7 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
       {/* 인기경매 */}
       <div className='h-[2rem] w-[43.9rem]'>
         <div>
-          <p className='mb-[1rem] font-[TheJamsil] text-36-400 text-[#222]'>인기 경매</p>
+          <p className='mb-[1rem] font-TheJamsil text-36-400 text-[#222]'>인기 경매</p>
           <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'></p>
         </div>
         <div className=''>

@@ -154,7 +154,7 @@
   
 
 @font-face {
-    font-family: 'TheJamsil5Bold';
+    font-family: 'TheJamsil';
     font-weight: 100;
     font-style: normal;
     src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Thin.eot');
@@ -165,7 +165,7 @@
     font-display: swap;
 }
 @font-face {
-    font-family: 'TheJamsil5Bold';
+    font-family: 'TheJamsil';
     font-weight: 300;
     font-style: normal;
     src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Light.eot');
@@ -176,7 +176,7 @@
     font-display: swap;
 }
 @font-face {
-    font-family: 'TheJamsil5Bold';
+    font-family: 'TheJamsil';
     font-weight: 400;
     font-style: normal;
     src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Regular.eot');
@@ -198,7 +198,7 @@
     font-display: swap;
 }
 @font-face {
-    font-family: 'TheJamsil5Bold';
+    font-family: 'TheJamsil';
     font-weight: 700;
     font-style: normal;
     src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.eot');
@@ -209,7 +209,7 @@
     font-display: swap;
 }
 @font-face {
-    font-family: 'TheJamsil5Bold';
+    font-family: 'TheJamsil';
     font-weight: 800;
     font-style: normal;
     src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-ExtraBold.eot');

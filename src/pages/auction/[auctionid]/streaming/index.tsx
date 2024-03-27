@@ -10,7 +10,7 @@ export default function Streaming() {
   return (
     <div className='relative m-auto flex w-[138rem] select-none items-center gap-2 py-2'>
       <div className='grid grid-cols-3 gap-[1.25rem] px-2'>
-        <div className='col-span-3 flex flex-row items-center gap-[1.2rem] bg-white font-[TheJamsil] text-36-400'>
+        <div className='col-span-3 flex flex-row items-center gap-[1.2rem] bg-white font-TheJamsil text-36-400'>
           <Button variant={'ghost'} className='p-0'>
             <ChevronLeft color='#e0e0e0' className='size-[3.2rem] shrink-0' />
           </Button>

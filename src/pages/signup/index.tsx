@@ -49,7 +49,7 @@ export default function SignUpPage() {
       <AlertDialog>
         <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
           <div className=' mb-[2.6rem] flex flex-col items-center'>
-            <h1 className='font-[TheJamsil]-400 text-[4.6rem] text-[#222]'>회원가입</h1>
+            <h1 className='font-TheJamsil text-[4.6rem] text-[#222]'>회원가입</h1>
             <h2 className='font-notoKR text-[1.6rem] text-gray-9'>회원가입에 필요한 정보를 입력해주세요.</h2>
           </div>
 

@@ -328,7 +328,7 @@ const config = {
     extend: {
       fontFamily: {
         // 예시) <p className="font-TheJamsil">
-        TheJamsil: ['TheJamsil5Bold'],
+        TheJamsil: ['TheJamsil'],
         NotoSansKR: ['NotoSansKR'],
       },
       colors: {
