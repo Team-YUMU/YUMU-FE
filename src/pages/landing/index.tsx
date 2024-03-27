@@ -1,84 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Card, CardContent } from '@/components/ui/card';
+import React, { useRef } from 'react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  MainCarouselPrevious,
+  MainCarouselNext,
+} from '@/components/ui/mainCarousel';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import LandingBanner from '@/components/domain/landing/LandingBanner';
-import { getLiveAuction, getPopularAuction } from '@/services/api';
-import { Heart } from 'lucide-react';
+import LandingLivePopular from '@/components/domain/landing/LandingLivePopular';
+import { BestAuction } from '@/components/common/BestAuction';
+import Autoplay from 'embla-carousel-autoplay';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Button } from '@/components/ui/button';
-
-interface liveProps {
-  id: number;
-  artName: string;
-  artSubTitle: string;
-  artImage: string;
-  artist: string;
-  status: string;
-  createdAt: string;
-  wishCnt: number;
-}
-
-interface Date {
-  currentTime: string;
-}
-
-export async function getServerSideProps() {
-  const currentTime = new Date().toLocaleString();
-  console.log(currentTime);
-  return { props: { currentTime } };
-}
 
 export default function Landing() {
-  const [liveData, setLiveData] = useState<liveProps[]>([]);
-  const [popularData, setPopularData] = useState<liveProps[]>([]);
-  // const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const router = useRouter();
-  const LiveKeyword = 'live';
+  const popularRef = useRef<HTMLDivElement>(null);
 
-  const loadLiveAuctionData = async () => {
-    try {
-      const data = await getLiveAuction({ keyword: '', size: 3, page: 0 });
-      const auctionLiveData = data.auctions;
-      console.log(auctionLiveData);
-      setLiveData(auctionLiveData);
-    } catch (error) {
-      console.error(error);
-    }
+  const moveToArtist = () => {
+    popularRef?.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
   };
-
-  const defaultItem = {
-    id: null,
-    artName: '',
-    artSubTitle: '',
-    artImage: '',
-    artist: '',
-    status: '',
-    createdAt: '',
-    wishCnt: 0,
-  };
-
-  const displayData = liveData.length === 3 ? liveData : [...liveData, defaultItem, defaultItem].slice(0, 3);
-
-  useEffect(() => {
-    loadLiveAuctionData();
-  }, []);
-
-  const loadPopularAuctionData = async () => {
-    try {
-      const data = await getPopularAuction({ keyword: '', size: 3, page: 0 });
-      const auctionPopularData = data.auctions;
-      console.log(auctionPopularData);
-      setPopularData(auctionPopularData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    loadPopularAuctionData();
-  }, []);
 
   return (
     <>
@@ -86,190 +31,83 @@ export default function Landing() {
       <main className='mx-auto max-w-[137.5rem] bg-[pink] pt-[4rem]'>
         <LandingBanner />
         <section className='mx-auto flex max-w-[136.9rem] justify-between'>
-          <div>
+          <LandingLivePopular moveToArtist={moveToArtist} />
+        </section>
+        <section className='mt-[8rem]'>
+          <ExhibitionCarousel />
+        </section>
+        <section>
+          <div className='mx-auto mt-[8rem] flex max-w-[136.8rem] justify-between'>
             <div>
-              <p className='mb-[1rem] font-[TheJamsil] text-36-400 text-[#222]'>현재 Live 경매</p>
-              <div className='flex justify-between'>
-                <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>지금 경매가 진행되고 있어요!</p>
-                <div
-                  onClick={() => {
-                    router.push(`/search?keyword=${encodeURIComponent(LiveKeyword)}`);
-                  }}
-                  className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] '
-                >
-                  <span className='mr-[.7rem] '>더보기</span>
-                  <Image
-                    src='/svgs/main1-moreArrow.svg'
-                    alt=''
-                    width={18}
-                    height={6}
-                    className='h-[.6rem] w-[1.86rem]'
-                  />
-                </div>
-              </div>
-            </div>
-            <div className='relative flex'>
-              <>
-                {displayData.map((item, index) =>
-                  item.id !== null ? (
-                    <>
-                      <div key={index} className='mr-[1.6rem]'>
-                        <div className='relative right-[-2rem] z-10'>
-                          <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem] shadow-md'>
-                            <Image className='h-full w-full' src={item.artImage} width={24} height={32} alt='' />
-                          </div>
-                          <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
-                            <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
-                            <p className='flex h-[2.8rem] w-[11rem] items-center justify-center rounded-[.8rem] rounded-t-none bg-[#FF7751] text-18-700 text-[#fff]'>
-                              {/* 타이머 기능 */}
-                              {item.createdAt}
-                            </p>
-                            <Image src='/svgs/m1-timeNear-r.svg' width={16.39} height={14} alt='' />
-                          </div>
-                        </div>
-                        <div className='relative top-[-5.7rem] h-[22.8rem] w-[28rem] rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
-                          <div className='ml-[2rem] mt-[8.2rem]'>
-                            <span className='mr-[1.5rem] text-18-500 text-[#999]'>{item.artist}</span>
-                            <span className='font-[Inter] text-16-500 text-[#999] opacity-40'>
-                              <Heart strokeWidth={3.5} size={12} className='mr-[.6rem] inline ' />
-                              {item.wishCnt.toLocaleString()}
-                            </span>
-                            <p className='mt-[.5rem] text-20-700 '>{item.artName}</p>
-                            <p className='mt-[.5rem] max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <div key={index} className='mr-[1.6rem]'>
-                      <div className='relative right-[-2rem] z-10'>
-                        <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem] shadow-md'>
-                          <div className='flex h-full w-full flex-col items-center justify-center bg-[#FFFAEC]'>
-                            <Image src='svgs/m1-microphone.svg' alt='' width={55} height={104} />
-                            <p className='mt-[1.2rem] text-12-500 text-[#FF7752]'>라이브가 준비중입니다!</p>
-                          </div>
-                        </div>
-                        <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
-                          <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
-                          <p className='flex h-[2.8rem] w-[11rem] items-center justify-center rounded-[.8rem] rounded-t-none bg-[#FF7751] text-18-700 text-[#fff]'></p>
-                          <Image src='/svgs/m1-timeNear-r.svg' width={16.39} height={14} alt='' />
-                        </div>
-                      </div>
-                      <div className='relative top-[-5.7rem] flex h-[22.8rem] w-[28rem] justify-center rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
-                        <div className='max-w-[17.3rem] pt-[8.5rem] text-center'>
-                          <span className=' mb-[1.9rem] text-14-500 text-[#999]'>
-                            매력적인 상품을 <br /> 곧 Live에서 보실 수 있습니다.
-                          </span>
-                          <Button
-                            variant='outline'
-                            size='header'
-                            className='mt-[1.9rem] text-[1.6rem] font-bold leading-[2rem] '
-                          >
-                            오픈예정 경매보기
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ),
-                )}
-              </>
-            </div>
-          </div>
-          {/* 인기경매 */}
-          <div className='h-[2rem] w-[43.9rem]'>
-            <div>
-              <p className='mb-[1rem] font-[TheJamsil] text-36-400 text-[#222]'>인기 경매</p>
-              <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'></p>
-            </div>
-            <div className=''>
-              {/* map으로 돌릴부분 */}
-              {popularData.map((item, index) => (
-                <div key={index} className='mb-[2rem] flex justify-between'>
-                  <Image src={item.artImage} alt='' width={18} height={12} className='h-[12rem] w-[18rem]' />
-                  <div className='w-[24.1rem]'>
-                    <span className='mr-[1.4rem] text-18-500 text-[#FF7752]'>{index + 1}</span>
-                    <span className='max-w-[20rem] text-20-700'>{item.artSubTitle}</span>
-                    <div className='mt-[3.4rem] text-end'>
-                      <span className='text-16-500 text-[#999]'>경매마감</span>
-                      <span className='ml-[1.2rem] text-20-700 text-[#FF7752]'>00:30:59</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <div className='text-center'>
+              <Image src='/svgs/openLive.svg' alt='' width={313} height={293} />
+              <div>
+                <p className='mt-[4rem] font-[TheJamsil] text-36-400 text-[#222]'>오픈 예정 Live 경매</p>
+                <p className='mt-[1rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>매력적인 예술품이 곧 오픈 됩니다.</p>
                 <button
-                  type='button'
-                  className='mt-[2rem] h-[4.8rme] w-[28rem] rounded-[3.7rem] border border-[#dfdfdf] px-[8.4rem] py-[1.3rem] text-16-500 text-[#999] hover:border-[#FF7752] hover:text-red-F/90'
+                  onClick={() => {
+                    router.push(`/search?sort=${encodeURIComponent('liveSoon')}`);
+                  }}
+                  className='mt-[4rem] rounded-[3.7rem] border border-[#DFDFDF;] px-[7.7rem] py-[1.3rem] text-16-500 text-[#999] hover:border-[#FF7752] hover:text-red-F/90'
                 >
-                  인기경매 더보기
+                  라이브 경매 더보기
                 </button>
               </div>
             </div>
+            <Carousel
+              opts={{
+                align: 'start',
+              }}
+              plugins={[Autoplay({ delay: 4000 })]}
+              className='mr-[8.2rem] w-full max-w-[87.2rem]'
+            >
+              <CarouselContent className='-ml-2'>
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <div key={index}>
+                    <CarouselItem className='basis-1/3 pl-2'>
+                      <div className='p-1'>
+                        <Image
+                          src='/svgs/openLive.svg'
+                          alt=''
+                          width={280}
+                          height={200}
+                          className='max-h-[20rem] max-w-[28rem]'
+                        />
+                        <p className='mt-[1.5rem] text-20-700'>국내 스마트 워치 타니 프로2</p>
+                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>국내앱 국내개발 국내보안 국내 최적화</p>
+                      </div>
+                    </CarouselItem>
+                    <CarouselItem className='mt-[4rem] basis-1/3 pl-2'>
+                      <div className='p-1'>
+                        <Image
+                          src='/svgs/openLive.svg'
+                          alt=''
+                          width={280}
+                          height={200}
+                          className='max-h-[20rem] max-w-[28rem]'
+                        />
+                        <p className='mt-[1.5rem] text-20-700'>국내 스마트 워치 타니 프로2</p>
+                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>국내앱 국내개발 국내보안 국내 최적화</p>
+                      </div>
+                    </CarouselItem>
+                  </div>
+                ))}
+              </CarouselContent>
+              <MainCarouselPrevious
+                type='button'
+                variant='arrow'
+                className='-left-32  h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
+              />
+              <MainCarouselNext
+                type='button'
+                variant='arrow'
+                className='-right-32  h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
+              />
+            </Carousel>
           </div>
         </section>
-        {/* 기획전 */}
-        <div className='mt-[8rem]'>
-          <ExhibitionCarousel />
-        </div>
-        <div>
-          <Carousel className=' w-full max-w-xs'>
-            <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index}>
-                  <div className='p-1'>
-                    <Card>
-                      <CardContent className='flex aspect-square items-center justify-center p-6'>
-                        <span className='text-4xl font-semibold'>{index + 1}</span>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-        {/* 오픈예정 */}
-        <div>
-          <Carousel className=' w-full max-w-xs'>
-            <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index}>
-                  <div className='p-1'>
-                    <Card>
-                      <CardContent className='flex aspect-square items-center justify-center p-6'>
-                        <span className='text-4xl font-semibold'>{index + 1}</span>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
-        {/* 인기경매 */}
-        <div>
-          <Carousel className=' w-full max-w-xs'>
-            <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <CarouselItem key={index}>
-                  <div className='p-1'>
-                    <Card>
-                      <CardContent className='flex aspect-square items-center justify-center p-6'>
-                        <span className='text-4xl font-semibold'>{index + 1}</span>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
+        <section className='mt-[8rem]'>
+          <BestAuction popularRef={popularRef} />
+        </section>
       </main>
     </>
   );
