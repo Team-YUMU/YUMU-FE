@@ -74,6 +74,7 @@ interface RegistrationRequestProps {
   artName: string;
   artSubTitle: string;
   artDescription: string;
+  artSummary: string;
   artSize: string;
   artCreatedDate?: Date;
   auctionStartDate?: Date;

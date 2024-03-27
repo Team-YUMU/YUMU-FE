@@ -19,13 +19,13 @@ import { TimePickerDemo } from '@/components/domain/live/time-picker-demo';
 import { postAuction } from '@/services/api';
 import { RegistrationProps } from '@/types/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Image from 'next/image';
 
 const defaultValues: Partial<RegistrationProps> = {
   request: {
     artName: '',
     artSubTitle: '',
     artDescription: '',
+    artSummary: '',
     artSize: '',
     artCreatedDate: undefined,
     auctionStartDate: undefined,
@@ -149,6 +149,43 @@ export default function Registration() {
               <FormField
                 control={form.control}
                 name='request.artSubTitle'
+                render={({ field }) => (
+                  <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
+                    <div className='space-y-[1.2rem] pt-3'>
+                      <FormLabel className='text-28-400'>
+                        짧은 제목 <span className='text-red-F'>*</span>
+                      </FormLabel>
+                      <SecondLabel>
+                        <p>
+                          작품을 빠르고 쉽게 이해할 수 있도록
+                          <br />
+                          명확하고 간략하게 소개해주세요!
+                        </p>
+                      </SecondLabel>
+                    </div>
+                    <div className='space-y-[1.2rem]'>
+                      <div>
+                        <ThirdLabel>
+                          <p>작품 요약</p>
+                        </ThirdLabel>
+                        <ForthLabel>*메인페이지에 나오는 안내글입니다.</ForthLabel>
+                      </div>
+                      <FormControl>
+                        <Input
+                          placeholder='작품 제목을 입력해주세요.'
+                          className='font-[NotoSansKR] text-16-500'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <Separator className='my-[8rem]' />
+              <FormField
+                control={form.control}
+                name='request.artSummary'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
