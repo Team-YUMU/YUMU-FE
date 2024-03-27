@@ -31,7 +31,7 @@ const Chating: React.FC = () => {
     { type: 'chat', memberId: '654321', message: `It's Test Message` },
   ]);
   const [inputValue, setInputValue] = useState('');
-  const [chatValue, setChatValue] = useState<ChatHistoryProps | null>(null);
+  // const [chatValue, setChatValue] = useState<ChatHistoryProps | null>(null);
 
   // Stomp의 CompatClient 객체를 참조하는 객체 (리렌더링에도 유지하기 위해 useRef 사용)
   // Stomp 라이브러와와 소켓 연결을 수행하는 client 객체에 접근하기 위함
