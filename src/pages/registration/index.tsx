@@ -41,14 +41,11 @@ export default function Registration() {
     console.log('handleAuctionData');
 
     const formData = new FormData();
-    formData.append('image', imageFile);
+    formData.append('image', imageFile as unknown as string);
 
-    for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        const value = data[key];
-        formData.append(key, value);
-        console.log(`${key}:`, value, typeof value);
-      }
+    for (const [key, value] of Object.entries(data)) {
+      console.log(key, value);
+      formData.append(key, value);
     }
 
     console.log(formData.get('image'), formData.get('artName'));
@@ -64,6 +61,9 @@ export default function Registration() {
     <div className='m-auto w-[137.6rem] pt-2 font-[TheJamsil] text-[#222] md:w-[60rem] sm:w-[40rem]'>
       <h1 className='mb-[8rem] p-0 text-36-400'>작품등록</h1>
       <form onSubmit={handleSubmit(onPost)} encType='multipart/form-data' className='grid grid-cols-[2fr_3fr] gap-2'>
+        <button type='submit' className='col-span-2 border text-20-500'>
+          등록
+        </button>
         <LeftLabel htmlFor='artName' mainLabel='작품 제목' subLabel1='멋진 제목을 붙여주세요!' subLabel2='최고!' />
         <Input {...register('artName')} id='artName' placeholder='작품 이름' className='border' />
         <div>
@@ -144,10 +144,6 @@ export default function Registration() {
           </label>
         </div>
         <Input {...register('receiveType')} id='receiveType' placeholder='수령 방법' className='border' />
-
-        <button type='submit' className='col-span-2 border text-20-500'>
-          등록
-        </button>
       </form>
       <div>
         <label className='text-20-500' htmlFor='image'>

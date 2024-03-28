@@ -79,7 +79,7 @@ export interface RegistrationProps {
   artCreatedDate?: string;
   auctionStartDate?: string;
   auctionEndDate?: string;
-  defaultBid?: number;
+  defaultBid?: string;
   notice: string;
   receiveType: string;
 }
