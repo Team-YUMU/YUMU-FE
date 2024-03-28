@@ -21,19 +21,17 @@ import { RegistrationProps } from '@/types/types';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const defaultValues: Partial<RegistrationProps> = {
-  request: {
-    artName: '',
-    artSubTitle: '',
-    artDescription: '',
-    artSummary: '',
-    artSize: '',
-    artCreatedDate: undefined,
-    auctionStartDate: undefined,
-    auctionEndDate: undefined,
-    defaultBid: undefined,
-    notice: '',
-    receiveType: '',
-  },
+  artName: '',
+  artSubTitle: '',
+  artDescription: '',
+  artSummary: '',
+  artSize: '',
+  artCreatedDate: undefined,
+  auctionStartDate: undefined,
+  auctionEndDate: undefined,
+  defaultBid: undefined,
+  notice: '',
+  receiveType: '',
   image: undefined,
 };
 
@@ -61,12 +59,20 @@ export default function Registration() {
 
   function onSubmit(data: RegistrationProps) {
     const formData = {
-      request: data.request,
+      artName: data.artName,
+      artSubTitle: data.artSubTitle,
+      artDescription: data.artDescription,
+      artSummary: data.artSummary,
+      artSize: data.artSize,
+      artCreatedDate: data.artCreatedDate,
+      auctionStartDate: data.auctionStartDate,
+      auctionEndDate: data.auctionEndDate,
+      defaultBid: data.defaultBid,
+      notice: data.notice,
+      receiveType: data.receiveType,
       image: selectedImage,
     };
-
     console.log(formData);
-
     postAuction(formData);
   }
 
@@ -85,7 +91,7 @@ export default function Registration() {
     <div className='m-auto w-[137.6rem] pt-2 font-[TheJamsil] text-[#222] md:w-[60rem] sm:w-[40rem]'>
       <h1 className='mb-[8rem] p-0 text-36-400 '>작품등록</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} encType='multipart/form-data'>
           <Tabs defaultValue='기본등록' className=' w-full'>
             <TabsList className='mb-[9.6rem] flex h-[3.7rem] w-full flex-row gap-[2rem] text-[#c5c5c5]'>
               {Object.keys(tabMenus).map((tab) => (
@@ -111,7 +117,7 @@ export default function Registration() {
             <TabsContent value='기본등록' className='m-auto w-[120rem] px-[8.8rem]'>
               <FormField
                 control={form.control}
-                name='request.artName'
+                name='artName'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -119,18 +125,14 @@ export default function Registration() {
                         작품 제목 <span className='text-red-F'>*</span>
                       </FormLabel>
                       <SecondLabel>
-                        <p>
-                          당신의 노력이 더욱 빛날 수 있도록
-                          <br />
-                          멋진 제목을 붙여주세요!
-                        </p>
+                        당신의 노력이 더욱 빛날 수 있도록
+                        <br />
+                        멋진 제목을 붙여주세요!
                       </SecondLabel>
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>작품 제목</p>
-                        </ThirdLabel>
+                        <ThirdLabel>작품 제목</ThirdLabel>
                         <ForthLabel>*상세페이지에 나오는 제목입니다.</ForthLabel>
                       </div>
                       <FormControl>
@@ -148,7 +150,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.artSubTitle'
+                name='artSubTitle'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -156,18 +158,14 @@ export default function Registration() {
                         짧은 제목 <span className='text-red-F'>*</span>
                       </FormLabel>
                       <SecondLabel>
-                        <p>
-                          작품을 빠르고 쉽게 이해할 수 있도록
-                          <br />
-                          명확하고 간략하게 소개해주세요!
-                        </p>
+                        작품을 빠르고 쉽게 이해할 수 있도록
+                        <br />
+                        명확하고 간략하게 소개해주세요!
                       </SecondLabel>
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>작품 요약</p>
-                        </ThirdLabel>
+                        <ThirdLabel>작품 요약</ThirdLabel>
                         <ForthLabel>*메인페이지에 나오는 안내글입니다.</ForthLabel>
                       </div>
                       <FormControl>
@@ -185,7 +183,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.artSummary'
+                name='artSummary'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -193,18 +191,14 @@ export default function Registration() {
                         작품 요약 <span className='text-red-F'>*</span>
                       </FormLabel>
                       <SecondLabel>
-                        <p>
-                          작품을 빠르고 쉽게 이해할 수 있도록
-                          <br />
-                          명확하고 간략하게 소개해주세요!
-                        </p>
+                        작품을 빠르고 쉽게 이해할 수 있도록
+                        <br />
+                        명확하고 간략하게 소개해주세요!
                       </SecondLabel>
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>작품 요약</p>
-                        </ThirdLabel>
+                        <ThirdLabel>작품 요약</ThirdLabel>
                         <ForthLabel>*메인페이지에 나오는 안내글입니다.</ForthLabel>
                       </div>
                       <FormControl>
@@ -230,18 +224,14 @@ export default function Registration() {
                         대표 이미지 <span className='text-red-F'>*</span>
                       </FormLabel>
                       <SecondLabel>
-                        <p>
-                          작품을 쉽게 파악할 수 있도록
-                          <br />
-                          멋진 이미지를 선정해주세요!
-                        </p>
+                        작품을 쉽게 파악할 수 있도록
+                        <br />
+                        멋진 이미지를 선정해주세요!
                       </SecondLabel>
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>대표 이미지</p>
-                        </ThirdLabel>
+                        <ThirdLabel>대표 이미지</ThirdLabel>
                         <ForthLabel>*상세페이지에 나오는 이미지입니다.</ForthLabel>
                       </div>
                       <FormControl>
@@ -253,6 +243,7 @@ export default function Registration() {
                               }}
                               type='file'
                               onInput={handleFileChange}
+                              formEncType='multipart/form-data;'
                               accept='image/*'
                               className='z-20 h-full w-full border-none bg-contain bg-center bg-no-repeat p-0 font-[NotoSansKR] text-16-500 text-[#fafafa]'
                               {...field}
@@ -277,7 +268,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.artSize'
+                name='artSize'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -294,9 +285,7 @@ export default function Registration() {
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>작품 규모</p>
-                        </ThirdLabel>
+                        <ThirdLabel>작품 규모</ThirdLabel>
                         <ForthLabel>*단위는 cm입니다.</ForthLabel>
                       </div>
                       <FormControl>
@@ -310,7 +299,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.artCreatedDate'
+                name='artCreatedDate'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -327,9 +316,7 @@ export default function Registration() {
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>제작 일자</p>
-                        </ThirdLabel>
+                        <ThirdLabel>제작 일자</ThirdLabel>
                         <ForthLabel>*대략적인 제작 일자를 기입해주세요.</ForthLabel>
                       </div>
                       <Popover>
@@ -367,7 +354,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.auctionStartDate'
+                name='auctionStartDate'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -384,9 +371,7 @@ export default function Registration() {
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>경매 시작 일시</p>
-                        </ThirdLabel>
+                        <ThirdLabel>경매 시작 일시</ThirdLabel>
                       </div>
                       <Popover>
                         <PopoverTrigger asChild>
@@ -430,15 +415,13 @@ export default function Registration() {
               />
               <FormField
                 control={form.control}
-                name='request.auctionEndDate'
+                name='auctionEndDate'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div />
                     <div className='space-y-[1.2rem] pt-3'>
                       <div>
-                        <ThirdLabel>
-                          <p>경매 종료 일시</p>
-                        </ThirdLabel>
+                        <ThirdLabel>경매 종료 일시</ThirdLabel>
                       </div>
                       <Popover>
                         <PopoverTrigger asChild>
@@ -483,7 +466,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.defaultBid'
+                name='defaultBid'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -500,9 +483,7 @@ export default function Registration() {
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>경매 시작가</p>
-                        </ThirdLabel>
+                        <ThirdLabel>경매 시작가</ThirdLabel>
                         <ForthLabel>*단위는 원입니다</ForthLabel>
                       </div>
                       <FormControl>
@@ -516,7 +497,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.receiveType'
+                name='receiveType'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -533,9 +514,7 @@ export default function Registration() {
                     </div>
                     <div className='space-y-[1.2rem] font-[NotoSansKR] text-16-500'>
                       <div>
-                        <ThirdLabel>
-                          <p>수령 방법</p>
-                        </ThirdLabel>
+                        <ThirdLabel>수령 방법</ThirdLabel>
                         <ForthLabel>*상세페이지에 나오는 제목입니다.</ForthLabel>
                       </div>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -569,7 +548,7 @@ export default function Registration() {
               <Separator className='my-[8rem]' />
               <FormField
                 control={form.control}
-                name='request.notice'
+                name='notice'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -584,9 +563,7 @@ export default function Registration() {
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>유의 사항</p>
-                        </ThirdLabel>
+                        <ThirdLabel>유의 사항</ThirdLabel>
                         <ForthLabel>*상세페이지에 나오는 유의사항입니다.</ForthLabel>
                       </div>
                       <FormControl>
@@ -605,7 +582,7 @@ export default function Registration() {
             <TabsContent value='작품상세' className='m-autoflex w-[120rem] flex-col gap-[8rem] px-[8.8rem]'>
               <FormField
                 control={form.control}
-                name='request.artDescription'
+                name='artDescription'
                 render={({ field }) => (
                   <FormItem className='grid w-full grid-cols-[2fr_3fr] '>
                     <div className='space-y-[1.2rem] pt-3'>
@@ -622,9 +599,7 @@ export default function Registration() {
                     </div>
                     <div className='space-y-[1.2rem]'>
                       <div>
-                        <ThirdLabel>
-                          <p>작품 상세</p>
-                        </ThirdLabel>
+                        <ThirdLabel>작품 상세</ThirdLabel>
                         <ForthLabel>*상세페이지에 나오는 내용입니다.</ForthLabel>
                       </div>
                       <FormControl>

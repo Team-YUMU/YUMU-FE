@@ -70,7 +70,7 @@ export interface AuctionProps {
   receiveType: string;
 }
 
-interface RegistrationRequestProps {
+export interface RegistrationProps {
   artName: string;
   artSubTitle: string;
   artDescription: string;
@@ -82,12 +82,9 @@ interface RegistrationRequestProps {
   defaultBid?: number;
   notice: string;
   receiveType: string;
-}
-
-export interface RegistrationProps {
-  request: RegistrationRequestProps;
   image: string;
 }
+
 export interface AuctionCheckProps {
   page?: number;
   size?: number;
