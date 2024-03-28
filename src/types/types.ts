@@ -76,13 +76,14 @@ export interface RegistrationProps {
   artDescription: string;
   artSummary: string;
   artSize: string;
-  artCreatedDate?: Date;
-  auctionStartDate?: Date;
-  auctionEndDate?: Date;
+  artCreatedDate?: string;
+  auctionStartDate?: string;
+  auctionEndDate?: string;
   defaultBid?: number;
   notice: string;
   receiveType: string;
   image: string;
+  FormData: FormData;
 }
 
 export interface AuctionCheckProps {

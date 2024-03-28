@@ -12,9 +12,9 @@ export const auctionFormSchema = z.object({
   artSize: z
     .string({ required_error: '필수 항목입니다.' })
     .regex(/^\d+x\d+x\d+$/, { message: '가로x세로x높이 꼴로 입력해주세요' }),
-  artCreatedDate: z.date({ required_error: '필수 항목입니다.' }),
-  auctionStartDate: z.date({ required_error: '필수 항목입니다.' }),
-  auctionEndDate: z.date({ required_error: '필수 항목입니다.' }),
+  artCreatedDate: z.string({ required_error: '필수 항목입니다.' }),
+  auctionStartDate: z.string({ required_error: '필수 항목입니다.' }),
+  auctionEndDate: z.string({ required_error: '필수 항목입니다.' }),
   defaultBid: z
     .number({ required_error: '필수 항목입니다.' })
     .min(1, { message: '필수 항목입니다.' })
@@ -27,5 +27,4 @@ export const auctionFormSchema = z.object({
       message: '160자 이내로 작성해주세요.',
     })
     .optional(),
-  image: z.string({ required_error: '필수 항목입니다.' }).min(1, { message: '필수 항목입니다.' }),
 });
