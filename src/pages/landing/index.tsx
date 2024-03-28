@@ -41,7 +41,7 @@ export default function Landing() {
             <div>
               <Image src='/svgs/openLive.svg' alt='' width={313} height={293} />
               <div>
-                <p className='mt-[4rem] font-[TheJamsil] text-36-400 text-[#222]'>오픈 예정 Live 경매</p>
+                <p className='mt-[4rem] font-TheJamsil text-36-400 text-[#222]'>오픈 예정 Live 경매</p>
                 <p className='mt-[1rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>매력적인 예술품이 곧 오픈 됩니다.</p>
                 <button
                   onClick={() => {
