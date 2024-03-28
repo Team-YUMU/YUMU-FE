@@ -28,9 +28,70 @@ export async function postAuthLogin(loginData: PostAuthLoginProps) {
 
 // SNS signIn API (SNS 로그인)
 
+//SNS signIn Token
+// export const getToken = async () => {
+//   const search = new URLSearchParams(window.location.search);
+//   const code = search.get('code');
+//   if (!code) {
+//     return {};
+//   }
+
+//   const param = new URLSearchParams({
+//     grant_type: 'authorization_code',
+//     client_id: '35db98ff4af114997aed8f7d44938cfd',
+//     redirect_uri: 'http://43.200.219.117:8080/api/v1/auth/kakao/callback',
+//     code,
+//   });
+//   const res = await fetch('https://kauth.kakao.com/oauth/token', {
+//     method: 'POST',
+//     headers: {
+//       'Content-type': 'Content-type: application/x-www-form-urlencoded;charset=utf-8',
+//     },
+//     body: param,
+//   });
+
+//   const result = await res.json;
+//   console.log(result);
+//   return result;
+// };
+
+export const getToken = async () => {
+  const search = new URLSearchParams(window.location.search);
+  const code = search.get('code');
+  if (!code) {
+    return;
+  }
+  try {
+    const param = new URLSearchParams({
+      grant_type: 'authorization_code',
+      client_id: '35db98ff4af114997aed8f7d44938cfd',
+      redirect_uri: 'http://43.200.219.117:8080/api/v1/auth/kakao/callback',
+      code,
+    });
+    const res = await axios.post('https://kauth.kakao.com/oauth/token', param);
+
+    const data = res.data;
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log('error', error);
+  }
+};
 // signUp-page API (회원가입)
 export async function postUsers(signUpData: PostAuthSignUpProps) {
   const res = await axios.post<UserInfoProps>(`${BASE_URL}/auth/signup`, signUpData);
+  return res.data;
+}
+
+// 이메일 중복체크 API
+export async function getCheckEmail(email: string) {
+  const res = await axios.get(`${BASE_URL}/auth/signup/email-check`, { params: { email } });
+  return res.data;
+}
+
+// 닉네임 중복체크 API
+export async function getCheckNickname(nickname: string): Promise<boolean> {
+  const res = await axios.get<boolean>(`${BASE_URL}/auth/signup/nickname-check`, { params: { nickname } });
   return res.data;
 }
 
