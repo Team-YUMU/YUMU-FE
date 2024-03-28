@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schemaSignin } from '@/types/validator/signForm';
 import AuthInput from '@/components/ui/AuthInput';
-import { postAuthLogin } from '@/services/api';
+import { getToken, postAuthLogin } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import axios from 'axios';
@@ -39,31 +40,51 @@ export default function SignInPage() {
   };
   //http://43.200.219.117:8080/api/v1/auth/kakao/callback
   //http://localhost:8080/api/v1/auth/kakao/callback
-  const redirect_uri = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
-  const client_secret = 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL';
-  const client_id = '35db98ff4af114997aed8f7d44938cfd';
-  const response_type = 'code';
+
+  // const redirect_uri = 'http://43.200.219.117:8080/api/v1/auth/kakao/callback';
+  // const client_secret = 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL';
+  // const client_id = '35db98ff4af114997aed8f7d44938cfd';
+  // const response_type = 'code';
+
+  useEffect(() => {
+    const search = new URLSearchParams(window.location.search);
+    const code = search.get('code');
+
+    if (code) {
+      handleGetToken();
+    }
+  }, []);
   const KakaoLoginBaseURL = 'https://kauth.kakao.com/oauth/authorize';
 
   const authParam = new URLSearchParams({
-    client_id,
-    redirect_uri,
-    response_type,
-    client_secret,
+    client_id: '35db98ff4af114997aed8f7d44938cfd',
+    redirect_uri: 'http://43.200.219.117:8080/api/v1/auth/kakao/callback',
+    response_type: 'code',
+    client_secret: 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL',
   });
 
   const handleKakaoLogin = async () => {
     try {
-      const res = await axios.get(`${KakaoLoginBaseURL}?${authParam.toString()}`);
-      const accessToken = res.headers['authorization'];
-      const refreshToken = res.headers['refresh'];
-      sessionStorage.setItem('accessToken', accessToken);
-      sessionStorage.setItem('refreshToken', refreshToken);
-      return res.data;
+      router.push(`${KakaoLoginBaseURL}?${authParam.toString()}`);
     } catch (error) {
       console.log('error', error);
     }
     console.log('카카오버튼 클릭');
+  };
+
+  interface TokenResponse {
+    token_type: string;
+    access_token: string;
+    expires_in: number;
+    refresh_token: string;
+    refresh_token_expires_in: number;
+  }
+  const handleGetToken = async () => {
+    const { token_type, access_token, expires_in, refresh_token, refresh_token_expires_in }: TokenResponse =
+      await getToken();
+
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh', refresh_token);
   };
 
   return (
@@ -111,7 +132,7 @@ export default function SignInPage() {
               alt='kakao'
               className='absolute left-[2.8rem] mt-8'
             />
-            <Button variant='sns' size='auth' className='bg-yellow text-[2rem] text-black-0' onClick={handleKakaoLogin}>
+            <Button onClick={handleKakaoLogin} variant='sns' size='auth' className='bg-yellow text-[2rem] text-black-0'>
               카카오로 로그인
             </Button>
           </div>
