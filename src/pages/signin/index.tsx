@@ -46,14 +46,14 @@ export default function SignInPage() {
   // const client_id = '35db98ff4af114997aed8f7d44938cfd';
   // const response_type = 'code';
 
-  useEffect(() => {
-    const search = new URLSearchParams(window.location.search);
-    const code = search.get('code');
+  // useEffect(() => {
+  //   const search = new URLSearchParams(window.location.search);
+  //   const code = search.get('code');
 
-    if (code) {
-      handleGetToken();
-    }
-  }, []);
+  //   if (code) {
+  //     handleGetToken();
+  //   }
+  // }, []);
   const KakaoLoginBaseURL = 'https://kauth.kakao.com/oauth/authorize';
 
   const authParam = new URLSearchParams({
@@ -72,20 +72,20 @@ export default function SignInPage() {
     console.log('카카오버튼 클릭');
   };
 
-  interface TokenResponse {
-    token_type: string;
-    access_token: string;
-    expires_in: number;
-    refresh_token: string;
-    refresh_token_expires_in: number;
-  }
-  const handleGetToken = async () => {
-    const { token_type, access_token, expires_in, refresh_token, refresh_token_expires_in }: TokenResponse =
-      await getToken();
+  // interface TokenResponse {
+  //   token_type: string;
+  //   access_token: string;
+  //   expires_in: number;
+  //   refresh_token: string;
+  //   refresh_token_expires_in: number;
+  // }
+  // const handleGetToken = async () => {
+  //   const { token_type, access_token, expires_in, refresh_token, refresh_token_expires_in }: TokenResponse =
+  //     await getToken();
 
-    localStorage.setItem('access_token', access_token);
-    localStorage.setItem('refresh', refresh_token);
-  };
+  //   localStorage.setItem('access_token', access_token);
+  //   localStorage.setItem('refresh', refresh_token);
+  // };
 
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
