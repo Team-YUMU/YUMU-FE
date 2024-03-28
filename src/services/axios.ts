@@ -28,8 +28,7 @@ export const authInstanceWithMedia = axios.create({
   },
 });
 
-// 그 뭐냐 경매글 등록할 때 쓸 에이시오스 그거 이름 알아서 정해라 미래의 나
-// 폼 데이터로 수정하기!
+// 경매글 등록
 export const authInstanceForRegist = axios.create({
   baseURL: 'http://43.200.219.117:8080/',
   headers: {

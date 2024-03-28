@@ -82,8 +82,6 @@ export interface RegistrationProps {
   defaultBid?: number;
   notice: string;
   receiveType: string;
-  image: string;
-  FormData: FormData;
 }
 
 export interface AuctionCheckProps {
