@@ -6,9 +6,10 @@ import testArts from '@/mocks/testArts.json';
 
 type BestAuctionProps = {
   className?: string;
+  popularRef?: React.RefObject<HTMLDivElement>;
 };
 
-export function BestAuction({ className = '' }: BestAuctionProps) {
+export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
   const artData = testArts.results;
   const [arts, setArts] = useState(artData);
   const [today, setToday] = useState('');
@@ -25,11 +26,11 @@ export function BestAuction({ className = '' }: BestAuctionProps) {
   return (
     <section className={`flex flex-col gap-10 ${className}`}>
       <div>
-        <h2 className='mb-[1rem] font-[TheJamsil] text-36-400 text-black-2'>인기 경매</h2>
+        <h2 className='mb-[1rem] font-TheJamsil text-36-400 text-black-2'>인기 경매</h2>
         <p className='text-18-500 text-gray-9'>{today} 기준</p>
       </div>
 
-      <Carousel className='w-full'>
+      <Carousel className='w-full' ref={popularRef}>
         <CarouselContent className='-ml-4'>
           {arts.map((item) => (
             <CarouselItem key={item.id} className='basis-1/4 pl-[1.6rem]'>
