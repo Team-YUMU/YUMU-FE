@@ -13,7 +13,7 @@ interface MembersInfoProps {
   introduce: null | string;
   snsLink: null | string;
   profileImage: string;
-  provider: null | string;
+  loginStatus: null | string;
 }
 
 export default function MyPage() {
@@ -23,7 +23,7 @@ export default function MyPage() {
     introduce: '',
     snsLink: '',
     profileImage: '',
-    provider: null,
+    loginStatus: null,
   });
   const [changeUi, setChangeUi] = useState(false);
   const router = useRouter();
@@ -39,14 +39,17 @@ export default function MyPage() {
   const handleChangeUi = () => {
     setChangeUi(!changeUi);
   };
-  const handleLogoutClick = () => {
-    sessionStorage.removeItem('accessToken');
-    sessionStorage.removeItem('refreshToken');
-    router.push('/');
+  const handleLogoutClick = async () => {
+    try {
+      await postAuthLogout();
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancelButtonClick = () => {
-    setChangeUi(false);
+    window.location.reload();
   };
 
   return (
@@ -93,7 +96,7 @@ export default function MyPage() {
 
                 <Separator className='w-full' />
                 <p className='h-[2.3rem] w-[28rem] text-center text-16-400 leading-[2rem] text-gray-9'>
-                  {memberInfo.email}
+                  {memberInfo.loginStatus === 'DEFAULT' ? memberInfo.email : '카카오로 로그인 되었습니다.'}
                 </p>
 
                 <Button onClick={handleLogoutClick} size={'myPage'} variant={'myPage'}>

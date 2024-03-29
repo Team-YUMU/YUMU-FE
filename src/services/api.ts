@@ -32,57 +32,6 @@ export async function postAuthLogin(loginData: PostAuthLoginProps) {
   }
 }
 
-// SNS signIn API (SNS 로그인)
-
-//SNS signIn Token
-// export const getToken = async () => {
-//   const search = new URLSearchParams(window.location.search);
-//   const code = search.get('code');
-//   if (!code) {
-//     return {};
-//   }
-
-//   const param = new URLSearchParams({
-//     grant_type: 'authorization_code',
-//     client_id: '35db98ff4af114997aed8f7d44938cfd',
-//     redirect_uri: 'http://43.200.219.117:8080/api/v1/auth/kakao/callback',
-//     code,
-//   });
-//   const res = await fetch('https://kauth.kakao.com/oauth/token', {
-//     method: 'POST',
-//     headers: {
-//       'Content-type': 'Content-type: application/x-www-form-urlencoded;charset=utf-8',
-//     },
-//     body: param,
-//   });
-
-//   const result = await res.json;
-//   console.log(result);
-//   return result;
-// };
-
-export const getToken = async () => {
-  const search = new URLSearchParams(window.location.search);
-  const code = search.get('code');
-  if (!code) {
-    return;
-  }
-  try {
-    const param = new URLSearchParams({
-      grant_type: 'authorization_code',
-      client_id: '35db98ff4af114997aed8f7d44938cfd',
-      redirect_uri: 'http://43.200.219.117:8080/api/v1/auth/kakao/callback',
-      code,
-    });
-    const res = await axios.post('https://kauth.kakao.com/oauth/token', param);
-
-    const data = res.data;
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log('error', error);
-  }
-};
 // signUp-page API (회원가입)
 export async function postMember(signUpData: PostAuthSignUpProps) {
   const res = await axios.post<MemberInfoProps>(`${BASE_URL}/auth/signup`, signUpData);
@@ -103,13 +52,25 @@ export async function getCheckNickname(nickname: string): Promise<boolean> {
 
 // Logout API (로그아웃)
 export async function postAuthLogout() {
-  const res = await authAxios.get<MemberInfoProps>(`${BASE_URL}/auth/logout`);
-  return res.data;
+  const res = await authAxios.post(`${BASE_URL}/logout`);
+  try {
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 // 계정 삭제
 export async function deleteWithMember() {
-  const res = await authAxios.delete(`${BASE_URL}/auth/withdraw`);
-  return res.data;
+  const res = await authAxios.delete(`${BASE_URL}/withdraw`);
+  try {
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // my-page get API (내정보 조회)
@@ -142,12 +103,15 @@ export async function deleteMemberProfileImage() {
 // my-page put API (비밀번호 수정)
 
 // 비밀번호 수정
-export async function putMemberPasswordData({ password, newPassword }: PutMemberPwdProps) {
-  const res = await authAxios.put(`${MY_PAGE_MEMBERS_URL}/password`, { password, newPassword });
-  return res;
+export async function putMemberPasswordData({ password, newPassword, newCheckPassword }: PutMemberPwdProps) {
+  const res = await authAxios.put(`${MY_PAGE_MEMBERS_URL}/password`, { password, newPassword, newCheckPassword });
+  try {
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-// my-page put API (회원 정보 수정)
 // 내 작품 조회
 export async function getArts() {
   const res = await authAxios.get(`${MY_PAGE_BASE_URL}/arts`);

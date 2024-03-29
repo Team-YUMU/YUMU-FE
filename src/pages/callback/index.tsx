@@ -17,8 +17,9 @@ export default function callback() {
         const accessToken = res.headers['authorization'];
         const refreshToken = res.headers['refresh'];
 
-        console.log(accessToken);
-        console.log(refreshToken);
+        sessionStorage.setItem('accessToken', accessToken);
+        sessionStorage.setItem('refreshToken', refreshToken);
+        window.location.href = '/';
       } catch (error) {
         console.log('error', error);
       }
@@ -34,5 +35,4 @@ export default function callback() {
   // };
 
   // router.push('/');
-  return <>callback</>;
 }
