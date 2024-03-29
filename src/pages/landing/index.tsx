@@ -85,6 +85,7 @@ export default function Landing() {
             <Carousel
               opts={{
                 align: 'start',
+                loop: true,
               }}
               plugins={[Autoplay({ delay: 4000 })]}
               className='mr-[8.2rem] w-full max-w-[87.2rem]'

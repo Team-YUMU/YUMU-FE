@@ -61,6 +61,7 @@ export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
         ref={popularRef}
         opts={{
           align: 'start',
+          loop: true,
         }}
         plugins={[Autoplay({ delay: 4000 })]}
       >
