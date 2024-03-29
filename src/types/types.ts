@@ -70,22 +70,20 @@ export interface AuctionProps {
   receiveType: string;
 }
 
-interface RegistrationRequestProps {
+export interface RegistrationProps {
   artName: string;
+  artSubTitle: string;
   artDescription: string;
+  artSummary: string;
   artSize: string;
-  artCreatedDate?: Date;
-  auctionStartDate?: Date;
-  auctionEndDate?: Date;
-  defaultBid?: number;
+  artCreatedDate?: string;
+  auctionStartDate?: string;
+  auctionEndDate?: string;
+  defaultBid?: string;
   notice: string;
   receiveType: string;
 }
 
-export interface RegistrationProps {
-  request: RegistrationRequestProps;
-  image: string;
-}
 export interface AuctionCheckProps {
   page?: number;
   size?: number;

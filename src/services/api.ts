@@ -135,7 +135,8 @@ export async function getWishHistory() {
 }
 
 // auction post API (경매글 등록)
-export async function postAuction(auctionRegister: RegistrationProps) {
+export async function postAuction(auctionRegister: FormData) {
+  console.log('auctionRegister', auctionRegister);
   const res = await authRegist.post(`${AUCTION_BASE_URL}`, auctionRegister);
   return res.data;
 }
