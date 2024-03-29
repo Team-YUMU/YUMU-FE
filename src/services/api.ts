@@ -11,6 +11,7 @@ import saveTokensLocally, {
   instance as axios,
   authInstanceWithMedia as axiosMedia,
 } from './axios';
+import { error } from 'console';
 const BASE_URL = `/api/v1`;
 const MY_PAGE_BASE_URL = `${BASE_URL}/mypage`;
 const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
@@ -103,12 +104,18 @@ export async function getCheckNickname(nickname: string): Promise<boolean> {
 
 // Logout API (로그아웃)
 export async function postAuthLogout() {
-  const res = await authAxios.get<MemberInfoProps>(`${BASE_URL}/auth/logout`);
-  return res.data;
+  const res = await authAxios.post(`${BASE_URL}/logout`);
+  try {
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 // 계정 삭제
 export async function deleteWithMember() {
-  const res = await authAxios.delete(`${BASE_URL}/auth/withdraw`);
+  const res = await authAxios.delete(`${BASE_URL}/withdraw`);
   return res.data;
 }
 
@@ -147,7 +154,6 @@ export async function putMemberPasswordData({ password, newPassword }: PutMember
   return res;
 }
 
-// my-page put API (회원 정보 수정)
 // 내 작품 조회
 export async function getArts() {
   const res = await authAxios.get(`${MY_PAGE_BASE_URL}/arts`);
