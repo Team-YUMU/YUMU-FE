@@ -91,10 +91,10 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
               onClick={() => {
                 router.push(`/search?sort=${encodeURIComponent('live')}`);
               }}
-              className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] hover:fill-[#FF7752] hover:text-[#FF7752] '
+              className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] hover:text-[#FF7752] '
             >
               <span className='mr-[.7rem] '>더보기</span>
-              <Image src='/svgs/main1-moreArrow.svg' alt='' width={18} height={6} className='h-[.6rem] w-[1.86rem] ' />
+              <Image src='/svgs/m1-moreArrow.svg' alt='' width={18} height={6} className='h-[.6rem] w-[1.86rem] ' />
             </div>
           </div>
         </div>
