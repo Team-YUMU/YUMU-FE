@@ -100,16 +100,6 @@ export async function getCheckNickname(nickname: string): Promise<boolean> {
   const res = await axios.get<boolean>(`${BASE_URL}/auth/signup/nickname-check`, { params: { nickname } });
   return res.data;
 }
-// 닉네임 중복 체크
-export async function getMemberNickNameCheck(nickname: string) {
-  const res = await axios.get(`${BASE_URL}/auth/signup/nickname-check?nickname=${nickname}`);
-  return res;
-}
-// 이메일 중복 체크
-export async function getMemberEmailCheck(email: string) {
-  const res = await axios.get(`${BASE_URL}/auth/signup/email-check?email=${email}`);
-  return res;
-}
 
 // Logout API (로그아웃)
 export async function postAuthLogout() {
