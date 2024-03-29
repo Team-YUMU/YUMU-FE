@@ -8,14 +8,14 @@ interface InputProps extends HTMLProps<HTMLInputElement> {
   required: boolean;
   errorMessage?: string | undefined;
   type: 'password' | 'text' | 'email' | 'file';
-  name: 'password' | 'text' | 'email' | 'file' | 'nickname' | 'checkPassword' | 'newPassword' | 'newPasswordCheck';
+  name: 'password' | 'text' | 'email' | 'file' | 'nickname' | 'checkPassword' | 'newPassword' | 'newCheckPassword';
 }
 
 const AuthInput = forwardRef<HTMLInputElement, InputProps>(
   ({ label, errorMessage, type, className, name, ...props }, ref) => {
     const [inputType, setInputType] = useState<'password' | 'text' | 'email' | 'file'>(type);
     const [inputName] = useState<
-      'password' | 'text' | 'email' | 'file' | 'nickname' | 'checkPassword' | 'newPassword' | 'newPasswordCheck'
+      'password' | 'text' | 'email' | 'file' | 'nickname' | 'checkPassword' | 'newPassword' | 'newCheckPassword'
     >(name);
     const [isFocused, setIsFocused] = useState(false);
 
@@ -75,7 +75,7 @@ const AuthInput = forwardRef<HTMLInputElement, InputProps>(
           {inputName === 'password' ||
           inputName === 'checkPassword' ||
           inputName === 'newPassword' ||
-          inputName === 'newPasswordCheck' ? (
+          inputName === 'newCheckPassword' ? (
             <PwdIcon
               width={15}
               height={15}

@@ -103,6 +103,7 @@ export interface MemberInfoProps {
 export interface PutMemberPwdProps {
   password: string;
   newPassword: string;
+  newCheckPassword: string;
 }
 
 export interface PostAuthLoginProps {
