@@ -39,14 +39,17 @@ export default function MyPage() {
   const handleChangeUi = () => {
     setChangeUi(!changeUi);
   };
-  const handleLogoutClick = () => {
-    sessionStorage.removeItem('accessToken');
-    sessionStorage.removeItem('refreshToken');
-    router.push('/');
+  const handleLogoutClick = async () => {
+    try {
+      await postAuthLogout();
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancelButtonClick = () => {
-    setChangeUi(false);
+    window.location.reload();
   };
 
   return (
