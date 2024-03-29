@@ -92,23 +92,21 @@ export default function Edit() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col items-center justify-center gap-[2.1rem]'>
           {memberInfo.profileImage ? (
-            <div className='border-1 h-[20rem] w-[20rem] rounded-[20rem]'>
+            <div className='border-1 relative h-[20rem] w-[20rem] rounded-[20rem]'>
               <Image
                 src={memberInfo.profileImage}
-                width={20}
-                height={20}
                 alt='회원 이미지'
-                className=' h-full w-full rounded-[50rem] border-[0.1rem] '
+                className=' h-full w-full rounded-[50rem] border-[0.1rem]'
+                fill
               />
             </div>
           ) : (
-            <div className='border-1 h-[20rem] w-[20rem] rounded-[20rem]'>
+            <div className='border-1 relative h-[20rem] w-[20rem] rounded-[20rem]'>
               <Image
                 src={memberInfo.profileImage}
-                width={20}
-                height={20}
                 alt='회원 이미지'
-                className=' h-full w-full rounded-[50rem] border-[0.1rem] '
+                className=' h-full w-full rounded-[50rem] border-[0.1rem]'
+                fill
               />
             </div>
           )}
@@ -151,7 +149,7 @@ export default function Edit() {
           <p className='h-[6rem] w-[28rem] flex-shrink-0 text-16-500 leading-[2rem] text-gray-9'>
             {memberInfo.loginStatus === 'DEFAULT' ? memberInfo.email : '카카오로 로그인 되었습니다.'}
           </p>
-          <NewPasswordModalForm />
+          {memberInfo.loginStatus === 'DEFAULT' ? <NewPasswordModalForm /> : null}
           <Button type='button' size='myPage' variant='myPage' onClick={handleLogoutClick}>
             <span className='text-center text-16-500  text-gray-9'>로그아웃</span>
           </Button>
