@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage } from '../ui/avatar';
-import { useRouter } from 'next/router';
 import SearchForm from './SearchForm';
 import Image from 'next/image';
 import { getMemberInfo } from '@/services/api';
@@ -21,7 +20,6 @@ interface userData {
 
 export default function Header() {
   const [memberData, setMemberData] = useState<userData>();
-  const router = useRouter();
   // const boardId = router.query.id;
 
   //데이터를 불러온다.
@@ -37,21 +35,16 @@ export default function Header() {
     console.log(memberData);
   };
 
-  //id 값이 바뀔때 마다 실행되지만 accesstoken 로컬 스토리지에 존재하는 경우 닉네임 데이터를 가져 온다.
   useEffect(() => {
-    const Token = sessionStorage.getItem('accessToken');
-    // const Token = localStorageStorage.getItem('refeshToken');
-    console.log(Token);
-    if (Token) {
-      userMembersData();
-    }
+    userMembersData();
   }, []);
 
   //로그아웃 클릭시 토큰 제거와 메인 페이지 이동
   const handleLogout = () => {
     sessionStorage.removeItem('accessToken');
-    if (!sessionStorage.getItem('accessToken')) {
-      router.push('/');
+    sessionStorage.removeItem('refreshToken');
+    if (!localStorage.getItem('accessToken')) {
+      window.location.href = '/';
     }
   };
 

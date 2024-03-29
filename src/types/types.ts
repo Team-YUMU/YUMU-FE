@@ -1,4 +1,4 @@
-export interface UsersProps {
+export interface MemberProps {
   id: number;
   email: string;
   nickname: string;
@@ -90,7 +90,7 @@ export interface AuctionCheckProps {
   keyword?: string;
 }
 
-export interface UserInfoProps {
+export interface MemberInfoProps {
   id: number;
   email: string;
   nickname: string;
@@ -100,10 +100,7 @@ export interface UserInfoProps {
   profileImage: null | string;
 }
 
-export interface PutUserProps {
-  nickname: string;
-  introduce: string;
-  profileImage: string | null;
+export interface PutMemberPwdProps {
   password: string;
   newPassword: string;
 }
