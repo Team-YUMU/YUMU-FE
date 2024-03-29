@@ -1,34 +1,47 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import MyPageTabs from '../../components/domain/myPage/Tabs/MyPageTabs';
 import Edit from '@/components/domain/myPage/Tabs/Edit/Edit';
 import { useRouter } from 'next/router';
-import Members from '@/mocks/Member';
-// import { getMemberInfo } from '@/services/api';
+import { getMemberInfo, postAuthLogout } from '@/services/api';
+
+interface MembersInfoProps {
+  nickname: string;
+  email: string;
+  introduce: null | string;
+  snsLink: null | string;
+  profileImage: string;
+  provider: null | string;
+}
 
 export default function MyPage() {
-  const [memberInfo] = useState({
-    password: '',
-    newPassword: '',
-    newPasswordCheck: '',
-    email: 'example2@example.com',
-    nickname: '홍길동',
+  const [memberInfo, setMemberInfo] = useState<MembersInfoProps>({
+    nickname: '',
+    email: '',
+    introduce: '',
+    snsLink: '',
     profileImage: '',
-    introduce: '안녕하세요. 저는 유저2입니다.',
-    Provider: null,
+    provider: null,
   });
   const [changeUi, setChangeUi] = useState(false);
   const router = useRouter();
 
-  const MembersData = Members;
+  const memberInfoData = async () => {
+    const res = await getMemberInfo();
+    setMemberInfo(res);
+  };
 
+  useEffect(() => {
+    memberInfoData();
+  }, []);
   const handleChangeUi = () => {
     setChangeUi(!changeUi);
   };
   const handleLogoutClick = () => {
-    // localStorage.removeItem
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
     router.push('/');
   };
 
@@ -57,7 +70,7 @@ export default function MyPage() {
               {' '}
               <div className='inline-flex flex-col items-center gap-[3rem]'>
                 <Image
-                  src='svgs/profile-image.svg'
+                  src={memberInfo.profileImage}
                   width={183}
                   height={183}
                   alt='회원 이미지'
@@ -75,12 +88,12 @@ export default function MyPage() {
                   </div>
                 </div>
                 <p className='h-[6.3rem] w-[22rem] text-center text-16-500 leading-[2rem] text-gray-9'>
-                  작가설명을 이렇게 넣어요! 최대 3줄이 들어가요! 이렇게!
+                  {memberInfo.introduce === null ? '소개 글을 작성 해주세요.' : memberInfo.introduce}
                 </p>
 
                 <Separator className='w-full' />
                 <p className='h-[2.3rem] w-[28rem] text-center text-16-400 leading-[2rem] text-gray-9'>
-                  {MembersData[1].email}
+                  {memberInfo.email}
                 </p>
 
                 <Button onClick={handleLogoutClick} size={'myPage'} variant={'myPage'}>

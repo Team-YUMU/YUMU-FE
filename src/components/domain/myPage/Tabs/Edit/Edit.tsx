@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import React from 'react';
 import { Input } from '@/components/ui/input';
@@ -9,42 +9,58 @@ import IntroEditForm from './IntroEditForm';
 import NewPasswordModalForm from './NewPasswordModalForm';
 import UserDeleteModal from './UserDeleteModal';
 import { Separator } from '@/components/ui/separator';
+import { deleteMemberProfileImage, getMemberInfo, putMemberProfileImageData } from '@/services/api';
 
 interface FormData {
   email: string;
+  nickname: string;
+  introduce: string;
   profileImage: string;
-  provider: string;
+  loginStatus: string;
 }
 
 export default function Edit() {
-  const { register, handleSubmit, setValue, watch } = useForm<FormData>();
-  const [memberInfo, setMemberInfo] = useState({
-    email: 'jackgg12322@yumu.com',
-    profileImage: 'svgs/profile-image.svg',
-    provider: 'DEFAULT',
+  const { register, handleSubmit } = useForm<FormData>();
+  const [memberInfo, setMemberInfo] = useState<FormData>({
+    email: '',
+    nickname: '',
+    introduce: '',
+    profileImage: '',
+    loginStatus: '',
   });
+  const onChangeImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setMemberInfo((prevMemberInfo) => ({
-        ...prevMemberInfo,
-        profileImage: imageUrl,
-      }));
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      const formData = new FormData();
+      formData.append('profileImage', uploadFile);
+
+      try {
+        await putMemberProfileImageData(formData);
+        memberInfoData();
+      } catch (error) {
+        console.error('이미지 업로드 오류:', error);
+      }
     }
   };
 
-  const handleImgDeleteClick = () => {
-    setMemberInfo((prevMemberInfo) => ({
-      ...prevMemberInfo,
-      profileImage: '',
-    }));
-    console.log(memberInfo);
-    const fileInput = watch('profileImage');
-    if (fileInput) {
-      setValue('profileImage', 'undefined');
-    }
+  useEffect(() => {
+    memberInfoData();
+  }, []);
+  const memberInfoData = async () => {
+    const { ...res } = await getMemberInfo();
+    setMemberInfo(res);
+    console.log(res);
+  };
+
+  useEffect(() => {
+    memberInfoData();
+  }, []);
+
+  const handleImgDeleteClick = async () => {
+    await deleteMemberProfileImage();
+    memberInfoData();
   };
 
   const onSubmit = (data: FormData) => {
@@ -67,7 +83,7 @@ export default function Edit() {
           ) : (
             <div className='border-1 h-[20rem] w-[20rem] rounded-[20rem]'>
               <Image
-                src={'/svgs/email-icon.svg'}
+                src={memberInfo.profileImage}
                 width={20}
                 height={20}
                 alt='회원 이미지'
@@ -88,7 +104,9 @@ export default function Edit() {
               type='file'
               className='hidden'
               accept='image/*'
-              onChange={handleFileChange}
+              required
+              multiple
+              onChange={onChangeImg}
             />
             <Button
               type='button'
@@ -102,15 +120,15 @@ export default function Edit() {
         </div>
       </form>
       <div className='inline-flex flex-col gap-[2rem]'>
-        <NickNameEditForm />
-        <IntroEditForm />
+        <NickNameEditForm nickname={memberInfo.nickname} />
+        <IntroEditForm introduce={memberInfo.introduce} />
         <div className='flex flex-col items-center gap-[1.2rem]'>
           <div className='h-[2.3rem] w-[28rem] flex-shrink-0'>
             <label className='text-12-500 leading-[2rem] text-gray-9'>아이디 정보</label>
           </div>
           <Separator orientation='vertical' className='h-[0.1rem] w-full bg-[#686868] p-0' />
           <p className='h-[6rem] w-[28rem] flex-shrink-0 text-16-500 leading-[2rem] text-gray-9'>
-            {memberInfo.provider === 'DEFAULT' ? memberInfo.email : '카카오로 로그인 되었습니다.'}
+            {memberInfo.loginStatus === 'DEFAULT' ? memberInfo.email : '카카오로 로그인 되었습니다.'}
           </p>
           <NewPasswordModalForm />
           <Button type='button' size='myPage' variant='myPage'>
