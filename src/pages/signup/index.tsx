@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { postUsers } from '@/services/api';
+import { getNicknameCheck, postUsers, getEmailCheck } from '@/services/api';
 import { useState } from 'react';
 // import axios from 'axios';
 import Link from 'next/link';
@@ -14,13 +14,24 @@ import {
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
 import { useRouter } from 'next/router';
-
+import { z } from 'zod';
 import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
+import { AxiosError } from 'axios';
+
+const emailResponseSchema = z.object({
+  message: z.string(),
+});
+
+const nicknameResponseSchema = z.object({
+  message: z.string(),
+});
 
 export default function SignUpPage() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorState, setErrorState] = useState(false);
 
   type FormData = {
     nickname: string;
@@ -37,10 +48,28 @@ export default function SignUpPage() {
 
   const onSubmit = async (data: FormData) => {
     try {
+      // const nicknameCheck = await getNicknameCheck(data.nickname);
+      // console.log(nicknameCheck);
+      const emailCheck = await getEmailCheck(data.email);
+      console.log(emailCheck);
+      setErrorState(false);
+      //=> {
+      //   const resEmail = emailCheck.response.data;
+      //   console.log(resEmail);
+      // const emailResponse = emailResponseSchema.parse(resEmail);
+      // if (emailResponse.code === '400') {
+      //   console.log('닉네임이 이미 사용중입니다.');
+      //   return;
+      // }
+
       setIsModalOpen(true);
       await postUsers(data);
     } catch (error) {
-      console.log('error', error);
+      if (error instanceof AxiosError) {
+        const emailErrorMessage: string = error.response?.data.errorMessage;
+        setErrorMessage(emailErrorMessage);
+        setErrorState(true);
+      }
     }
   };
 
@@ -55,7 +84,7 @@ export default function SignUpPage() {
 
           <form
             noValidate
-            className='flex w-full flex-col items-center justify-center gap-5'
+            className={`flex w-full flex-col items-center justify-center ${errorMessage ? 'gap-[3rem]' : 'gap-[0.6rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
             <AuthInput
@@ -72,11 +101,10 @@ export default function SignUpPage() {
               type='email'
               required={!!errors.email}
               placeholder='이메일을 입력해 주세요'
-              errorMessage={errors?.email?.message}
-              className=' h-[6.4rem] w-[43.8rem]'
+              errorMessage={errors?.email?.message && errorMessage ? errorMessage : 'undefined'}
+              className={`h-[6.4rem] w-[43.8rem] `}
               {...register('email')}
             />
-            {errors.email && <p></p>}
 
             <AuthInput
               type='password'

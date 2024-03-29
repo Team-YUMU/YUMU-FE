@@ -26,6 +26,16 @@ export async function postAuthLogin(loginData: PostAuthLoginProps) {
   }
 }
 
+// signIn-page nickname check (로그인 닉네임 중복체크)
+export async function getNicknameCheck(nickname: string) {
+  const res = await axios.get(`${BASE_URL}/auth/signup/nickname-check`, { params: { nickname } });
+  return res.data;
+}
+// signIn-page email check (로그인 이메일 중복체크)
+export async function getEmailCheck(email: string) {
+  const res = await axios.get(`${BASE_URL}/auth/signup/email-check`, { params: { email } });
+  return res.data;
+}
 // SNS signIn API (SNS 로그인)
 
 // signUp-page API (회원가입)
