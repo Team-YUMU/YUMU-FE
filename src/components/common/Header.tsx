@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage } from '../ui/avatar';
+import { useRouter } from 'next/router';
 import SearchForm from './SearchForm';
 import Image from 'next/image';
 import { getMemberInfo } from '@/services/api';
@@ -20,7 +21,7 @@ interface userData {
 
 export default function Header() {
   const [memberData, setMemberData] = useState<userData>();
-  // const boardId = router.query.id;
+  const router = useRouter();
 
   //데이터를 불러온다.
   const userMembersData = async () => {
@@ -39,7 +40,6 @@ export default function Header() {
     userMembersData();
   }, []);
 
-  //로그아웃 클릭시 토큰 제거와 메인 페이지 이동
   const handleLogout = () => {
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('refreshToken');

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Carousel,
   CarouselContent,
@@ -13,10 +13,38 @@ import { BestAuction } from '@/components/common/BestAuction';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { getAuction } from '@/services/api';
+import LikeButton from '@/components/common/LikeButton';
+
+interface popularProps {
+  id: number;
+  artName: string;
+  artSubTitle: string;
+  artImage: string;
+  artist: string;
+  status: string;
+  createdAt: string;
+  wishCnt: number;
+}
 
 export default function Landing() {
   const router = useRouter();
   const popularRef = useRef<HTMLDivElement>(null);
+  const [liveSoonData, setLiveSoonData] = useState<popularProps[]>([]);
+
+  const loadLiveSoonData = async () => {
+    try {
+      const data = await getAuction({ keyword: '', page: 0, sort: 'liveSoon', size: 30 });
+      console.log(data);
+      setLiveSoonData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    loadLiveSoonData();
+  }, []);
 
   const moveToArtist = () => {
     popularRef?.current?.scrollIntoView({
@@ -53,6 +81,7 @@ export default function Landing() {
                 </button>
               </div>
             </div>
+            {/* liveSoonData */}
             <Carousel
               opts={{
                 align: 'start',
@@ -61,9 +90,10 @@ export default function Landing() {
               className='mr-[8.2rem] w-full max-w-[87.2rem]'
             >
               <CarouselContent className='-ml-2'>
+                {/* {liveSoonData.map((item, index) => ( */}
                 {Array.from({ length: 5 }).map((_, index) => (
                   <div key={index}>
-                    <CarouselItem className='basis-1/3 pl-2'>
+                    <CarouselItem className='relative basis-1/3 pl-2 '>
                       <div className='p-1'>
                         <Image
                           src='/svgs/openLive.svg'
@@ -75,8 +105,9 @@ export default function Landing() {
                         <p className='mt-[1.5rem] text-20-700'>국내 스마트 워치 타니 프로2</p>
                         <p className='max-w-[19.1rem] text-18-500 text-[#999]'>국내앱 국내개발 국내보안 국내 최적화</p>
                       </div>
+                      <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                     </CarouselItem>
-                    <CarouselItem className='mt-[4rem] basis-1/3 pl-2'>
+                    <CarouselItem className='relative mt-[4rem] basis-1/3 pl-2'>
                       <div className='p-1'>
                         <Image
                           src='/svgs/openLive.svg'
@@ -88,6 +119,7 @@ export default function Landing() {
                         <p className='mt-[1.5rem] text-20-700'>국내 스마트 워치 타니 프로2</p>
                         <p className='max-w-[19.1rem] text-18-500 text-[#999]'>국내앱 국내개발 국내보안 국내 최적화</p>
                       </div>
+                      <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                     </CarouselItem>
                   </div>
                 ))}

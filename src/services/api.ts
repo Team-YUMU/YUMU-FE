@@ -4,7 +4,8 @@ import {
   AuctionCheckProps,
   PostAuthLoginProps,
   PostAuthSignUpProps,
-  PutMemberPwdProps,
+  PutUserProps,
+  FetchAuctionCheckProps,
 } from '@/types/types';
 import saveTokensLocally, {
   authInstance as authAxios,
@@ -159,21 +160,15 @@ export async function getAuctionHistory({ keyword, size, page }: AuctionCheckPro
   return res.data;
 }
 
-// auction get auctionPopularData API (인기 경매 조회)
-export async function getPopularAuction({ keyword, size, page }: AuctionCheckProps) {
-  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=popular&keyword=${keyword}`);
-  return res.data;
-}
-
 // auction get auctionSearchData API (경매글 검색)
 export async function getSearchAuction({ keyword, size, page }: AuctionCheckProps) {
   const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=&keyword="${keyword}"`);
   return res.data;
 }
 
-// auction get liveAuctionData API (라이브 경매 조회)
-export async function getLiveAuction({ keyword, size, page }: AuctionCheckProps) {
-  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=live&keyword=${keyword}`);
+//라이브 경매, 라이브 예정 경매, 인기경매
+export async function getAuction({ keyword, sort, size, page }: FetchAuctionCheckProps) {
+  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=${sort}&keyword=${keyword}`);
   return res.data;
 }
 

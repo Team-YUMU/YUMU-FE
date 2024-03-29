@@ -89,6 +89,12 @@ export interface AuctionCheckProps {
   size?: number;
   keyword?: string;
 }
+export interface FetchAuctionCheckProps {
+  page?: number;
+  size?: number;
+  keyword?: string;
+  sort: string;
+}
 
 export interface MemberInfoProps {
   id: number;

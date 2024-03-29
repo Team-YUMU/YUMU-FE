@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   MainCarouselPrevious,
   MainCarouselNext,
+  type CarouselApi,
 } from '@/components/ui/mainCarousel';
 import Image from 'next/image';
-// import Autoplay from 'embla-carousel-autoplay';
+import Autoplay from 'embla-carousel-autoplay';
 
 const BannerInformation = [
   {
@@ -58,36 +59,40 @@ const BannerInformation = [
 ];
 
 export default function LandingBanner() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+  console.log(count);
+  console.log(current);
 
-  const nextSlide = () => {
-    setActiveIndex((prevIndex) => (prevIndex === BannerInformation.length - 1 ? 0 : prevIndex + 1));
-  };
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
 
-  const prevSlide = () => {
-    setActiveIndex((prevIndex) => (prevIndex === 0 ? BannerInformation.length - 1 : prevIndex - 1));
-  };
+    api.on('select', () => {
+      console.log('current');
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
   return (
     <section>
       <Carousel
         className=' w-full'
-        // plugins={[
-        //   Autoplay({
-        //     delay: 2000,
-        //   }),
-        // ]}
-        opts={{
-          loop: true,
-          watchDrag: false,
-          active: false,
-        }}
+        setApi={setApi}
+        plugins={[
+          Autoplay({
+            delay: 4000,
+          }),
+        ]}
+        // opts={{
+        //   loop: true,
+        // }}
       >
-        <CarouselContent
-          style={{
-            transform: `translateX(-${activeIndex * 100}%)`,
-            transition: 'transform 0.5s ease-in-out',
-          }}
-        >
+        <CarouselContent>
           {BannerInformation.map((el, index) => (
             <CarouselItem className='relative' key={index}>
               <Image
@@ -95,7 +100,6 @@ export default function LandingBanner() {
                 alt={`배너이미지 `}
                 width={1375}
                 height={396}
-                priority
                 className='h-auto w-full object-cover'
               />
               <div className='absolute left-[15.6rem] top-0 max-h-[39.8rem] max-w-[37.2rem]'>
@@ -106,23 +110,27 @@ export default function LandingBanner() {
           ))}
         </CarouselContent>
         <MainCarouselPrevious
-          type='button'
-          onClick={prevSlide}
+          variant='arrow'
           className='h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
         />
         <MainCarouselNext
           type='button'
-          onClick={nextSlide}
+          variant='arrow'
           className='h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
         />
       </Carousel>
-      <div className='mt-4 flex justify-end'>
+      <div className='mt-4 flex justify-end text-muted-foreground'>
         {BannerInformation.map((_, index) => (
-          <span
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            className={`mx-2 h-[1.2rem] w-[1.2rem] cursor-pointer rounded-full ${index === activeIndex ? 'bg-[#ff7752]' : 'bg-[#d9d9d9]'}`}
-          ></span>
+          <>
+            <span
+              key={index}
+              className={`mx-2 h-[1.2rem] w-[1.2rem] cursor-pointer rounded-full ${index + 1 === current ? 'bg-[#ff7752]' : 'bg-[#d9d9d9]'}`}
+            ></span>
+            <div className='hidden'>
+              {count} of
+              {current}
+            </div>
+          </>
         ))}
       </div>
     </section>
