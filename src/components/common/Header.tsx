@@ -12,7 +12,7 @@ import { Avatar, AvatarImage } from '../ui/avatar';
 import { useRouter } from 'next/router';
 import SearchForm from './SearchForm';
 import Image from 'next/image';
-import { getMemberInfo } from '@/services/api';
+import { getMemberInfo, postAuthLogout } from '@/services/api';
 
 interface userData {
   nickname: string;
@@ -40,11 +40,12 @@ export default function Header() {
     userMembersData();
   }, []);
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('accessToken');
-    sessionStorage.removeItem('refreshToken');
-    if (!localStorage.getItem('accessToken')) {
-      window.location.href = '/';
+  const handleLogout = async () => {
+    try {
+      await postAuthLogout();
+      router.reload();
+    } catch (error) {
+      console.error('로그아웃 오류:', error);
     }
   };
 
@@ -78,11 +79,9 @@ export default function Header() {
                       마이페이지
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
                     <LogOut strokeWidth={2.5} size={15} color='#C5C5C5' className='mr-2 ' />
-                    <span onClick={handleLogout} className='text-16-500 leading-[2rem] text-[#9E9E9E]'>
-                      로그아웃
-                    </span>
+                    <span className='text-16-500 leading-[2rem] text-[#9E9E9E]'>로그아웃</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
