@@ -119,10 +119,19 @@ export async function getArts() {
   return res.data;
 }
 
+interface SalesHistoryProps {
+  id: number;
+  artTitle: string;
+  artist: string;
+  price: number;
+  saleDate: string;
+  auctionId: number;
+}
 // 판매내역 조회
-export async function getSalesHistory(cursor = 0) {
-  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/sold?cursor=${cursor}&limit=5`);
-  return res.data;
+export async function getSalesHistory(cursor: number, limit: number) {
+  const res = await authAxios.get<SalesHistoryProps[]>(`${MY_PAGE_BASE_URL}/sold?cursor=${cursor}&limit=${limit}`);
+  const postList: SalesHistoryProps[] = res.data;
+  return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
 }
 
 // 구매내역 조회
