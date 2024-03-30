@@ -31,10 +31,12 @@ export default function Landing() {
   const router = useRouter();
   const popularRef = useRef<HTMLDivElement>(null);
   const [liveSoonData, setLiveSoonData] = useState<popularProps[]>([]);
+  const [liveSoonDataSecond, setLiveSoonDataSecond] = useState<popularProps[]>([]);
 
   const loadLiveSoonData = async () => {
     try {
-      const data = await getAuction({ keyword: '', page: 0, sort: 'liveSoon', size: 30 });
+      const res = await getAuction({ keyword: '', page: 0, sort: 'liveSoon', size: 15 });
+      const data = res.auctions;
       console.log(data);
       setLiveSoonData(data);
     } catch (error) {
@@ -42,8 +44,23 @@ export default function Landing() {
     }
   };
 
+  const loadLiveSoonDataSecond = async () => {
+    try {
+      const res = await getAuction({ keyword: '', page: 1, sort: 'liveSoon', size: 15 });
+      const data = res.auctions;
+      console.log(data);
+      setLiveSoonDataSecond(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     loadLiveSoonData();
+  }, []);
+
+  useEffect(() => {
+    loadLiveSoonDataSecond();
   }, []);
 
   const moveToArtist = () => {
@@ -56,7 +73,7 @@ export default function Landing() {
   return (
     <>
       {/* 텍스트 박스 밑에 margin 없애기 */}
-      <main className='mx-auto max-w-[137.5rem] bg-[pink] pt-[4rem]'>
+      <main className='mx-auto max-w-[137.5rem] pt-[4rem]'>
         <LandingBanner />
         <section className='mx-auto flex max-w-[136.9rem] justify-between'>
           <LandingLivePopular moveToArtist={moveToArtist} />
@@ -81,7 +98,6 @@ export default function Landing() {
                 </button>
               </div>
             </div>
-            {/* liveSoonData */}
             <Carousel
               opts={{
                 align: 'start',
@@ -90,40 +106,29 @@ export default function Landing() {
               plugins={[Autoplay({ delay: 4000 })]}
               className='mr-[8.2rem] w-full max-w-[87.2rem]'
             >
-              <CarouselContent className='-ml-2'>
-                {/* {liveSoonData.map((item, index) => ( */}
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <div key={index}>
-                    <CarouselItem className='relative basis-1/3 pl-2 '>
+              <CarouselContent className='-ml-2 flex flex-wrap'>
+                <div>
+                  {liveSoonData.map((item, index) => (
+                    <CarouselItem className='relative basis-1/3  pl-2' key={index}>
                       <div className='p-1'>
-                        <Image
-                          src='/svgs/openLive.svg'
-                          alt=''
-                          width={280}
-                          height={200}
-                          className='max-h-[20rem] max-w-[28rem]'
-                        />
-                        <p className='mt-[1.5rem] text-20-700'>국내 스마트 워치 타니 프로2</p>
-                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>국내앱 국내개발 국내보안 국내 최적화</p>
+                        <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
+                        <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
+                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
                       </div>
                       <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                     </CarouselItem>
-                    <CarouselItem className='relative mt-[4rem] basis-1/3 pl-2'>
+                  ))}
+                  {liveSoonDataSecond.map((item, index) => (
+                    <CarouselItem className='relative mt-[4rem] basis-1/3 pl-2' key={index}>
                       <div className='p-1'>
-                        <Image
-                          src='/svgs/openLive.svg'
-                          alt=''
-                          width={280}
-                          height={200}
-                          className='max-h-[20rem] max-w-[28rem]'
-                        />
-                        <p className='mt-[1.5rem] text-20-700'>국내 스마트 워치 타니 프로2</p>
-                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>국내앱 국내개발 국내보안 국내 최적화</p>
+                        <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
+                        <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
+                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
                       </div>
                       <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                     </CarouselItem>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </CarouselContent>
               <MainCarouselPrevious
                 type='button'
