@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { getNicknameCheck, postUsers, getEmailCheck } from '@/services/api';
+
+import { postMember } from '@/services/api';
+
 import { useState } from 'react';
 // import axios from 'axios';
 import Link from 'next/link';
@@ -63,7 +65,7 @@ export default function SignUpPage() {
       // }
 
       setIsModalOpen(true);
-      await postUsers(data);
+      await postMember(data);
     } catch (error) {
       if (error instanceof AxiosError) {
         const emailErrorMessage: string = error.response?.data.errorMessage;
@@ -78,7 +80,7 @@ export default function SignUpPage() {
       <AlertDialog>
         <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
           <div className=' mb-[2.6rem] flex flex-col items-center'>
-            <h1 className='font-[TheJamsil]-400 text-[4.6rem] text-[#222]'>회원가입</h1>
+            <h1 className='font-TheJamsil text-[4.6rem] text-[#222]'>회원가입</h1>
             <h2 className='font-notoKR text-[1.6rem] text-gray-9'>회원가입에 필요한 정보를 입력해주세요.</h2>
           </div>
 

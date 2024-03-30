@@ -12,12 +12,18 @@ import {
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { deleteWithMember } from '@/services/api';
 
 export default function UserDeleteModal() {
   const router = useRouter();
-  const handleDeleteUserClick = () => {
-    // deleteMembersData();
-    router.push('/');
+
+  const handleDeleteUserClick = async () => {
+    try {
+      await deleteWithMember();
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <AlertDialog>

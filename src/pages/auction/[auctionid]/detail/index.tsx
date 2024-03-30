@@ -15,7 +15,7 @@ export default function AuctionDetailPage() {
 
   return (
     <div className='mx-auto my-0 flex w-[136.8rem] flex-col gap-20'>
-      <h2 className='font-[TheJamsil] text-36-400 text-black-2'>문은주 Moon Eunjoo 이불 밖은 위험해 2, 2023</h2>
+      <h2 className='font-TheJamsil text-36-400 text-black-2'>문은주 Moon Eunjoo 이불 밖은 위험해 2, 2023</h2>
       <div className='flex gap-5'>
         <section>
           <div className='relative mb-[1.8rem] h-[54rem] w-[91rem] overflow-hidden rounded-[1rem] bg-gray-100'>
@@ -39,7 +39,7 @@ export default function AuctionDetailPage() {
                 <LikeButton />
               </div>
 
-              <h2 className='mb-4 font-[TheJamsil] text-36-400 text-black-2'>이불 밖은 위험해 2, 2023</h2>
+              <h2 className='mb-4 font-TheJamsil text-36-400 text-black-2'>이불 밖은 위험해 2, 2023</h2>
               <p className='min-h-[19.3rem] text-18-500 text-gray-99'>
                 대중과 작가가 만날 수 있는 특별한 교류의 장, 프린트베이커리 문화기획 프로젝트 오픈 스튜디오가 10월 21일
                 (토) 에 오픈합니다. 가나아뜰리에 입주 작가와 PBG 전속작가, 그리고 평범한 마법봉이 협업하여 기부 전시를
@@ -75,7 +75,7 @@ export default function AuctionDetailPage() {
 
               <Link
                 href={``}
-                className='flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] bg-red-F font-[TheJamsil] text-[2.6rem] font-bold text-white'
+                className='flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] bg-red-F font-TheJamsil text-[2.6rem] font-bold text-white'
               >
                 Live 경매 참가하기
               </Link>

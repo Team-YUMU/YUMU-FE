@@ -13,7 +13,7 @@ export const schemaSignin = z.object({
   password: z
     .string()
     .min(6, { message: '최소 6자 이상 입력해 주세요.' })
-    .regex(/^(?=.*[a-zA-Z])(?=.*[0-9]).{6,25}$/, {
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!-*]).{6,16}$/, {
       message: '비밀번호는 영문 대/소 문자,숫자,특수기호를 조합해서 사용하세요.',
     }),
 });
@@ -25,7 +25,7 @@ export const schemaSignup = schemaSignin
       .string()
       .min(2, { message: '최소 2자 이상 입력해 주세요.' })
       .max(10, { message: '최대 10자 이하로 입력해 주세요.' })
-      .regex(/^[aeiou가-힣][a-zA-Z0-9가-힣_-]{1,10}$/, { message: '공백,특수문자 입력이 불가능합니다.' }),
+      .regex(/^[aeiou가-힣][a-zA-Z0-9가-힣_-]{2,10}$/, { message: '공백,특수문자 입력이 불가능합니다.' }),
   })
   .refine(
     (value) => {

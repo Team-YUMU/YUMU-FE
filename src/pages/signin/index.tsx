@@ -36,15 +36,32 @@ export default function SignInPage() {
       }
     }
     console.log('button clicked');
+
+
+  const KakaoLoginBaseURL = 'https://kauth.kakao.com/oauth/authorize';
+
+  const authParam = new URLSearchParams({
+    client_id: '35db98ff4af114997aed8f7d44938cfd',
+    redirect_uri: 'http://localhost:3000/callback',
+    response_type: 'code',
+    client_secret: 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL',
+  });
+
+  const handleKakaoLogin = async () => {
+    try {
+      router.push(`${KakaoLoginBaseURL}?${authParam.toString()}`);
+    } catch (error) {
+      console.log('error', error);
+    }
+    console.log('카카오버튼 클릭');
   };
 
-  const handleKakaoLogin = async () => {};
 
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
         <div className=' mb-[2.6rem] flex flex-col items-center'>
-          <h1 className='font-[TheJamsil]-400 text-[4.6rem] text-[#222] '>로그인</h1>
+          <h1 className='font-TheJamsil text-[4.6rem] text-[#222] '>로그인</h1>
           <h2 className='font-notoKR  text-[1.6rem] text-gray-9'>YUMU에 방문해주셔서 감사합니다.</h2>
         </div>
 
@@ -85,7 +102,7 @@ export default function SignInPage() {
               alt='kakao'
               className='absolute left-[2.8rem] mt-8'
             />
-            <Button variant='sns' size='auth' className='bg-yellow text-[2rem] text-black-0' onClick={handleKakaoLogin}>
+            <Button onClick={handleKakaoLogin} variant='sns' size='auth' className='bg-yellow text-[2rem] text-black-0'>
               카카오로 로그인
             </Button>
           </div>

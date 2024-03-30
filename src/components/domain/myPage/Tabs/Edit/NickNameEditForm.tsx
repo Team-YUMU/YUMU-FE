@@ -1,35 +1,37 @@
-import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { myPagePwEditSchema } from '@/types/validator/myPageForm';
-import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import { putMemberNickNameData } from '@/services/api';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 
 interface FormData {
   nickname: string;
 }
 
-export default function NickNameEditForm() {
+export default function NickNameEditForm({ nickname }: FormData) {
   const {
     register,
-    setValue,
     handleSubmit,
+    getValues,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(myPagePwEditSchema) });
-  const [memberInfo, setMemberInfo] = useState({
-    nickname: 'user2',
-  });
-
+  } = useForm<FormData>();
   const INPUT_SETTING = {
     placeholder: {
-      nickname: `${memberInfo.nickname}`,
+      nickname: `${nickname}`,
     },
   };
 
-  const handleNicknameEdit = () => {
-    setValue('nickname', memberInfo.nickname);
+  const onChangeNickName = async () => {
+    const nicknameParams = getValues('nickname');
+    try {
+      await putMemberNickNameData(nicknameParams);
+      alert('성공적으로 수정되었습니다.');
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error.response?.data.errorMessage);
+      }
+    }
   };
 
   const onSubmit = (data: FormData) => {
@@ -53,7 +55,7 @@ export default function NickNameEditForm() {
         />
         {errors?.nickname?.message}
         <div className='flex justify-end'>
-          <Button type='button' className='absolute bottom-[2rem]  rounded-[0.4rem]' onClick={handleNicknameEdit}>
+          <Button type='button' className='absolute bottom-[2rem]  rounded-[0.4rem]' onClick={onChangeNickName}>
             변경하기
           </Button>
         </div>

@@ -67,7 +67,7 @@ export function AuctionDetail() {
             <div className='flex h-[3.2rem] w-[16rem] shrink-0 items-center justify-center rounded-xl bg-[#fff2ee] text-16-700'>
               <p className='font-[notoKR] text-red-F'>아티스트 업데이트</p>
             </div>
-            <h1 className='pb-[1.8rem] pt-[2rem] font-[TheJamsil] text-36-400 text-[#222222]'>공지 제목</h1>
+            <h1 className='pb-[1.8rem] pt-[2rem] font-TheJamsil text-36-400 text-[#222222]'>공지 제목</h1>
             <p className='font-[notoKR] text-18-500 text-[#999999]'>공지 내용</p>
           </div>
           <div ref={(el) => (scrollRef.current[1] = el!)} className='flex flex-col gap-[3rem] font-[notoKR]'>
