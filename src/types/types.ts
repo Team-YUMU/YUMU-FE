@@ -123,3 +123,30 @@ export interface PostAuthSignUpProps {
   password: string;
   checkPassword: string;
 }
+
+export interface GetAuctionDetailsArtInfoProps {
+  id: number;
+  artName: string;
+  artSubTitle: string;
+  artImage: string;
+  artist: string;
+  status: string;
+  createAt: string;
+  wishCnt: number;
+}
+
+export interface GetAuctionDetailsProps {
+  artinfo: GetAuctionDetailsArtInfoProps;
+  id: number;
+  artDescription: string;
+  artSummary: null;
+  artSize: string;
+  artCreatedDate: string;
+  auctionStartDate: string;
+  auctionEndDate: string;
+  defaultBid: number;
+  winningBid: string | number;
+  winningBidder: string | null;
+  notice: string | null;
+  receiveType: string;
+}
