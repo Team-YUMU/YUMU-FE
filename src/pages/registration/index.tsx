@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import ScrollButtons from '@/components/common/ScrollButtons';
+import { useRouter } from 'next/router';
 
 const LeftLabel: React.FC<{
   htmlFor: string;
@@ -42,12 +43,13 @@ export default function Registration() {
   const [imageFile, setImageFile] = useState<File>();
   const [selectedImage, setSelectedImage] = useState<string>(''); // 대표 이미지 미리보기용
 
+  const router = useRouter();
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     if (event.target.files) {
       const file = event.target.files[0];
       setImageFile(file);
-      console.log('Selected image:', file);
       // 대표 이미지 미리보기용
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -60,21 +62,26 @@ export default function Registration() {
   };
 
   const handleAuctionData = async (data: RegistrationProps) => {
-    console.log('handleAuctionData');
-
     const formData = new FormData();
     formData.append('image', imageFile as unknown as string);
 
     for (const [key, value] of Object.entries(data)) {
-      console.log(key, value);
       formData.append(key, value);
     }
 
-    postAuction(formData).then(() => alert('저장되었습니다!'));
+    postAuction(formData)
+      .then(() => {
+        alert('저장되었습니다!');
+        router.push('/search');
+      })
+      .catch((error) => {
+        alert('경매 등록에 실패하였습니다! 이미지의 크기를 확인해주세요!');
+        console.error('postAuction error:', error);
+        // 오류 발생 시 처리할 내용 추가
+      });
   };
 
   function onPost(data: RegistrationProps) {
-    console.log('data : ', data);
     handleAuctionData(data);
   }
 
