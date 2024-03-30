@@ -205,6 +205,12 @@ const config = {
           fontWeight: '700',
         },
       ],
+      '22.5-400': [
+        '2.25rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       '22.5-500': [
         '2.25rem',
         {
@@ -212,6 +218,12 @@ const config = {
         },
       ],
       //fontsize: 24px
+      '24-500': [
+        '2.4rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '24-700': [
         '2.4rem',
         {
@@ -374,15 +386,15 @@ const config = {
         },
         gray: {
           7: '#787486',
+          8: '#888',
           9: '#9E9E9E',
-          C: '#CCC',
-          C5: '#C5C5C5',
+          99: '#999',
+          B: '#BDBDBD',
+          C: '#C5C5C5',
           D: '#D9D9D9',
           DF: '#DFDFDF',
           E: '#E0E0E0',
           F: '#FAFAFA',
-          B: '#BDBDBD',
-          99: '#999',
         },
         white: {
           DEFAULT: '#FFFFFF',

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { getLiveAuction, getPopularAuction } from '@/services/api';
+import { getAuction } from '@/services/api';
 import { Heart } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
@@ -23,11 +23,12 @@ interface LandingLivePopularProps {
 function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
   const [liveData, setLiveData] = useState<liveProps[]>([]);
   const [popularData, setPopularData] = useState<liveProps[]>([]);
+  const [today, setToday] = useState('');
   const router = useRouter();
 
   const loadLiveAuctionData = async () => {
     try {
-      const data = await getLiveAuction({ keyword: '', size: 3, page: 0 });
+      const data = await getAuction({ keyword: '', size: 3, page: 0, sort: 'live' });
       const auctionLiveData = data.auctions;
       console.log(auctionLiveData);
       setLiveData(auctionLiveData);
@@ -57,7 +58,7 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
 
   const loadPopularAuctionData = async () => {
     try {
-      const data = await getPopularAuction({ keyword: '', size: 3, page: 0 });
+      const data = await getAuction({ keyword: '', size: 3, page: 0, sort: 'popular' });
       const auctionPopularData = data.auctions;
       console.log(auctionPopularData);
       setPopularData(auctionPopularData);
@@ -68,6 +69,15 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
 
   useEffect(() => {
     loadPopularAuctionData();
+  }, []);
+
+  useEffect(() => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    setToday(year + '.' + month + '.' + day);
   }, []);
 
   return (
@@ -81,10 +91,10 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
               onClick={() => {
                 router.push(`/search?sort=${encodeURIComponent('live')}`);
               }}
-              className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] '
+              className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] hover:text-[#FF7752] '
             >
               <span className='mr-[.7rem] '>더보기</span>
-              <Image src='/svgs/main1-moreArrow.svg' alt='' width={18} height={6} className='h-[.6rem] w-[1.86rem]' />
+              <Image src='/svgs/m1-moreArrow.svg' alt='' width={18} height={6} className='h-[.6rem] w-[1.86rem] ' />
             </div>
           </div>
         </div>
@@ -95,8 +105,10 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
                 <>
                   <div key={index} className='mr-[1.6rem]'>
                     <div className='relative right-[-2rem] z-10'>
-                      <div className='h-[32rem] w-[24rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] p-[.4rem] shadow-md'>
-                        <Image className='h-full w-full' src={item.artImage} width={24} height={32} alt='' />
+                      <div className=' h-[32.8rem] w-[24.8rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] shadow-md'>
+                        <div className='relative left-[.4rem] top-[.4rem] h-[32rem] w-[24rem] overflow-hidden rounded-[.6rem]'>
+                          <Image src={item.artImage} alt='' fill className='transition-transform hover:scale-125' />
+                        </div>
                       </div>
                       <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
                         <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
@@ -162,13 +174,15 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
       <div className='h-[2rem] w-[43.9rem]'>
         <div>
           <p className='mb-[1rem] font-TheJamsil text-36-400 text-[#222]'>인기 경매</p>
-          <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'></p>
+          <p className='mb-[4rem] text-18-500 leading-[2rem] text-[#9E9E9E]'>{today} 기준</p>
         </div>
         <div className=''>
           {/* map으로 돌릴부분 */}
           {popularData.map((item, index) => (
             <div key={index} className='mb-[2rem] flex justify-between'>
-              <Image src={item.artImage} alt='' width={18} height={12} className='h-[12rem] w-[18rem]' />
+              <div className='relative  h-[12rem] w-[18rem] overflow-hidden'>
+                <Image src={item.artImage} alt='' fill className='transition-transform hover:scale-125' />
+              </div>
               <div className='w-[24.1rem]'>
                 <span className='mr-[1.4rem] text-18-500 text-[#FF7752]'>{index + 1}</span>
                 <span className='max-w-[20rem] text-20-700'>{item.artSubTitle}</span>

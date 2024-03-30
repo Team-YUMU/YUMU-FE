@@ -2,17 +2,43 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import AuctionCard from '@/components/common/AuctionCard';
-import testArts from '@/mocks/testArts.json';
+import Autoplay from 'embla-carousel-autoplay';
+import { getAuction } from '@/services/api';
 
 type BestAuctionProps = {
   className?: string;
   popularRef?: React.RefObject<HTMLDivElement>;
 };
 
+interface popularProps {
+  id: number;
+  artName: string;
+  artSubTitle: string;
+  artImage: string;
+  artist: string;
+  status: string;
+  createdAt: string;
+  wishCnt: number;
+}
+
 export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
-  const artData = testArts.results;
-  const [arts, setArts] = useState(artData);
   const [today, setToday] = useState('');
+  const [popularData, setPopularData] = useState<popularProps[]>([]);
+
+  const loadPopularAuctionData = async () => {
+    try {
+      const loadData = await getAuction({ keyword: '', page: 0, sort: 'popular', size: 30 });
+      const auctionData = loadData.auctions;
+      console.log(auctionData);
+      setPopularData(auctionData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    loadPopularAuctionData();
+  }, []);
 
   useEffect(() => {
     const today = new Date();
@@ -30,10 +56,18 @@ export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
         <p className='text-18-500 text-gray-9'>{today} 기준</p>
       </div>
 
-      <Carousel className='w-full' ref={popularRef}>
-        <CarouselContent className='-ml-4'>
-          {arts.map((item) => (
-            <CarouselItem key={item.id} className='basis-1/4 pl-[1.6rem]'>
+      <Carousel
+        className='w-full'
+        ref={popularRef}
+        opts={{
+          align: 'start',
+          loop: true,
+        }}
+        plugins={[Autoplay({ delay: 4000 })]}
+      >
+        <CarouselContent className='-ml-2'>
+          {popularData.map((item) => (
+            <CarouselItem key={item.id} className='basis-1/4 pl-2'>
               <Link href={`/auction/${item.id}/detail`}>
                 <AuctionCard {...item} />
               </Link>

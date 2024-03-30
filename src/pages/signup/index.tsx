@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { postUsers } from '@/services/api';
+import { postMember } from '@/services/api';
 import { useState } from 'react';
 // import axios from 'axios';
 import Link from 'next/link';
@@ -38,7 +38,7 @@ export default function SignUpPage() {
   const onSubmit = async (data: FormData) => {
     try {
       setIsModalOpen(true);
-      await postUsers(data);
+      await postMember(data);
     } catch (error) {
       console.log('error', error);
     }

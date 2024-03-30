@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import React from 'react';
 import { Input } from '@/components/ui/input';
@@ -9,41 +9,78 @@ import IntroEditForm from './IntroEditForm';
 import NewPasswordModalForm from './NewPasswordModalForm';
 import UserDeleteModal from './UserDeleteModal';
 import { Separator } from '@/components/ui/separator';
+import { deleteMemberProfileImage, getMemberInfo, postAuthLogout, putMemberProfileImageData } from '@/services/api';
+import { useRouter } from 'next/router';
 
 interface FormData {
   email: string;
+  nickname: string;
+  introduce: string;
   profileImage: string;
-  provider: string;
+  loginStatus: string;
 }
 
 export default function Edit() {
-  const { register, handleSubmit, setValue, watch } = useForm<FormData>();
-  const [memberInfo, setMemberInfo] = useState({
-    email: 'jackgg12322@yumu.com',
-    profileImage: 'svgs/profile-image.svg',
-    provider: 'DEFAULT',
+  const { register, handleSubmit } = useForm<FormData>();
+  const [memberInfo, setMemberInfo] = useState<FormData>({
+    email: '',
+    nickname: '',
+    introduce: '',
+    profileImage: '',
+    loginStatus: '',
   });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setMemberInfo((prevMemberInfo) => ({
-        ...prevMemberInfo,
-        profileImage: imageUrl,
-      }));
+  const router = useRouter();
+
+  const onChangeImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      const formData = new FormData();
+      formData.append('profileImage', uploadFile);
+
+      try {
+        await putMemberProfileImageData(formData);
+        memberInfoData();
+      } catch (error) {
+        console.error('이미지 업로드 오류:', error);
+      }
     }
   };
 
-  const handleImgDeleteClick = () => {
-    setMemberInfo((prevMemberInfo) => ({
-      ...prevMemberInfo,
-      profileImage: '',
-    }));
-    console.log(memberInfo);
-    const fileInput = watch('profileImage');
-    if (fileInput) {
-      setValue('profileImage', 'undefined');
+  useEffect(() => {
+    memberInfoData();
+  }, []);
+  const memberInfoData = async () => {
+    try {
+      const { ...res } = await getMemberInfo();
+      setMemberInfo(res);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    memberInfoData();
+  }, []);
+
+  const handleLogoutClick = async () => {
+    try {
+      await postAuthLogout();
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleImgDeleteClick = async () => {
+    try {
+      await deleteMemberProfileImage();
+      memberInfoData();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -55,23 +92,21 @@ export default function Edit() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col items-center justify-center gap-[2.1rem]'>
           {memberInfo.profileImage ? (
-            <div className='border-1 h-[20rem] w-[20rem] rounded-[20rem]'>
+            <div className='border-1 relative h-[20rem] w-[20rem] rounded-[20rem]'>
               <Image
                 src={memberInfo.profileImage}
-                width={20}
-                height={20}
                 alt='회원 이미지'
-                className=' h-full w-full rounded-[50rem] border-[0.1rem] '
+                className=' h-full w-full rounded-[50rem] border-[0.1rem]'
+                fill
               />
             </div>
           ) : (
-            <div className='border-1 h-[20rem] w-[20rem] rounded-[20rem]'>
+            <div className='border-1 relative h-[20rem] w-[20rem] rounded-[20rem]'>
               <Image
-                src={'/svgs/email-icon.svg'}
-                width={20}
-                height={20}
+                src={memberInfo.profileImage}
                 alt='회원 이미지'
-                className=' h-full w-full rounded-[50rem] border-[0.1rem] '
+                className=' h-full w-full rounded-[50rem] border-[0.1rem]'
+                fill
               />
             </div>
           )}
@@ -88,7 +123,9 @@ export default function Edit() {
               type='file'
               className='hidden'
               accept='image/*'
-              onChange={handleFileChange}
+              required
+              multiple
+              onChange={onChangeImg}
             />
             <Button
               type='button'
@@ -102,18 +139,18 @@ export default function Edit() {
         </div>
       </form>
       <div className='inline-flex flex-col gap-[2rem]'>
-        <NickNameEditForm />
-        <IntroEditForm />
+        <NickNameEditForm nickname={memberInfo.nickname} />
+        <IntroEditForm introduce={memberInfo.introduce} />
         <div className='flex flex-col items-center gap-[1.2rem]'>
           <div className='h-[2.3rem] w-[28rem] flex-shrink-0'>
             <label className='text-12-500 leading-[2rem] text-gray-9'>아이디 정보</label>
           </div>
           <Separator orientation='vertical' className='h-[0.1rem] w-full bg-[#686868] p-0' />
           <p className='h-[6rem] w-[28rem] flex-shrink-0 text-16-500 leading-[2rem] text-gray-9'>
-            {memberInfo.provider === 'DEFAULT' ? memberInfo.email : '카카오로 로그인 되었습니다.'}
+            {memberInfo.loginStatus === 'DEFAULT' ? memberInfo.email : '카카오로 로그인 되었습니다.'}
           </p>
-          <NewPasswordModalForm />
-          <Button type='button' size='myPage' variant='myPage'>
+          {memberInfo.loginStatus === 'DEFAULT' ? <NewPasswordModalForm /> : null}
+          <Button type='button' size='myPage' variant='myPage' onClick={handleLogoutClick}>
             <span className='text-center text-16-500  text-gray-9'>로그아웃</span>
           </Button>
           <UserDeleteModal />
