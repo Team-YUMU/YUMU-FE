@@ -4,8 +4,8 @@ import {
   AuctionCheckProps,
   PostAuthLoginProps,
   PostAuthSignUpProps,
-  PutUserProps,
   FetchAuctionCheckProps,
+  PutMemberPwdProps,
 } from '@/types/types';
 import saveTokensLocally, {
   authInstance as authAxios,
