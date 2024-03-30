@@ -3,8 +3,8 @@ import { Button } from '../ui/button';
 import { Separator } from '../ui/separator';
 
 interface AuctionDetailProps {
-  description: string | undefined;
-  notice: string | null | undefined;
+  description?: string | undefined;
+  notice?: string | null | undefined;
 }
 
 type MenuType = '작품 소개' | '작가 소개' | '유의사항';
