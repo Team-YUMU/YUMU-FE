@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import AuctionCard from '@/components/common/AuctionCard';
+// import AuctionCard from '@/components/common/AuctionCard';
 import testArts from '@/mocks/testArts.json';
 import { QueryClient, useQuery, keepPreviousData } from '@tanstack/react-query';
 import Pagination from '@/components/common/Pagination';
@@ -19,6 +19,7 @@ type Todo = {
 type Art = {
   id: number;
   artName: string;
+  artSubTitle: string;
   artImage: string;
   artist: string;
   status: string;
@@ -100,9 +101,7 @@ function SearchPage() {
         <ul className='grid w-full grid-cols-4 gap-x-[3rem] gap-y-[6rem]'>
           {sortedItems?.map((item) => (
             <li key={item.id}>
-              <Link href={`/auction/${item.id}/detail`}>
-                <AuctionCard {...item} />
-              </Link>
+              <Link href={`/auction/${item.id}/detail`}>{/* <AuctionCard {...item} /> */}</Link>
             </li>
           ))}
         </ul>
