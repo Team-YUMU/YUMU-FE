@@ -1,10 +1,10 @@
 import { BidHistories } from '@/components/domain/live/BidHistories';
-import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { LiveVideo } from '@/components/domain/live/livevideo';
 import { LiveChatting } from '@/components/domain/live/livechatting';
-import { CircleAlert } from 'lucide-react';
 import ScrollButtons from '@/components/common/ScrollButtons';
+import InfoBox from '@/components/common/InfoBox';
+import BiddingBox from '@/components/domain/live/BiddingBox';
 
 export default function Live() {
   return (
@@ -16,16 +16,15 @@ export default function Live() {
             비디오 켜지면 플리 이상하게 들려서 끄려고 대충 만든 녀석인데 비디오 컴포넌트 잘 만들어져 있으니까 걱정
             마세요. 사이즈도 동일합니다.
           </div>
+          <InfoBox className='mb-[2rem]' />
           {/* <LiveVideo /> */}
-          <div className='flex h-[8rem] w-full flex-row items-center space-x-[1.3rem] rounded-xl bg-stone-50 px-[3.2rem] text-16-700'>
-            <CircleAlert color='#bdbdbd' size={16} />
-            <p className='text-16-700 text-stone-300'>제주도 및 도서 산간 지역은 배송이 불가합니다.</p>
-          </div>
         </div>
         <LiveChatting />
         <AuctionDetail />
-        <BidHistories />
-        <ExhibitionCarousel />
+        <div className='space-y-[2rem]'>
+          <BiddingBox />
+          <BidHistories />
+        </div>
       </div>
       <ScrollButtons />
     </div>
