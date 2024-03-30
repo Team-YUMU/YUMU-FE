@@ -134,10 +134,19 @@ export async function getSalesHistory(cursor: number, limit: number) {
   return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
 }
 
+interface BuyHistoryProps {
+  id: number;
+  artTitle: string;
+  artist: string;
+  price: number;
+  purchaseDate: string;
+  auctionId: number;
+}
 // 구매내역 조회
-export async function getBuyHistory() {
-  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/buy`);
-  return res.data;
+export async function getBuyHistory(cursor: number, limit: number) {
+  const res = await authAxios.get<BuyHistoryProps[]>(`${MY_PAGE_BASE_URL}/buy?cursor=${cursor}&limit=${limit}`);
+  const postList: BuyHistoryProps[] = res.data;
+  return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
 }
 // 관심목록 조회
 export async function getWishHistory() {
