@@ -3,6 +3,7 @@
     {
       "id": 1,
       "artName": "Draw your own map (Langley, BC)",
+      "artSubTitle": "서브제목입니다.",
       "artImage":
         "https://ymkimstorage.s3.ap-northeast-2.amazonaws.com/art4.png",
       "artist": "에디강 Eddie Kang",
@@ -13,6 +14,7 @@
     {
       "id": 2,
       "artName": "저녁시간, 2023",
+      "artSubTitle": "서브제목입니다.",
       "artImage":
         "https://ymkimstorage.s3.ap-northeast-2.amazonaws.com/art5.png",
       "artist": "김정윤 Kim JungYoun",
@@ -23,6 +25,7 @@
     {
       "id": 3,
       "artName": "이불 밖은 위험해 2, 2023",
+      "artSubTitle": "서브제목입니다.",
       "artImage":
         "https://ymkimstorage.s3.ap-northeast-2.amazonaws.com/art2.png",
       "artist": "문은주 Moon Eunjoo",
@@ -33,6 +36,7 @@
     {
       "id": 4,
       "artName": "사랑하는 강아지 Love dog",
+      "artSubTitle": "서브제목입니다.",
       "artImage":
         "https://ymkimstorage.s3.ap-northeast-2.amazonaws.com/art1.png",
       "artist": "보트 Boat",
@@ -43,6 +47,7 @@
     {
       "id": 5,
       "artName": "무엇을 하지도, 누구를 기다리지 않아도 되는 지금, 2023",
+      "artSubTitle": "서브제목입니다.",
       "artImage":
         "https://ymkimstorage.s3.ap-northeast-2.amazonaws.com/art3.png",
       "artist": "만욱 Man Wook",

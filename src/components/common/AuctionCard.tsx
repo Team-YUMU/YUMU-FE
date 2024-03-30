@@ -5,16 +5,17 @@ import LikeButton from './LikeButton';
 type Art = {
   id: number;
   artName: string;
+  artSubTitle: string;
   artImage: string;
   artist: string;
   status: string;
-  createdAt: number;
+  createdAt: string;
   wishCnt: number;
 };
 
 export default function AuctionCard({ artName, artImage, artist }: Art) {
   return (
-    <div className='relative'>
+    <div className='relative p-1'>
       <div className='group relative h-[20rem] w-full overflow-hidden rounded-[0.6rem] bg-gray-100'>
         <Image src={artImage} alt={artName} className='transition-transform group-hover:scale-125' fill />
       </div>
