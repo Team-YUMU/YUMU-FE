@@ -13,7 +13,7 @@ import saveTokensLocally, {
   authInstanceWithMedia as axiosMedia,
 } from './axios';
 const BASE_URL = `/api/v1`;
-const MY_PAGE_BASE_URL = `${BASE_URL}/mypage`;
+const MY_PAGE_BASE_URL = `${BASE_URL}/my-page`;
 const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
 const AUCTION_BASE_URL = `${BASE_URL}/auction`;
 
@@ -120,10 +120,11 @@ export async function getArts() {
 }
 
 // 판매내역 조회
-export async function getSalesHistory() {
-  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/sold`);
+export async function getSalesHistory(cursor = 0) {
+  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/sold?cursor=${cursor}&limit=5`);
   return res.data;
 }
+
 // 구매내역 조회
 export async function getBuyHistory() {
   const res = await authAxios.get(`${MY_PAGE_BASE_URL}/buy`);

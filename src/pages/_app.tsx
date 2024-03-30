@@ -15,12 +15,15 @@ export default function App({ Component, pageProps }: AppProps) {
   if (exceptionPath.includes(router.pathname)) return <Component {...pageProps} />;
 
   if (router.pathname.startsWith('/mypage')) {
+    const queryClient = new QueryClient();
     return (
       <SubLayout>
         <Head>
           <title>YUMU 유무</title>
         </Head>
-        <Component {...pageProps}></Component>
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps}></Component>
+        </QueryClientProvider>
       </SubLayout>
     );
   }
