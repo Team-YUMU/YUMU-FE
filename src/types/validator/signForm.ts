@@ -1,10 +1,15 @@
 import { z } from 'zod';
 
+/*
+try - catch 에러처리에 getEmailCheck 의 리스폰스.데이터.메시지 값을 조드 에 추가하면 되지 않을까.
+*/
+
 export const schemaSignin = z.object({
   email: z
     .string()
     .email({ message: '이메일 형식에 맞지 않는 메일 주소입니다.' })
     .min(2, { message: '이메일을 입력해 주세요.' }),
+
   password: z
     .string()
     .min(6, { message: '최소 6자 이상 입력해 주세요.' })
