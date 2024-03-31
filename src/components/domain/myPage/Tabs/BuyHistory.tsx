@@ -5,6 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Fragment, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function BuyHistory() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function BuyHistory() {
     data: postInfoList,
     fetchNextPage,
     hasNextPage,
+    isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ['posts'],
@@ -49,7 +51,7 @@ export default function BuyHistory() {
                   <div className='ml-[4.8rem]'>
                     <span className='h-[1.8333rem] w-[5rem] flex-shrink-0 text-18-700 text-gray-9'>배송중</span>
                     <div className='flex flex-col gap-[2.48rem]'>
-                      <p className='h-[3.9rem] w-[24.9rem] flex-shrink-0 text-32-700 text-black-2'>{item.artTitle}</p>
+                      <p className='h-[3.9rem] w-[30rem] flex-shrink-0 text-32-700 text-black-2'>{item.artTitle}</p>
                       <p className='h-[1.8333rem] w-[18.3rem] flex-shrink-0 text-18-700 text-gray-9'>
                         아티스트 : {item.artist}
                       </p>
@@ -70,7 +72,15 @@ export default function BuyHistory() {
               ))}
             </Fragment>
           ))}
-          {isFetchingNextPage ? <div>Loading...</div> : <div ref={ref}></div>}
+          {isFetching ? (
+            <div className='flex flex-col gap-[1.6rem]'>
+              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
+              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
+              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
+            </div>
+          ) : (
+            <div ref={ref}></div>
+          )}
         </div>
       ) : (
         <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
@@ -86,13 +96,12 @@ export default function BuyHistory() {
           <p className='h-[4.3rem] w-[30.2rem] text-center text-16-500 leading-[2rem] text-gray-C'>
             현재 라이브중인 제품중에 마음이 이끄는 예술품을 발견해봐요!
           </p>
-          <Button
-            variant={'outline'}
-            className='h-[4.8rem] w-[16rem] flex-shrink-0 rounded-[0.6rem]'
+          <button
+            className='h-[4.8rem] w-[16rem] rounded-[0.6rem] border-[0.1rem] border-red-F text-16-700 leading-[2rem] text-red-F outline-red-F'
             onClick={() => router.push('/search?sort=$live')}
           >
             현재 Live 경매 보기
-          </Button>
+          </button>
         </div>
       )}
     </>

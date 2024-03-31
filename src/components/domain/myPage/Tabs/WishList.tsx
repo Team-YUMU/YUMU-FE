@@ -1,17 +1,20 @@
 import Image from 'next/image';
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getWishHistory } from '@/services/api';
+import { getWishHistory, postWishAuction } from '@/services/api';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function WishList() {
   const [ref, inView] = useInView();
+  const [wishState, setWishState] = useState(false);
   const {
     data: postInfoList,
     fetchNextPage,
     hasNextPage,
+    isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ['posts'],
@@ -32,7 +35,19 @@ export default function WishList() {
   }, [inView]);
 
   const router = useRouter();
-  const handleWishClick = () => {};
+
+  const handleWishToggle = async (itemId: number) => {
+    try {
+      const res = await postWishAuction(itemId);
+      setWishState(true);
+      res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    wishState;
+  }, []);
 
   return (
     <div className='grid h-[73rem] w-[90.8rem] grid-cols-3 gap-[1.72rem] overflow-scroll' onScroll={handleScroll}>
@@ -50,12 +65,17 @@ export default function WishList() {
                       src={item.imageUrl}
                       alt='관심경매 이미지'
                     />
-                    <Button type='button' variant='myPageWish' size='myPageWish' onClick={handleWishClick}>
+                    <Button
+                      type='button'
+                      variant='myPageWish'
+                      size='myPageWish'
+                      onClick={() => handleWishToggle(item.auctionId)}
+                    >
                       <Image
                         width={35}
                         height={30}
                         className='absolute'
-                        src={'svgs/my-page-wish-gray-icon.svg'}
+                        src={'/images/heart_on.png'}
                         alt='관심목록 찜 버튼'
                       />
                     </Button>
@@ -68,7 +88,15 @@ export default function WishList() {
               ))}
             </Fragment>
           ))}
-          {isFetchingNextPage ? <div>Loading...</div> : <div ref={ref}></div>}
+          {isFetching ? (
+            <div className='grid grid-cols-3 gap-[1.72rem]'>
+              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
+              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
+              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
+            </div>
+          ) : (
+            <div ref={ref}></div>
+          )}
         </>
       ) : (
         <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
@@ -84,13 +112,12 @@ export default function WishList() {
           <p className='h-[4.3rem] w-[30.2rem] text-center text-16-500 leading-[2rem] text-gray-C'>
             유무는 작품의 가치를 높이는 사이트입니다! 유투메어 유일무이한 작품을 발견해보세요!
           </p>
-          <Button
-            variant={'outline'}
-            className='h-[4.8rem] w-[16rem] flex-shrink-0 rounded-[0.6rem]'
+          <button
+            className='h-[4.8rem] w-[16rem] rounded-[0.6rem] border-[0.1rem] border-red-F text-16-700 leading-[2rem] text-red-F outline-red-F'
             onClick={() => router.push('/search?sort=$live')}
           >
             현재 Live 경매 보기
-          </Button>
+          </button>
         </div>
       )}
     </div>
