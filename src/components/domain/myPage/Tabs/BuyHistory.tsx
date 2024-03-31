@@ -5,6 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Fragment, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+
 export default function BuyHistory() {
   const router = useRouter();
   const handleBuyListDetail = () => {
@@ -36,9 +37,10 @@ export default function BuyHistory() {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
+
   return (
     <>
-      {!postInfoList?.pages ? (
+      {postInfoList && postInfoList?.pages[0]?.postList.length > 0 ? (
         <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll' onScroll={handleScroll}>
           {postInfoList?.pages.map((page, index) => (
             <Fragment key={index}>
@@ -55,7 +57,7 @@ export default function BuyHistory() {
                   </div>
                   <div className='ml-[5rem] flex flex-col gap-[6.85rem]'>
                     <p className='h-[1.8rem] w-[16.5rem] flex-shrink-0 text-18-700 text-gray-9'>
-                      {item.purchaseDate.slice(0, 10) + ` 낙찰`}
+                      {item.purchaseDate ? item.purchaseDate.slice(0, 10) + `낙찰` : '판매일자 없음'}
                     </p>
                     <p
                       className='ml-[5rem] h-[1.8333rem] w-[8.8rem] flex-shrink-0 text-right text-18-700 text-gray-9'
@@ -68,6 +70,7 @@ export default function BuyHistory() {
               ))}
             </Fragment>
           ))}
+          {isFetchingNextPage ? <div>Loading...</div> : <div ref={ref}></div>}
         </div>
       ) : (
         <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
@@ -92,7 +95,6 @@ export default function BuyHistory() {
           </Button>
         </div>
       )}
-      {isFetchingNextPage ? <div>Loading...</div> : <div ref={ref}></div>}
     </>
   );
 }

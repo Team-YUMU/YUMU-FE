@@ -44,13 +44,13 @@ export default function SalesHistory() {
   const router = useRouter();
 
   return (
-    <>
-      {!postInfoList?.pages ? (
-        <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll' onScroll={handleScroll}>
+    <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll'>
+      {postInfoList && postInfoList?.pages[0]?.postList.length > 0 ? (
+        <>
           {postInfoList?.pages.map((page, index) => (
             <Fragment key={index}>
               {page.postList.map((item, itemIndex) => (
-                <div className={`${historyBoxStyles} items-center`} key={itemIndex}>
+                <div className={`${historyBoxStyles} items-center`} key={itemIndex} onScroll={handleScroll}>
                   <div className='ml-[4.8rem] flex w-[8rem] flex-col gap-[4.3rem]'>
                     <div className='flex flex-col gap-[0.4rem]'>
                       <span className='h-[1.8rem] w-[9.5rem] flex-shrink-0 text-18-700 text-gray-9'>{'판매 완료'}</span>
@@ -110,14 +110,15 @@ export default function SalesHistory() {
                       <p className='text-28-500 text-gray-9'>{'낙찰'}</p>
                     </div>
                     <p className='ml-[3rem] h-[1.8rem] w-[27.1rem] flex-shrink-0 text-right text-18-700 text-gray-9'>
-                      {item.saleDate.slice(0, 10) + ` 경매 종료`}
+                      {item.saleDate ? item.saleDate.slice(0, 10) + ` 경매 종료` : '판매일자 없음'}
                     </p>
                   </div>
                 </div>
               ))}
             </Fragment>
           ))}
-        </div>
+          {isFetchingNextPage ? <div>Loading...</div> : <div ref={ref}></div>}
+        </>
       ) : (
         <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
           <div className='flex w-[15.2rem] flex-col items-center gap-[1rem]'>
@@ -141,8 +142,6 @@ export default function SalesHistory() {
           </Button>
         </div>
       )}
-
-      {isFetchingNextPage ? <div>Loading...</div> : <div ref={ref}></div>}
-    </>
+    </div>
   );
 }
