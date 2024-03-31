@@ -194,20 +194,8 @@ export async function putAuction(auctionId: number, auctionRegister: Registratio
   return res.data;
 }
 
-// auction get auctionNewData API (경매 조회(최신순))
-export async function getAuctionHistory({ keyword, size, page }: AuctionCheckProps) {
-  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=latest&keyword=${keyword}`);
-  return res.data;
-}
-
-// auction get auctionSearchData API (경매글 검색)
-export async function getSearchAuction({ keyword, size, page }: AuctionCheckProps) {
-  const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=&keyword="${keyword}"`);
-  return res.data;
-}
-
-//라이브 경매, 라이브 예정 경매, 인기경매
-export async function getAuction({ keyword, sort, size, page }: FetchAuctionCheckProps) {
+// auction get API (경매글 조회)
+export async function getAuction(page: string, size: string, sort?: string, keyword?: string) {
   const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=${sort}&keyword=${keyword}`);
   return res.data;
 }
