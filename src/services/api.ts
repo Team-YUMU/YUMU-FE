@@ -148,10 +148,20 @@ export async function getBuyHistory(cursor: number, limit: number) {
   const postList: BuyHistoryProps[] = res.data;
   return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
 }
+
+interface WishHistoryProps {
+  id: number;
+  artTitle: string;
+  artSubtitle: string;
+  artist: string;
+  imageUrl: string;
+  auctionId: number;
+}
 // 관심목록 조회
-export async function getWishHistory() {
-  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/wish`);
-  return res.data;
+export async function getWishHistory(cursor: number, limit: number) {
+  const res = await authAxios.get<WishHistoryProps[]>(`${MY_PAGE_BASE_URL}/wish?cursor=${cursor}&limit=${limit}`);
+  const postList: WishHistoryProps[] = res.data;
+  return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
 }
 
 // auction post API (경매글 등록)
