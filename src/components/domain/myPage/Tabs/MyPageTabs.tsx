@@ -77,7 +77,7 @@ export default function MyPageTabs() {
         >
           <div className='flex items-center justify-center gap-[1.5rem] pb-[1.5rem]'>
             {buyIconToggleFn}
-            <p className='font-TheJamsil text-20-400 '>구매목록</p>
+            <p className='font-TheJamsil text-20-400 '>낙찰목록</p>
           </div>
         </TabsTrigger>
         <TabsTrigger
