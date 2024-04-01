@@ -54,7 +54,7 @@ export default function SignUpPage() {
   };
   const [errorMessage, setErrorMessage] = useState('');
   //  const [errorMessage, setNicknameErrorMessage] = useState('');
-
+  /*
   const handleCheckNickname = async (data: FormData) => {
     console.log('clicked');
     try {
@@ -78,7 +78,7 @@ export default function SignUpPage() {
       }
     }
   };
-
+*/
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <AlertDialog>
@@ -103,9 +103,7 @@ export default function SignUpPage() {
                 {...register('nickname')}
               />
 
-              <Button onClick={handleCheckNickname} className='absolute bottom-6 right-6'>
-                중복확인
-              </Button>
+              <Button className='absolute bottom-6 right-6'>중복확인</Button>
             </div>
             <div className='relative flex items-center justify-end'>
               <AuthInput
@@ -116,9 +114,7 @@ export default function SignUpPage() {
                 className={`h-[6.4rem] w-[43.8rem] `}
                 {...register('email')}
               />
-              <Button onClick={() => handleCheckEmail()} className='absolute bottom-6 right-6'>
-                중복확인
-              </Button>
+              <Button className='absolute bottom-6 right-6'>중복확인</Button>
             </div>
             <AuthInput
               type='password'
