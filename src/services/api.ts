@@ -196,7 +196,7 @@ export async function putAuction(auctionId: number, auctionRegister: Registratio
 }
 
 // auction get API (경매글 조회)
-export async function getAuction(page: string, size: string, sort?: string, keyword?: string) {
+export async function getAuction(page: number, size: number, sort?: string, keyword?: string) {
   const res = await axios.get(`${AUCTION_BASE_URL}/paging?page=${page}&size=${size}&sort=${sort}&keyword=${keyword}`);
   return res.data;
 }

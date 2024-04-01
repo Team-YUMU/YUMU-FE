@@ -85,7 +85,7 @@ export interface RegistrationProps {
   receiveType: string;
 }
 
-export interface AuctionCheckProps {
+export interface AuctionProps {
   page: number;
   size: number;
   sort?: string;
