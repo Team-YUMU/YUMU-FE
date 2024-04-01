@@ -1,15 +1,18 @@
 import React, { useState, useRef, SyntheticEvent, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Separator } from '../ui/separator';
+import { GetAuctionDetailsArtistInfoProps } from '@/types/types';
+import Image from 'next/image';
 
 interface AuctionDetailProps {
   description?: string | undefined;
   notice?: string | null | undefined;
+  artistInfo?: GetAuctionDetailsArtistInfoProps;
 }
 
 type MenuType = '작품 소개' | '작가 소개' | '유의사항';
 
-export function AuctionDetail({ description, notice }: AuctionDetailProps) {
+export function AuctionDetail({ description, notice, artistInfo }: AuctionDetailProps) {
   const scrollRef = useRef<HTMLDivElement[]>([]);
   const [activeTab, setActiveTab] = useState<MenuType>('작품 소개');
   const [isMoreView, setIsMoreView] = useState(false);
@@ -79,7 +82,19 @@ export function AuctionDetail({ description, notice }: AuctionDetailProps) {
               <Separator orientation='vertical' className='h-[2.6rem] w-[0.4rem] bg-[#686868] p-0' />
               <p className='p-0 text-18-500'>작가 소개</p>
             </div>
-            <div className='text-18-500'>작가 소개 들어가는 자리</div>
+            <div className='text-18-500'>
+              <p>{artistInfo?.nickname}</p>
+              <p>{artistInfo?.email}</p>
+              <p>{artistInfo?.introduce}</p>
+              {artistInfo?.profileImage && (
+                <Image
+                  src={artistInfo?.profileImage as string}
+                  alt={artistInfo?.nickname as string}
+                  width={20}
+                  height={20}
+                />
+              )}
+            </div>
           </div>
           <div ref={(el) => (scrollRef.current[2] = el!)} className='flex flex-col gap-[3rem] font-[notoKR]'>
             <div className='flex flex-row items-center gap-[1.6rem] p-0 text-[#686868]'>

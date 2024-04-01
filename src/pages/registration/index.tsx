@@ -221,14 +221,14 @@ export default function Registration() {
             requiered
           />
           <div>
-            <RightLabel mainLabel='경매 시작일' />
+            <RightLabel mainLabel='경매 시작일시' />
             <Input
               {...register('auctionStartDate')}
               id='auctionStartDate'
               type='datetime-local'
               className='mb-[3rem] w-1/2 text-16-500'
             />
-            <RightLabel mainLabel='경매 종료일' />
+            <RightLabel mainLabel='경매 종료일시' />
             <Input
               {...register('auctionEndDate')}
               id='auctionEndDate'

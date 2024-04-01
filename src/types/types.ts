@@ -140,8 +140,17 @@ export interface GetAuctionDetailsArtInfoProps {
   wishCnt: number;
 }
 
+export interface GetAuctionDetailsArtistInfoProps {
+  email: string;
+  nickname: string;
+  introduce: null | string;
+  profileImage: null | string;
+  loginStatus: string;
+}
+
 export interface GetAuctionDetailsProps {
-  artinfo: GetAuctionDetailsArtInfoProps;
+  artInfo: GetAuctionDetailsArtInfoProps;
+  artistInfo: GetAuctionDetailsArtistInfoProps;
   id: number;
   artDescription: string;
   artSummary: null;
