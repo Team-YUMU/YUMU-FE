@@ -22,6 +22,7 @@
     "svgr",
     "svgs",
     "tailwindcss",
+    "tanstack",
     "YUMU"
   ]
 }

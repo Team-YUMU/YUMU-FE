@@ -13,7 +13,7 @@ import saveTokensLocally, {
   authInstanceWithMedia as axiosMedia,
 } from './axios';
 const BASE_URL = `/api/v1`;
-const MY_PAGE_BASE_URL = `${BASE_URL}/mypage`;
+const MY_PAGE_BASE_URL = `${BASE_URL}/my-page`;
 const MY_PAGE_MEMBERS_URL = `${BASE_URL}/member`;
 const AUCTION_BASE_URL = `${BASE_URL}/auction`;
 
@@ -119,20 +119,49 @@ export async function getArts() {
   return res.data;
 }
 
+interface SalesHistoryProps {
+  id: number;
+  artTitle: string;
+  artist: string;
+  price: number;
+  saleDate: string;
+  auctionId: number;
+}
 // 판매내역 조회
-export async function getSalesHistory() {
-  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/sold`);
-  return res.data;
+export async function getSalesHistory(cursor: number, limit: number) {
+  const res = await authAxios.get<SalesHistoryProps[]>(`${MY_PAGE_BASE_URL}/sold?cursor=${cursor}&limit=${limit}`);
+  const postList: SalesHistoryProps[] = res.data;
+  return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
+}
+
+interface BuyHistoryProps {
+  id: number;
+  artTitle: string;
+  artist: string;
+  price: number;
+  purchaseDate: string;
+  auctionId: number;
 }
 // 구매내역 조회
-export async function getBuyHistory() {
-  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/buy`);
-  return res.data;
+export async function getBuyHistory(cursor: number, limit: number) {
+  const res = await authAxios.get<BuyHistoryProps[]>(`${MY_PAGE_BASE_URL}/buy?cursor=${cursor}&limit=${limit}`);
+  const postList: BuyHistoryProps[] = res.data;
+  return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
+}
+
+interface WishHistoryProps {
+  id: number;
+  artTitle: string;
+  artSubtitle: string;
+  artist: string;
+  imageUrl: string;
+  auctionId: number;
 }
 // 관심목록 조회
-export async function getWishHistory() {
-  const res = await authAxios.get(`${MY_PAGE_BASE_URL}/wish`);
-  return res.data;
+export async function getWishHistory(cursor: number, limit: number) {
+  const res = await authAxios.get<WishHistoryProps[]>(`${MY_PAGE_BASE_URL}/wish?cursor=${cursor}&limit=${limit}`);
+  const postList: WishHistoryProps[] = res.data;
+  return { postList, nextLastPostId: postList[postList.length - 1]?.id, isLast: postList.length < limit };
 }
 
 // auction post API (경매글 등록)
