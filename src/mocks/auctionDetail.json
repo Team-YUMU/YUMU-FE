@@ -1,0 +1,26 @@
+[
+  {
+    "artInfo": {
+      "id": 1,
+      "artName": "Draw your own map (Langley, BC)",
+      "artImage": "https://ymkimstorage.s3.ap-northeast-2.amazonaws.com/art4.png",
+      "artist": "에디강 Eddie Kang",
+      "status": "진행중",
+      "createdAt": "2024-03-24T09:07:40.478Z",
+      "wishCnt": 10
+    },
+    "id": 0,
+    "artDescription": "에디강 작가에게 예술은 행복을 전달하는 매개체이다. 작가는 상상 속 캐릭터들이 등장하는 해피 플레이스(Happy Place)를 그려냄으로써, 지친 현대인들을 위로해 준다. 포근한 털의 질감과 실루엣을 제외하고 형태를 알 수 없는 ‘Yeti’는 마음으로만 볼 수 있는 행복한 에너지를 전달해 주며, 현실에 어떤 일이 일어나도 괜찮을 거라는 위안을 건네줄 것이다.",
+    "artSize": "30x30",
+    "artCreatedDate": "2024-03-24T09:07:40.478Z",
+    "auctionStartDate": "2024-03-24T09:07:40.478Z",
+    "auctionEndDate": "2024-03-24T10:07:40.478Z",
+    "defaultBid": 300000,
+    "winningBid": 900000,
+    "winningBidder": "별튤립",
+    "notice": "* Edition 100, 한정으로 제작된 작품입니다. * 해당 상품은 액자가 포함된 아트 포스터로 블랙 알루미늄 프레임으로 표구 되어 배송 됩니다. (제작 기간 2-3주 소요)",
+    "receiveType": "EMAIL"
+  }
+]
+
+
