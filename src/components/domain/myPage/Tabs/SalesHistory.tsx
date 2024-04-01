@@ -29,7 +29,8 @@ export default function SalesHistory() {
     queryKey: ['posts'],
     queryFn: ({ pageParam = 999999 }) => getSalesHistory(pageParam, 5),
     initialPageParam: 999999,
-    getNextPageParam: (lastPage) => (!lastPage.isLast ? lastPage.nextLastPostId : undefined),
+    retry: 0,
+    getNextPageParam: (lastPage) => (!lastPage?.isLast ? lastPage?.nextLastPostId : undefined),
   });
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -42,17 +43,16 @@ export default function SalesHistory() {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
-
   const router = useRouter();
 
   return (
-    <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll'>
+    <>
       {postInfoList && postInfoList?.pages[0]?.postList.length > 0 ? (
-        <>
+        <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll' onScroll={handleScroll}>
           {postInfoList?.pages.map((page, index) => (
             <Fragment key={index}>
-              {page.postList.map((item, itemIndex) => (
-                <div className={`${historyBoxStyles} items-center`} key={itemIndex} onScroll={handleScroll}>
+              {page?.postList.map((item, itemIndex) => (
+                <div className={`${historyBoxStyles} items-center`} key={itemIndex}>
                   <div className=' mx-[4.8rem] flex w-[1rem] flex-col gap-[4.3rem]'>
                     <div className='flex flex-col gap-[0.4rem]'>
                       <span className='h-[1.8rem] w-[9.5rem] flex-shrink-0 text-18-700 text-gray-9'>{'판매 완료'}</span>
@@ -130,7 +130,7 @@ export default function SalesHistory() {
           ) : (
             <div ref={ref}></div>
           )}
-        </>
+        </div>
       ) : (
         <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
           <div className='flex w-[15.2rem] flex-col items-center gap-[1rem]'>
@@ -153,6 +153,6 @@ export default function SalesHistory() {
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 }
