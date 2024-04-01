@@ -30,36 +30,36 @@ export default function Footer() {
         <div className='flex h-[19rem] flex-row gap-[4rem]'>
           <div className='text-gray-6 flex flex-col items-center gap-[0.5rem]'>
             <h1 className='text-20-700'>FE</h1>
-            <Link href='https://github.com/00TaciTa00'>
+            <Link href='https://github.com/00TaciTa00' target='_blank'>
               <p className='text-gray-99'>이서영</p>
             </Link>
-            <Link href='https://github.com/Nebaisgood'>
+            <Link href='https://github.com/Nebaisgood' target='_blank'>
               <p className='text-gray-99'>성은지</p>
             </Link>
-            <Link href='https://github.com/ynmkim'>
+            <Link href='https://github.com/ynmkim' target='_blank'>
               <p className='text-gray-99'>김윤미</p>
             </Link>
-            <Link href='https://github.com/hyun522'>
+            <Link href='https://github.com/hyun522' target='_blank'>
               <p className='text-gray-99'>정현진</p>
             </Link>
-            <Link href='https://github.com/PJW980921'>
+            <Link href='https://github.com/PJW980921' target='_blank'>
               <p className='text-gray-99'>박지원</p>
             </Link>
           </div>
           <Separator orientation='vertical' className='h-full w-[0.1rem] bg-gray-D' />
           <div className='text-gray-6 flex flex-col items-center gap-[0.5rem]'>
             <h1 className='text-20-700'>BE</h1>
-            <Link href='https://github.com/quipu1'>
+            <Link href='https://github.com/quipu1' target='_blank'>
               <p className='text-gray-99'>성루비</p>
             </Link>
-            <Link href='https://github.com/seominsu1'>
+            <Link href='https://github.com/seominsu1' target='_blank'>
               <p className='text-gray-99'>서민수</p>
             </Link>
           </div>
           <Separator orientation='vertical' className='h-full w-[0.1rem] bg-gray-D' />
           <div className='text-gray-6 flex flex-col items-center gap-[0.5rem]'>
             <h1 className='text-20-700'>DE</h1>
-            <Link href='/'>
+            <Link href='https://url.kr/zjhygq' target='_blank'>
               <p className='text-gray-99'>조효은</p>
             </Link>
           </div>
