@@ -10,10 +10,19 @@
 	// 기본 포매팅 실행 방지
   "editor.formatOnSave": false,
   "cSpell.words": [
+    "aeiou",
     "clsx",
-    "pretendard",
+    "Embla",
+    "hookform",
+    "Jamsil",
+    "lucide",
+    "mypage",
+    "shadcn",
+    "Signin",
     "svgr",
+    "svgs",
     "tailwindcss",
+    "tanstack",
     "YUMU"
   ]
 }

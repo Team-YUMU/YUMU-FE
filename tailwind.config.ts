@@ -1,12 +1,17 @@
 import type { Config } from 'tailwindcss';
 
-const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+const config = {
+  darkMode: ['class'],
+  content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
+  prefix: '',
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     screens: {
       // => @media (max-width: 1119px) { ... }
       md: { max: '1199px' }, // tablet
@@ -16,8 +21,32 @@ const config: Config = {
     },
     fontSize: {
       // <p class="text-12-400 ...">The quick brown fox ...</p> 처럼 사용
+      '0.8-400': [
+        '0.875rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       '10-400': [
         '1rem',
+        {
+          fontWeight: '400',
+        },
+      ],
+      '10-500': [
+        '1rem',
+        {
+          fontWeight: '500',
+        },
+      ],
+      '10-700': [
+        '1rem',
+        {
+          fontWeight: '700',
+        },
+      ],
+      '11.1-400': [
+        '1.125rem',
         {
           fontWeight: '400',
         },
@@ -47,6 +76,12 @@ const config: Config = {
           fontWeight: '700',
         },
       ],
+      '12.5-500': [
+        '1.25rem',
+        {
+          fontWeight: '500',
+        },
+      ],
 
       //fontsize: 14px
       '14-400': [
@@ -61,7 +96,13 @@ const config: Config = {
           fontWeight: '500',
         },
       ],
-
+      //fontsize : 15px
+      '15-400': [
+        '1.5rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       //fontsize: 16px
       '16-400': [
         '1.6rem',
@@ -81,6 +122,18 @@ const config: Config = {
           fontWeight: '600',
         },
       ],
+      '16-700': [
+        '1.6rem',
+        {
+          fontWeight: '700',
+        },
+      ],
+      '16-900': [
+        '1.6rem',
+        {
+          fontWeight: '900',
+        },
+      ],
 
       //fontsize: 18px
       '18-400': [
@@ -95,13 +148,24 @@ const config: Config = {
           fontWeight: '500',
         },
       ],
+      '18-600': [
+        '1.8rem',
+        {
+          fontWeight: '600',
+        },
+      ],
       '18-700': [
         '1.8rem',
         {
           fontWeight: '700',
         },
       ],
-
+      '20-400': [
+        '2rem',
+        {
+          fontWeight: '400',
+        },
+      ],
       //fontsize: 20px
       '20-500': [
         '2rem',
@@ -121,6 +185,12 @@ const config: Config = {
           fontWeight: '700',
         },
       ],
+      '20-900': [
+        '2rem',
+        {
+          fontWeight: '900',
+        },
+      ],
 
       //fontsize: 22px
       '22-500': [
@@ -135,28 +205,79 @@ const config: Config = {
           fontWeight: '700',
         },
       ],
-
+      '22.5-400': [
+        '2.25rem',
+        {
+          fontWeight: '400',
+        },
+      ],
+      '22.5-500': [
+        '2.25rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       //fontsize: 24px
+      '24-500': [
+        '2.4rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '24-700': [
         '2.4rem',
         {
           fontWeight: '700',
         },
       ],
-
       //fontsize: 28px
+      '28-400': [
+        '2.8rem',
+        {
+          fontWeight: '400',
+        },
+      ],
+      '28-500': [
+        '2.8rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '28-700': [
         '2.8rem',
         {
           fontWeight: '700',
         },
       ],
-
+      '32-700': [
+        '3.2rem',
+        {
+          fontWeight: '700',
+        },
+      ],
       //fontsize: 36px
+      '36-400': [
+        '3.6rem',
+        {
+          fontWeight: '400',
+        },
+      ],
+      '36-500': [
+        '3.6rem',
+        {
+          fontWeight: '500',
+        },
+      ],
       '36-700': [
         '3.6rem',
         {
           fontWeight: '700',
+        },
+      ],
+      '36-900': [
+        '3.6rem',
+        {
+          fontWeight: '900',
         },
       ],
 
@@ -218,22 +339,62 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        // 예시) <p className="text-pretendard">
-        pretendard: ['Pretendard Variable'],
+        // 예시) <p className="font-TheJamsil">
+        TheJamsil: ['TheJamsil'],
+        NotoSansKR: ['NotoSansKR'],
       },
       colors: {
-        // 예시) <p className="bg-gray-D">
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
         black: {
           0: '#000000',
           1: '#171717',
+          2: '#222222',
           3: '#333236',
           4: '#4B4B4B',
         },
         gray: {
+          6: '#686868',
           7: '#787486',
-          9: '#9FA6B2',
+          8: '#888',
+          9: '#9E9E9E',
+          99: '#999',
+          B: '#BDBDBD',
+          C: '#C5C5C5',
           D: '#D9D9D9',
-          E: '#EEEEEE',
+          DF: '#DFDFDF',
+          E: '#E0E0E0',
           F: '#FAFAFA',
         },
         white: {
@@ -245,6 +406,8 @@ const config: Config = {
         },
         red: {
           DEFAULT: '#D6173A',
+          F: '#FF7752',
+          E: '#E75852',
         },
         green: {
           DEFAULT: '#7AC555',
@@ -254,6 +417,7 @@ const config: Config = {
         },
         orange: {
           DEFAULT: '#FFA500',
+          F: '#F9BB00',
         },
         blue: {
           DEFAULT: '#76A5EA',
@@ -263,13 +427,35 @@ const config: Config = {
           F: '#F4D7DA',
           D: '#D25B68',
         },
+        yellow: {
+          DEFAULT: '#FEE500',
+        },
       },
-      scale: {
-        103: '1.03',
-        104: '1.04',
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      aspectRatio: {
+        'card-image': '4 / 3',
       },
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
-};
+} satisfies Config;
+
 export default config;
