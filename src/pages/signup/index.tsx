@@ -19,19 +19,9 @@ import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
 import { AxiosError } from 'axios';
 
-const emailResponseSchema = z.object({
-  message: z.string(),
-});
-
-const nicknameResponseSchema = z.object({
-  message: z.string(),
-});
-
 export default function SignUpPage() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [errorState, setErrorState] = useState(false);
 
   type FormData = {
     nickname: string;
@@ -48,27 +38,43 @@ export default function SignUpPage() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const nicknameCheck = await getNicknameCheck(data.nickname);
-      console.log(nicknameCheck);
       const emailCheck = await getEmailCheck(data.email);
       console.log(emailCheck);
-      setErrorState(false);
-      //=> {
-      //   const resEmail = emailCheck.response.data;
-      //   console.log(resEmail);
-      // const emailResponse = emailResponseSchema.parse(resEmail);
-      // if (emailResponse.code === '400') {
-      //   console.log('닉네임이 이미 사용중입니다.');
-      //   return;
-      // }
-
       setIsModalOpen(true);
       await postMember(data);
+    } catch (error) {
+      console.log('onSubmit error', error);
+      if (error instanceof AxiosError) {
+        // const nicknameErrorMessage: string = error.response?.data.errorMessage;
+        const emailErrorMessage: string = error.response?.data.errorMessage;
+        setErrorMessage(emailErrorMessage);
+        // setErrorMessage(nicknameErrorMessage);
+      }
+    }
+  };
+  const [errorMessage, setErrorMessage] = useState('');
+  //  const [errorMessage, setNicknameErrorMessage] = useState('');
+
+  const handleCheckNickname = async (data: FormData) => {
+    console.log('clicked');
+    try {
+      const nicknameCheck = await getNicknameCheck(data.nickname);
+      console.log(nicknameCheck);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const nicknameErrorMessage: string = error.response?.data.errorMessage;
+        setEmailErrorMessage(nicknameErrorMessage);
+      }
+    }
+  };
+  const handleCheckEmail = async (data: FormData) => {
+    try {
+      const emailCheck = await getEmailCheck(data.email);
+      console.log(emailCheck);
     } catch (error) {
       if (error instanceof AxiosError) {
         const emailErrorMessage: string = error.response?.data.errorMessage;
         setErrorMessage(emailErrorMessage);
-        setErrorState(true);
       }
     }
   };
@@ -84,28 +90,36 @@ export default function SignUpPage() {
 
           <form
             noValidate
-            className={`flex w-full flex-col items-center justify-center ${errorMessage ? 'gap-[3rem]' : 'gap-[0.6rem]'}`}
+            className={` relative flex w-full flex-col items-center justify-center ${errors ? 'gap-[3.5rem]' : 'gap-[1rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <AuthInput
-              type='text'
-              placeholder='닉네임을 입력해주세요'
-              required={true}
-              errorMessage={errors?.nickname?.message}
-              className=' h-[6.4rem] w-[43.8rem]'
-              {...register('nickname')}
-            />
-            {errors.nickname && <p></p>}
+            <div className='relative flex items-center justify-end'>
+              <AuthInput
+                type='text'
+                placeholder='닉네임을 입력해주세요'
+                required={true}
+                errorMessage={errorMessage ? errorMessage : errors?.nickname?.message}
+                className=' h-[6.4rem] w-[43.8rem]'
+                {...register('nickname')}
+              />
 
-            <AuthInput
-              type='email'
-              required={!!errors.email}
-              placeholder='이메일을 입력해 주세요'
-              errorMessage={errors?.email?.message && errorMessage ? errorMessage : 'undefined'}
-              className={`h-[6.4rem] w-[43.8rem] `}
-              {...register('email')}
-            />
-
+              <Button onClick={handleCheckNickname} className='absolute bottom-6 right-6'>
+                중복확인
+              </Button>
+            </div>
+            <div className='relative flex items-center justify-end'>
+              <AuthInput
+                type='email'
+                required={!!errors.email}
+                placeholder='이메일을 입력해 주세요'
+                errorMessage={errorMessage ? errorMessage : errors?.email?.message}
+                className={`h-[6.4rem] w-[43.8rem] `}
+                {...register('email')}
+              />
+              <Button onClick={() => handleCheckEmail()} className='absolute bottom-6 right-6'>
+                중복확인
+              </Button>
+            </div>
             <AuthInput
               type='password'
               required={!!errors.password}
@@ -114,7 +128,6 @@ export default function SignUpPage() {
               {...register('password')}
               placeholder='비밀번호를 입력해주세요'
             />
-            {errors.password && <p></p>}
 
             <AuthInput
               type='password'
