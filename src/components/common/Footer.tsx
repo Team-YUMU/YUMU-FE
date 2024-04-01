@@ -28,7 +28,7 @@ export default function Footer() {
       <div className='flex flex-col items-end gap-[4rem] text-18-500'>
         <p className='text-gray-9'>함께한 사람들</p>
         <div className='flex h-[19rem] flex-row gap-[4rem]'>
-          <div className='text-gray-6 flex flex-col items-center gap-[0.5rem]'>
+          <div className='flex flex-col items-center gap-[0.5rem] text-gray-6'>
             <h1 className='text-20-700'>FE</h1>
             <Link href='https://github.com/00TaciTa00' target='_blank'>
               <p className='text-gray-99'>이서영</p>
@@ -47,7 +47,7 @@ export default function Footer() {
             </Link>
           </div>
           <Separator orientation='vertical' className='h-full w-[0.1rem] bg-gray-D' />
-          <div className='text-gray-6 flex flex-col items-center gap-[0.5rem]'>
+          <div className='flex flex-col items-center gap-[0.5rem] text-gray-6'>
             <h1 className='text-20-700'>BE</h1>
             <Link href='https://github.com/quipu1' target='_blank'>
               <p className='text-gray-99'>성루비</p>
@@ -57,7 +57,7 @@ export default function Footer() {
             </Link>
           </div>
           <Separator orientation='vertical' className='h-full w-[0.1rem] bg-gray-D' />
-          <div className='text-gray-6 flex flex-col items-center gap-[0.5rem]'>
+          <div className='flex flex-col items-center gap-[0.5rem] text-gray-6'>
             <h1 className='text-20-700'>DE</h1>
             <Link href='https://url.kr/zjhygq' target='_blank'>
               <p className='text-gray-99'>조효은</p>
