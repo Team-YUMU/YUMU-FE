@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { postMember } from '@/services/api';
+import { getNicknameCheck, postMember, getEmailCheck } from '@/services/api';
 import { useState } from 'react';
 // import axios from 'axios';
 import Link from 'next/link';
@@ -14,9 +14,10 @@ import {
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
 import { useRouter } from 'next/router';
-
+import { z } from 'zod';
 import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
+import { AxiosError } from 'axios';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -37,13 +38,47 @@ export default function SignUpPage() {
 
   const onSubmit = async (data: FormData) => {
     try {
+      const emailCheck = await getEmailCheck(data.email);
+      console.log(emailCheck);
       setIsModalOpen(true);
       await postMember(data);
     } catch (error) {
-      console.log('error', error);
+      console.log('onSubmit error', error);
+      if (error instanceof AxiosError) {
+        // const nicknameErrorMessage: string = error.response?.data.errorMessage;
+        const emailErrorMessage: string = error.response?.data.errorMessage;
+        setErrorMessage(emailErrorMessage);
+        // setErrorMessage(nicknameErrorMessage);
+      }
     }
   };
-
+  const [errorMessage, setErrorMessage] = useState('');
+  //  const [errorMessage, setNicknameErrorMessage] = useState('');
+  /*
+  const handleCheckNickname = async (data: FormData) => {
+    console.log('clicked');
+    try {
+      const nicknameCheck = await getNicknameCheck(data.nickname);
+      console.log(nicknameCheck);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const nicknameErrorMessage: string = error.response?.data.errorMessage;
+        setEmailErrorMessage(nicknameErrorMessage);
+      }
+    }
+  };
+  const handleCheckEmail = async (data: FormData) => {
+    try {
+      const emailCheck = await getEmailCheck(data.email);
+      console.log(emailCheck);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const emailErrorMessage: string = error.response?.data.errorMessage;
+        setErrorMessage(emailErrorMessage);
+      }
+    }
+  };
+*/
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <AlertDialog>
@@ -55,29 +90,32 @@ export default function SignUpPage() {
 
           <form
             noValidate
-            className='flex w-full flex-col items-center justify-center gap-5'
+            className={` relative flex w-full flex-col items-center justify-center ${errors ? 'gap-[3.5rem]' : 'gap-[1rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <AuthInput
-              type='text'
-              placeholder='닉네임을 입력해주세요'
-              required={true}
-              errorMessage={errors?.nickname?.message}
-              className=' h-[6.4rem] w-[43.8rem]'
-              {...register('nickname')}
-            />
-            {errors.nickname && <p></p>}
+            <div className='relative flex items-center justify-end'>
+              <AuthInput
+                type='text'
+                placeholder='닉네임을 입력해주세요'
+                required={true}
+                errorMessage={errorMessage ? errorMessage : errors?.nickname?.message}
+                className=' h-[6.4rem] w-[43.8rem]'
+                {...register('nickname')}
+              />
 
-            <AuthInput
-              type='email'
-              required={!!errors.email}
-              placeholder='이메일을 입력해 주세요'
-              errorMessage={errors?.email?.message}
-              className=' h-[6.4rem] w-[43.8rem]'
-              {...register('email')}
-            />
-            {errors.email && <p></p>}
-
+              <Button className='absolute bottom-6 right-6'>중복확인</Button>
+            </div>
+            <div className='relative flex items-center justify-end'>
+              <AuthInput
+                type='email'
+                required={!!errors.email}
+                placeholder='이메일을 입력해 주세요'
+                errorMessage={errorMessage ? errorMessage : errors?.email?.message}
+                className={`h-[6.4rem] w-[43.8rem] `}
+                {...register('email')}
+              />
+              <Button className='absolute bottom-6 right-6'>중복확인</Button>
+            </div>
             <AuthInput
               type='password'
               required={!!errors.password}
@@ -86,7 +124,6 @@ export default function SignUpPage() {
               {...register('password')}
               placeholder='비밀번호를 입력해주세요'
             />
-            {errors.password && <p></p>}
 
             <AuthInput
               type='password'

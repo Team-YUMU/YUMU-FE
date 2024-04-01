@@ -66,7 +66,7 @@ export default function SignInPage() {
 
         <form
           noValidate
-          className={`flex w-full flex-col items-center justify-center ${errors.email ? 'gap-[4.5rem]' : 'gap-[0.6rem]'}`}
+          className={`flex w-full flex-col items-center justify-center ${errors.email ? 'gap-[3.5rem]' : 'gap-[1rem]'}`}
           onSubmit={handleSubmit(onSubmit)}
         >
           <AuthInput
