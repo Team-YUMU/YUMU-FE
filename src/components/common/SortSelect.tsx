@@ -42,7 +42,7 @@ export default function SortSelect({ setOrder }: SortSelectProps) {
         <li className='py-2'>
           <button
             type='button'
-            onClick={() => handleOptionClick('최신순', 'latest')}
+            onClick={() => handleOptionClick('최신순', 'createdAt')}
             className='h-full w-full text-start'
           >
             최신순
@@ -52,7 +52,7 @@ export default function SortSelect({ setOrder }: SortSelectProps) {
         <li className='border-t border-gray-E py-2'>
           <button
             type='button'
-            onClick={() => handleOptionClick('인기순', 'popular')}
+            onClick={() => handleOptionClick('인기순', 'wishCnt')}
             className='h-full w-full text-start'
           >
             인기순

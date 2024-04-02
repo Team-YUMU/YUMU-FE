@@ -4,7 +4,6 @@ import { getAuction } from '@/services/api';
 import { Heart } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
-import ColorChangeMoreArrow from '@/components/svgs/ColorChangeMoreArrow';
 
 interface liveProps {
   id: number;
@@ -25,13 +24,11 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
   const [liveData, setLiveData] = useState<liveProps[]>([]);
   const [popularData, setPopularData] = useState<liveProps[]>([]);
   const [today, setToday] = useState('');
-  const [arrowImgState, setArrowImgState] = useState(false);
   const router = useRouter();
-  const pageSize = 3;
 
   const loadLiveAuctionData = async () => {
     try {
-      const data = await getAuction(0, pageSize, 'live', '');
+      const data = await getAuction({ keyword: '', size: 3, page: 0, sort: 'live' });
       const auctionLiveData = data.auctions;
       console.log(auctionLiveData);
       setLiveData(auctionLiveData);
@@ -61,7 +58,7 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
 
   const loadPopularAuctionData = async () => {
     try {
-      const data = await getAuction(0, pageSize, 'popular', '');
+      const data = await getAuction({ keyword: '', size: 3, page: 0, sort: 'popular' });
       const auctionPopularData = data.auctions;
       console.log(auctionPopularData);
       setPopularData(auctionPopularData);
@@ -83,8 +80,6 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
     setToday(year + '.' + month + '.' + day);
   }, []);
 
-  const textColor = `flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] hover:text-[#FF7752] `;
-  const arrowColor = arrowImgState ? '#FF7752' : '#999';
   return (
     <>
       <div>
@@ -96,13 +91,10 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
               onClick={() => {
                 router.push(`/search?sort=${encodeURIComponent('live')}`);
               }}
-              onMouseEnter={() => setArrowImgState(true)}
-              onMouseLeave={() => setArrowImgState(false)}
-              className={textColor}
+              className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] hover:text-[#FF7752] '
             >
               <span className='mr-[.7rem] '>더보기</span>
-
-              <ColorChangeMoreArrow width={18} height={6} arrowImgState={arrowImgState} color={arrowColor} />
+              <Image src='/svgs/m1-moreArrow.svg' alt='' width={18} height={6} className='h-[.6rem] w-[1.86rem] ' />
             </div>
           </div>
         </div>

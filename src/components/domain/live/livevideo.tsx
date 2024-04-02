@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AspectRatio } from '../../ui/aspect-ratio';
-import InfoBox from '@/components/common/InfoBox';
 
-interface LiveVideoProps {
-  notice: string;
-}
-
-export function LiveVideo({ notice }: LiveVideoProps) {
+export function LiveVideo() {
   const [stream, setStream] = useState<MediaStream | null>(null);
 
   useEffect(() => {
@@ -28,8 +23,9 @@ export function LiveVideo({ notice }: LiveVideoProps) {
           />
         )}
       </AspectRatio>
-      {notice && <InfoBox className='mb-[2rem]' notice={notice} />}
-      <div className='rounded-xl bg-slate-50 p-2'>{notice}</div>
+      <div className='rounded-xl bg-slate-50 p-2'>
+        유의사항 ex. 도서신간 배송 불가 / 실문배송이 아닌 이메일로 상품이 전달 됩니다.
+      </div>
     </div>
   );
 }

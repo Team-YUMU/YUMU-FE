@@ -12,7 +12,12 @@ export default function Pagination({ totalPage, currentPage, setCurrentPage, sta
   return (
     <div className='flex'>
       {currentPage !== 1 && (
-        <button type='button' onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className='cursor p-4'>
+        <button
+          type='button'
+          onClick={() => setCurrentPage(1)}
+          disabled={currentPage === 1}
+          className='cursor -mt-1 p-4'
+        >
           <Image src='/svgs/arrow_first.svg' alt='첫 페이지로 가기' width={17} height={12} />
         </button>
       )}
@@ -23,7 +28,7 @@ export default function Pagination({ totalPage, currentPage, setCurrentPage, sta
           onClick={() => {
             setCurrentPage((prev) => prev - 1);
           }}
-          className='cursor mr-4 p-4'
+          className='cursor -mt-1 mr-4 p-4'
         >
           <Image src='/svgs/arrow_prev.svg' alt='이전 페이지로 가기' width={8} height={12} />
         </button>
@@ -52,7 +57,7 @@ export default function Pagination({ totalPage, currentPage, setCurrentPage, sta
           onClick={() => {
             setCurrentPage((prev) => prev + 1);
           }}
-          className='cursor ml-4 p-4'
+          className='cursor -mt-1 ml-4 p-4'
         >
           <Image src='/svgs/arrow_next.svg' alt='다음 페이지로 가기' width={8} height={12} />
         </button>
@@ -63,7 +68,7 @@ export default function Pagination({ totalPage, currentPage, setCurrentPage, sta
           type='button'
           onClick={() => setCurrentPage(totalPage)}
           disabled={currentPage === totalPage}
-          className='cursor p-4'
+          className='cursor -mt-1 p-4'
         >
           <Image src='/svgs/arrow_last.svg' alt='마지막 페이지로 가기' width={17} height={12} />
         </button>
