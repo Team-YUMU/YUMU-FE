@@ -42,7 +42,17 @@ export interface ArtPropsData {
   page: number;
   totalElements: number;
   totalPages: number;
-  auctions: AuctionProps[];
+  auctions: ArtProps[];
+}
+
+export interface ArtProps {
+  id: number;
+  artName: string;
+  artImage: string;
+  artist: string;
+  status: string;
+  createdAt: Date;
+  wishCnt: number;
 }
 
 export interface AuctionProps {

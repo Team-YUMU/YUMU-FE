@@ -25,10 +25,11 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
   const [popularData, setPopularData] = useState<liveProps[]>([]);
   const [today, setToday] = useState('');
   const router = useRouter();
+  const pageSize = 3;
 
   const loadLiveAuctionData = async () => {
     try {
-      const data = await getAuction({ keyword: '', size: 3, page: 0, sort: 'live' });
+      const data = await getAuction(0, pageSize, 'live', '');
       const auctionLiveData = data.auctions;
       console.log(auctionLiveData);
       setLiveData(auctionLiveData);
@@ -58,7 +59,7 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
 
   const loadPopularAuctionData = async () => {
     try {
-      const data = await getAuction({ keyword: '', size: 3, page: 0, sort: 'popular' });
+      const data = await getAuction(0, pageSize, 'popular', '');
       const auctionPopularData = data.auctions;
       console.log(auctionPopularData);
       setPopularData(auctionPopularData);

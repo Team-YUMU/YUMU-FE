@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import AuctionCard from '@/components/common/AuctionCard';
 import Autoplay from 'embla-carousel-autoplay';
 import { getAuction } from '@/services/api';
 
@@ -24,10 +23,11 @@ interface popularProps {
 export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
   const [today, setToday] = useState('');
   const [popularData, setPopularData] = useState<popularProps[]>([]);
+  const pageSize = 30;
 
   const loadPopularAuctionData = async () => {
     try {
-      const loadData = await getAuction({ keyword: '', page: 0, sort: 'popular', size: 30 });
+      const loadData = await getAuction(0, pageSize, 'popular', '');
       const auctionData = loadData.auctions;
       console.log(auctionData);
       setPopularData(auctionData);
@@ -68,9 +68,7 @@ export function BestAuction({ className = '', popularRef }: BestAuctionProps) {
         <CarouselContent className='-ml-2'>
           {popularData.map((item) => (
             <CarouselItem key={item.id} className='basis-1/4 pl-2'>
-              <Link href={`/auction/${item.id}/detail`}>
-                <AuctionCard {...item} />
-              </Link>
+              <Link href={`/auction/${item.id}/detail`}></Link>
             </CarouselItem>
           ))}
         </CarouselContent>
