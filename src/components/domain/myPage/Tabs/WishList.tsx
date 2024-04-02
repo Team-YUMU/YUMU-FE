@@ -6,6 +6,7 @@ import { getWishHistory, postWishAuction } from '@/services/api';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
 
 export default function WishList() {
   const [ref, inView] = useInView();
@@ -78,10 +79,12 @@ export default function WishList() {
                         alt='관심목록 찜 버튼'
                       />
                     </Button>
-                    <div className='pt-[1.5rem] text-20-700 text-black-0'>
-                      <p>{item.artTitle}</p>
-                      <p className='h-[5.4rem] w-[19.1rem] text-18-500 text-gray-9'>{item.artSubtitle}</p>
-                    </div>
+                    <Link href={`/auction/${item.auctionId}/detail`}>
+                      <div className='pt-[1.5rem] text-20-700 text-black-0 '>
+                        <p className='hover:border-b-[0.1rem] hover:border-b-black-2'>{item.artTitle}</p>
+                        <p className='h-[5.4rem] w-[19.1rem] text-18-500 text-gray-9'>{item.artSubtitle}</p>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               ))}
