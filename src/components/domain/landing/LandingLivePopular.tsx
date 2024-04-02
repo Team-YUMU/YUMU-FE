@@ -4,6 +4,7 @@ import { getAuction } from '@/services/api';
 import { Heart } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
+import ColorChangeMoreArrow from '@/components/svgs/ColorChangeMoreArrow';
 
 interface liveProps {
   id: number;
@@ -24,6 +25,7 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
   const [liveData, setLiveData] = useState<liveProps[]>([]);
   const [popularData, setPopularData] = useState<liveProps[]>([]);
   const [today, setToday] = useState('');
+  const [arrowImgState, setArrowImgState] = useState(false);
   const router = useRouter();
   const pageSize = 3;
 
@@ -81,6 +83,8 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
     setToday(year + '.' + month + '.' + day);
   }, []);
 
+  const textColor = `flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] hover:text-[#FF7752] `;
+  const arrowColor = arrowImgState ? '#FF7752' : '#999';
   return (
     <>
       <div>
@@ -92,10 +96,13 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
               onClick={() => {
                 router.push(`/search?sort=${encodeURIComponent('live')}`);
               }}
-              className='flex h-[2.6rem] items-center justify-between text-18-500 text-[#999] hover:text-[#FF7752] '
+              onMouseEnter={() => setArrowImgState(true)}
+              onMouseLeave={() => setArrowImgState(false)}
+              className={textColor}
             >
               <span className='mr-[.7rem] '>더보기</span>
-              <Image src='/svgs/m1-moreArrow.svg' alt='' width={18} height={6} className='h-[.6rem] w-[1.86rem] ' />
+
+              <ColorChangeMoreArrow width={18} height={6} arrowImgState={arrowImgState} color={arrowColor} />
             </div>
           </div>
         </div>

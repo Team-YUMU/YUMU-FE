@@ -20,7 +20,7 @@ const buttonVariants = cva(
         myPageEditButton: 'inline-flex',
         myPageUserDelete: 'text-center',
         arrow: 'disabled:opacity-1 text-red-F disabled:text-gray-300 disabled:bg-white',
-        exhibitionArrow: 'disabled:opacity-1 text-red-F hover:text-[#E0E0E0] disabled:text-gray-300',
+        exhibitionArrow: 'disabled:opacity-1 text-red-F hover:text-[#FF7752] disabled:text-gray-300',
       },
       size: {
         default: 'h-10 px-4 py-2',
@@ -28,7 +28,8 @@ const buttonVariants = cva(
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 wp-10',
         auth: 'w-[43.8rem] h-[6.4rem]',
-        header: 'w-[16rem] h-[4.8rem] bg-red-F rounded-[0.6rem]',
+        // header에 bg-red-F 제거
+        header: 'w-[16rem] h-[4.8rem]  rounded-[0.6rem]',
         myPage: 'rounded-[3.7rem] border-[0.1rem] w-[28rem] h-[4.8rem] flex-shrink-0',
         myPageWish: 'left-[24.4rem] top-[1.4rem] bottom-[15.6rem] right-[1.3rem] w-[3.5rem] h-[3rem]',
         myPageEditImageDelete: 'h-10  px-4 py-2',

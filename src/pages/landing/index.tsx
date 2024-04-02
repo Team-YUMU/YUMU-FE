@@ -60,16 +60,20 @@ export default function Landing() {
     loadLiveSoonData();
   }, []);
 
-  useEffect(() => {
-    loadLiveSoonDataSecond();
-  }, []);
-
   const moveToArtist = () => {
     popularRef?.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'center',
     });
   };
+
+  // const nextSlide = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex === liveSoonData.length - 1 ? 0 : prevIndex + 1));
+  // };
+
+  // const prevSlide = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex === 0 ? liveSoonData.length - 1 : prevIndex - 1));
+  // };
 
   return (
     <>
@@ -105,31 +109,35 @@ export default function Landing() {
                 loop: true,
               }}
               plugins={[Autoplay({ delay: 4000 })]}
-              className='mr-[8.2rem] w-full max-w-[87.2rem]'
+              className='mr-[8.2rem] w-full max-w-[87.2rem] bg-pink'
             >
-              <CarouselContent className='-ml-2 flex flex-wrap'>
-                <div>
-                  {liveSoonData.map((item, index) => (
-                    <CarouselItem className='relative basis-1/3  pl-2' key={index}>
-                      <div className='p-1'>
-                        <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
-                        <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
-                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
+              <CarouselContent className='-ml-1 flex basis-1/3  flex-wrap'>
+                <CarouselItem className='flex  flex-wrap pl-1'>
+                  <div className='flex basis-1/3 bg-red '>
+                    {liveSoonData.map((item, index) => (
+                      <div key={index} className='relative'>
+                        <div className='p-1'>
+                          <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
+                          <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
+                          <p className='w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
+                        </div>
+                        <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                       </div>
-                      <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
-                    </CarouselItem>
-                  ))}
-                  {liveSoonDataSecond.map((item, index) => (
-                    <CarouselItem className='relative mt-[4rem] basis-1/3 pl-2' key={index}>
-                      <div className='p-1'>
-                        <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
-                        <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
-                        <p className='max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
+                    ))}
+                  </div>
+                  <div className='flex basis-1/3'>
+                    {liveSoonData.map((item, index) => (
+                      <div key={index} className='relative'>
+                        <div className='p-1'>
+                          <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
+                          <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
+                          <p className='w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
+                        </div>
+                        <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                       </div>
-                      <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
-                    </CarouselItem>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </CarouselItem>
               </CarouselContent>
               <MainCarouselPrevious
                 type='button'
@@ -142,6 +150,44 @@ export default function Landing() {
                 className='-right-32  h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
               />
             </Carousel>
+            {/* <div className='relative w-full'>
+              <button
+                className='absolute inset-y-0 left-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 bg-opacity-50 text-white'
+                onClick={prevSlide}
+              >
+                이전
+              </button>
+              <button
+                className='absolute inset-y-0 right-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 bg-opacity-50 text-white'
+                onClick={nextSlide}
+              >
+                다음
+              </button>
+              <div className='absolute mr-[8.2rem] grid  w-[87.2rem]  grid-flow-col grid-rows-2  gap-4 bg-pink'>
+                {liveSoonData.map((item, index) => (
+                  <div
+                    key={index}
+                    className=' basis-1/3'
+                    // className={`transition-opacity duration-500 ${
+                    //   index === currentIndex ? 'opacity-100' : 'opacity-0'
+                    // }`}
+                  >
+                    <div className='rounded-lg bg-gray-200 p-4'>
+                      <Image
+                        src={item.artImage}
+                        alt={item.artName}
+                        width={280}
+                        height={200}
+                        className='h-[20rem] w-[28rem]'
+                      />
+                      <p className='text-lg mt-2 font-semibold'>{item.artSubTitle}</p>
+                      <p className='text-gray-600'>{item.artist}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div> */}
           </div>
         </section>
         <section className='mt-[8rem]'>

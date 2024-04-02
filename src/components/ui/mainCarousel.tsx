@@ -186,7 +186,8 @@ const MainCarouselPrevious = React.forwardRef<HTMLButtonElement, React.Component
       >
         <ChevronLeft
           strokeWidth={1.5}
-          className=' h-[7.7rem] w-[7.7rem] rounded-full border-transparent  bg-transparent hover:text-[#E0E0E0]'
+          className=' h-[7.7rem] w-[7.7rem] rounded-full  border-transparent bg-transparent
+            hover:text-[#FF7752]'
         />
         <span className='sr-only'>Previous slide</span>
       </Button>
@@ -215,7 +216,7 @@ const MainCarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProp
         onClick={scrollNext}
         {...props}
       >
-        <ChevronRight strokeWidth={1.5} className='h-[7.7rem] w-[7.7rem] rounded-full  hover:text-[#E0E0E0]' />
+        <ChevronRight strokeWidth={1.5} className='h-[7.7rem] w-[7.7rem]  rounded-full hover:text-[#FF7752]' />
         <span className='sr-only'>Next slide</span>
       </Button>
     );
