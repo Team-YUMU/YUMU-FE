@@ -53,7 +53,7 @@ export default function Streaming() {
         <AuctionDetail
           description={auctionDetailData?.artDescription}
           notice={auctionDetailData?.notice}
-          artInfo={auctionDetailData?.artInfo}
+          artistInfo={auctionDetailData?.artistInfo}
         />
         <div className='space-y-[2rem]'>
           <BiddingBox />

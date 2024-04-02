@@ -67,17 +67,19 @@ export interface AuctionProps {
 }
 
 export interface AuctionDetailProps {
+  artInfo: GetAuctionDetailsArtInfoProps;
+  artistInfo: GetAuctionDetailsArtistInfoProps;
   id: number;
-  artId: number;
-  artDetail: string;
+  artDescription: string;
+  artSummary: null;
   artSize: string;
-  artDate: Date;
-  startDate: Date;
-  endDate: Date;
-  startPrice: number;
-  endPrice: null | number;
-  bidder: null | string;
-  notice: null | string;
+  artCreatedDate: string;
+  auctionStartDate: string;
+  auctionEndDate: string;
+  defaultBid: number;
+  winningBid: string | number;
+  winningBidder: string | null;
+  notice: string | null;
   receiveType: string;
 }
 
