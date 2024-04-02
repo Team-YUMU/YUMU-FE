@@ -17,7 +17,7 @@ export default function BuyHistory() {
   const paymentStatusOutStandingStyles =
     ' flex h-[23.6rem] w-[92rem] flex-shrink-0 flex-row justify-around gap-[35rem] rounded-[1rem] border-[0.1rem] border-gray-C hover:border-2';
   const {
-    data: postInfoList,
+    data: getBuyList,
     fetchNextPage,
     hasNextPage,
     isFetching,
@@ -32,7 +32,7 @@ export default function BuyHistory() {
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    if (scrollHeight - scrollTop === clientHeight && !isFetchingNextPage && hasNextPage) {
+    if (inView && scrollHeight - scrollTop === clientHeight && !isFetchingNextPage && hasNextPage) {
       fetchNextPage();
     }
   };
@@ -44,9 +44,9 @@ export default function BuyHistory() {
   const handleKaKaoPayClick = () => {};
   return (
     <>
-      {postInfoList && postInfoList?.pages[0]?.postList.length > 0 ? (
+      {getBuyList && getBuyList?.pages[0]?.postList.length > 0 ? (
         <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll' onScroll={handleScroll}>
-          {postInfoList?.pages.map((page, index) => (
+          {getBuyList?.pages.map((page, index) => (
             <Fragment key={index}>
               {page?.postList.map((item, itemIndex) => (
                 <div

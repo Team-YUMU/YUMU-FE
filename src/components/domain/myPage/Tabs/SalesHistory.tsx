@@ -20,7 +20,7 @@ export default function SalesHistory() {
     'flex h-[24rem] w-[90.8rem] flex-shrink-0 flex-row justify-around gap-[40rem] rounded-[1rem] border-[0.1rem] border-gray-C';
 
   const {
-    data: postInfoList,
+    data: getSalesList,
     fetchNextPage,
     hasNextPage,
     isFetching,
@@ -35,7 +35,7 @@ export default function SalesHistory() {
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    if (scrollHeight - scrollTop === clientHeight && !isFetchingNextPage && hasNextPage) {
+    if (inView && scrollHeight - scrollTop === clientHeight && !isFetchingNextPage && hasNextPage) {
       fetchNextPage();
     }
   };
@@ -47,9 +47,9 @@ export default function SalesHistory() {
 
   return (
     <>
-      {postInfoList && postInfoList?.pages[0]?.postList.length > 0 ? (
+      {getSalesList && getSalesList?.pages[0]?.postList.length > 0 ? (
         <div className='inline-flex h-[73rem] flex-col gap-[1.6rem] overflow-scroll' onScroll={handleScroll}>
-          {postInfoList?.pages.map((page, index) => (
+          {getSalesList?.pages.map((page, index) => (
             <Fragment key={index}>
               {page?.postList.map((item, itemIndex) => (
                 <div className={`${historyBoxStyles} items-center`} key={itemIndex}>
