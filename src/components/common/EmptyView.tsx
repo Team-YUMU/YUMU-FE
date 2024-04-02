@@ -1,19 +1,11 @@
-import Image from 'next/image';
-
 type EmptyViewProps = {
-  title: string;
-  description: string;
-  className?: string;
+  text: string;
 };
 
-export default function EmptyView({ title, description, className }: EmptyViewProps) {
+export default function EmptyView({ text }: EmptyViewProps) {
   return (
-    <div
-      className={`flex flex-col items-center justify-center gap-[2rem] whitespace-pre-line py-[8rem] text-center text-gray-C ${className}`}
-    >
-      <Image src='/svgs/empty_view.svg' alt='' width={112} height={152} />
-      <h3 className='text-20-400'>{title}</h3>
-      <p className='text-16-500'>{description}</p>
+    <div className='flex items-center justify-center'>
+      <p className='text-16-400'>{text}</p>
     </div>
   );
 }

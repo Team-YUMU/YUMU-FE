@@ -21,7 +21,6 @@ interface userData {
 
 export default function Header() {
   const [memberData, setMemberData] = useState<userData>();
-
   const router = useRouter();
 
   //데이터를 불러온다.
@@ -45,7 +44,6 @@ export default function Header() {
     try {
       await postAuthLogout();
       router.reload();
-      window.location.href = '/';
     } catch (error) {
       console.error('로그아웃 오류:', error);
     }
