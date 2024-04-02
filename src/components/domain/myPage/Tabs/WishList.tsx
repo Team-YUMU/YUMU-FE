@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { QueryClient, useInfiniteQuery, useMutation, useQueryClient, QueryKey } from '@tanstack/react-query';
 import { getWishHistory, postWishAuction } from '@/services/api';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
@@ -9,23 +9,26 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function WishList() {
   const [ref, inView] = useInView();
-  const [wishState, setWishState] = useState(false);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const {
-    data: postInfoList,
+    data: getWishList,
     fetchNextPage,
     hasNextPage,
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ['posts'],
-    queryFn: ({ pageParam = 999999 }) => getWishHistory(pageParam, 9),
+    queryFn: ({ pageParam = 999999 }) => getWishHistory(pageParam, 6),
     initialPageParam: 999999,
-    getNextPageParam: (lastPage) => (!lastPage.isLast ? lastPage.nextLastPostId : undefined),
+    retry: 0,
+    getNextPageParam: (lastPage) => (!lastPage?.isLast ? lastPage?.nextLastPostId : undefined),
   });
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    if (scrollHeight - scrollTop === clientHeight && !isFetchingNextPage && hasNextPage) {
+    if (inView && scrollHeight - scrollTop === clientHeight && !isFetchingNextPage && hasNextPage) {
       fetchNextPage();
     }
   };
@@ -34,30 +37,26 @@ export default function WishList() {
     if (inView) fetchNextPage();
   }, [inView]);
 
-  const router = useRouter();
+  const { mutate } = useMutation({
+    mutationFn: (itemId: number) => postWishAuction(itemId),
+    onSuccess: () => {
+      return queryClient.invalidateQueries({ queryKey: ['posts'] });
+    },
+  });
 
-  const handleWishToggle = async (itemId: number) => {
-    try {
-      const res = await postWishAuction(itemId);
-      setWishState(true);
-      res.data;
-    } catch (error) {
-      console.error(error);
-    }
+  const handleButtonClick = (itemId: number) => {
+    mutate(itemId);
   };
-  useEffect(() => {
-    wishState;
-  }, []);
 
   return (
     <div className='grid h-[73rem] w-[90.8rem] grid-cols-3 gap-[1.72rem] overflow-scroll' onScroll={handleScroll}>
-      {postInfoList && postInfoList?.pages[0]?.postList.length > 0 ? (
+      {getWishList && getWishList?.pages[0]?.postList.length > 0 ? (
         <>
-          {postInfoList?.pages.map((page, pageIndex) => (
+          {getWishList?.pages.map((page, pageIndex) => (
             <Fragment key={pageIndex}>
-              {page.postList.map((item, itemIndex) => (
+              {page?.postList.map((item, itemIndex) => (
                 <div key={itemIndex}>
-                  <form className={`relative gap-[5rem]`}>
+                  <div className={`relative gap-[5rem]`}>
                     <Image
                       className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem]'
                       width={292}
@@ -69,7 +68,7 @@ export default function WishList() {
                       type='button'
                       variant='myPageWish'
                       size='myPageWish'
-                      onClick={() => handleWishToggle(item.auctionId)}
+                      onClick={() => handleButtonClick(item.auctionId)}
                     >
                       <Image
                         width={35}
@@ -83,7 +82,7 @@ export default function WishList() {
                       <p>{item.artTitle}</p>
                       <p className='h-[5.4rem] w-[19.1rem] text-18-500 text-gray-9'>{item.artSubtitle}</p>
                     </div>
-                  </form>
+                  </div>
                 </div>
               ))}
             </Fragment>

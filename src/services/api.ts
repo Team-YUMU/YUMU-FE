@@ -152,6 +152,7 @@ interface BuyHistoryProps {
   price: number;
   purchaseDate: string;
   auctionId: number;
+  payStatus: string;
 }
 
 // 구매내역 조회
