@@ -67,13 +67,13 @@ export default function Landing() {
     });
   };
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === liveSoonData.length - 1 ? 0 : prevIndex + 1));
-  };
+  // const nextSlide = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex === liveSoonData.length - 1 ? 0 : prevIndex + 1));
+  // };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? liveSoonData.length - 1 : prevIndex - 1));
-  };
+  // const prevSlide = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex === 0 ? liveSoonData.length - 1 : prevIndex - 1));
+  // };
 
   return (
     <>
