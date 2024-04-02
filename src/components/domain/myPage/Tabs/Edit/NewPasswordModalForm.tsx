@@ -67,7 +67,7 @@ export default function NewPasswordModalForm() {
         const errorMessage: string = error.response?.data.errorMessage;
         console.log(errorMessage);
         // 비밀번호가 일치하지 않을 때 에러 메시지를 설정
-        if (errorMessage === '비밀번호가 일치하지 않습니다.') {
+        if (errorMessage) {
           alert(errorMessage);
         }
       }

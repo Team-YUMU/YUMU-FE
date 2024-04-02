@@ -57,16 +57,29 @@ export interface ArtProps {
 
 export interface AuctionProps {
   id: number;
-  artId: number;
-  artDetail: string;
+  artImage: string;
+  artName: string;
+  artSubTitle: string;
+  createdAt: string;
+  artist: string;
+  status: string;
+  wishCnt: number;
+}
+
+export interface AuctionDetailProps {
+  artInfo: GetAuctionDetailsArtInfoProps;
+  artistInfo: GetAuctionDetailsArtistInfoProps;
+  id: number;
+  artDescription: string;
+  artSummary: null;
   artSize: string;
-  artDate: Date;
-  startDate: Date;
-  endDate: Date;
-  startPrice: number;
-  endPrice: null | number;
-  bidder: null | string;
-  notice: null | string;
+  artCreatedDate: string;
+  auctionStartDate: string;
+  auctionEndDate: string;
+  defaultBid: number;
+  winningBid: string | number;
+  winningBidder: string | null;
+  notice: string | null;
   receiveType: string;
 }
 
@@ -84,18 +97,12 @@ export interface RegistrationProps {
   receiveType: string;
 }
 
-export interface AuctionCheckProps {
-  page?: number;
-  size?: number;
+export interface AuctionProps {
+  page: number;
+  size: number;
+  sort?: string;
   keyword?: string;
 }
-export interface FetchAuctionCheckProps {
-  page?: number;
-  size?: number;
-  keyword?: string;
-  sort: string;
-}
-
 export interface MemberInfoProps {
   id: number;
   email: string;
@@ -135,8 +142,17 @@ export interface GetAuctionDetailsArtInfoProps {
   wishCnt: number;
 }
 
+export interface GetAuctionDetailsArtistInfoProps {
+  email: string;
+  nickname: string;
+  introduce: null | string;
+  profileImage: null | string;
+  loginStatus: string;
+}
+
 export interface GetAuctionDetailsProps {
-  artinfo: GetAuctionDetailsArtInfoProps;
+  artInfo: GetAuctionDetailsArtInfoProps;
+  artistInfo: GetAuctionDetailsArtistInfoProps;
   id: number;
   artDescription: string;
   artSummary: null;

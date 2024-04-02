@@ -39,18 +39,22 @@ export default function Live() {
           <button onClick={() => router.push('/search')}>
             <ChevronLeft color='#e0e0e0' width={36} height={36} />
           </button>
-          상품명(긴제목)
+          {auctionDetailData?.artInfo.artName}
         </div>
         <div className='col-span-2 flex w-[91rem] flex-col gap-[1.13rem]'>
           <div className='h-[54rem] w-full bg-stone-50'>
             비디오 켜지면 플리 이상하게 들려서 끄려고 대충 만든 녀석인데 비디오 컴포넌트 잘 만들어져 있으니까 걱정
             마세요. 사이즈도 동일합니다.
           </div>
-          <InfoBox className='mb-[2rem]' />
-          {/* <LiveVideo /> */}
+          {auctionDetailData?.notice && <InfoBox className='mb-[2rem]' notice={auctionDetailData?.notice} />}
+          {/* <LiveVideo notice={auctionDetailData?.notice as string} /> */}
         </div>
         <LiveChatting />
-        <AuctionDetail description={auctionDetailData?.artDescription} notice={auctionDetailData?.notice} />
+        <AuctionDetail
+          description={auctionDetailData?.artDescription}
+          notice={auctionDetailData?.notice}
+          artistInfo={auctionDetailData?.artistInfo}
+        />
         <div className='space-y-[2rem]'>
           <BiddingBox />
           <BidHistories />
