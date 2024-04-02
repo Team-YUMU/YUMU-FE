@@ -11,6 +11,7 @@ import { BestAuction } from '@/components/common/BestAuction';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getAuctionDetails } from '@/services/api';
+import { ChevronLeft } from 'lucide-react';
 
 /** TODO
  * 서버사이드 렌더링으로 리팩토링
@@ -29,7 +30,7 @@ export default function AuctionDetailPage() {
   });
 
   const { artName, artSubTitle, artImage, artist, status } = auctionDetailsData?.artInfo ?? [];
-  const { artDescription, auctionStartDate, auctionEndDate } = auctionDetailsData;
+  const { artDescription, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
 
   const formatDate = (dateString: string, type: string) => {
     const dateObject = new Date(dateString);
@@ -65,7 +66,12 @@ export default function AuctionDetailPage() {
 
   return (
     <div className='relative mx-auto my-0 flex w-[136.8rem] flex-col pb-[10.5rem]'>
-      <h2 className='mb-[4rem] font-[TheJamsil] text-36-400 text-black-2'>{artName}</h2>
+      <div className='mb-[4rem] flex flex-row items-center gap-[0.4rem] font-TheJamsil text-36-400 text-black-2'>
+        <button onClick={() => router.push('/search')}>
+          <ChevronLeft color='#e0e0e0' width={36} height={36} />
+        </button>
+        {artName}
+      </div>
 
       <div className='mb-[8rem] flex gap-[2rem]'>
         <section className='w-[91rem]'>
@@ -73,7 +79,7 @@ export default function AuctionDetailPage() {
             <Image src={artImage} alt={artName} fill />
           </div>
 
-          <InfoBox className='mb-[3rem]' />
+          <InfoBox className='mb-[3rem]' notice={notice} />
 
           <AuctionDetail {...auctionDetailsData} />
         </section>

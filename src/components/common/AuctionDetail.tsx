@@ -1,15 +1,19 @@
 import React, { useState, useRef, SyntheticEvent, useEffect } from 'react';
 import { Button } from '../ui/button';
 import { Separator } from '../ui/separator';
+import { GetAuctionDetailsArtistInfoProps } from '@/types/types';
+import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 interface AuctionDetailProps {
   description?: string | undefined;
   notice?: string | null | undefined;
+  artistInfo?: GetAuctionDetailsArtistInfoProps;
 }
 
 type MenuType = '작품 소개' | '작가 소개' | '유의사항';
 
-export function AuctionDetail({ description, notice }: AuctionDetailProps) {
+export function AuctionDetail({ description, notice, artistInfo }: AuctionDetailProps) {
   const scrollRef = useRef<HTMLDivElement[]>([]);
   const [activeTab, setActiveTab] = useState<MenuType>('작품 소개');
   const [isMoreView, setIsMoreView] = useState(false);
@@ -79,7 +83,17 @@ export function AuctionDetail({ description, notice }: AuctionDetailProps) {
               <Separator orientation='vertical' className='h-[2.6rem] w-[0.4rem] bg-[#686868] p-0' />
               <p className='p-0 text-18-500'>작가 소개</p>
             </div>
-            <div className='text-18-500'>작가 소개 들어가는 자리</div>
+            <div className='flex h-fit flex-row gap-[2rem] text-18-500'>
+              <Avatar className='size-[20rem]'>
+                <AvatarImage src={artistInfo?.profileImage as string} alt={artistInfo?.nickname} />
+                <AvatarFallback>{artistInfo?.nickname[0]}</AvatarFallback>
+              </Avatar>
+              <div className='flex w-full flex-col gap-[1rem]'>
+                <p className='font-TheJamsil text-20-600'>{artistInfo?.nickname}</p>
+                <p className='text-16-400'>{artistInfo?.email}</p>
+                <p className='text-wrap'>{artistInfo?.introduce}</p>
+              </div>
+            </div>
           </div>
           <div ref={(el) => (scrollRef.current[2] = el!)} className='flex flex-col gap-[3rem] font-[notoKR]'>
             <div className='flex flex-row items-center gap-[1.6rem] p-0 text-[#686868]'>
