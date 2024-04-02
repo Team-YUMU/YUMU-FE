@@ -1,6 +1,6 @@
 'use client';
 
-import { CompatClient, Stomp } from '@stomp/stompjs';
+import * as StompJS from '@stomp/stompjs';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
@@ -15,8 +15,6 @@ interface ChatHistoryProps {
   memberId?: string;
   message: string;
 }
-
-const memberId = '123456';
 
 // component
 const Chating: React.FC = () => {
@@ -33,68 +31,58 @@ const Chating: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [chatValue, setChatValue] = useState<ChatHistoryProps | null>(null);
 
-  // Stomp의 CompatClient 객체를 참조하는 객체 (리렌더링에도 유지하기 위해 useRef 사용)
-  // Stomp 라이브러와와 소켓 연결을 수행하는 client 객체에 접근하기 위함
-  const client = useRef<CompatClient | null>(null);
+  let accessToken;
+  let refreshToken;
 
-  // 입장하기
-  // /live/join
+  if (typeof window !== 'undefined') {
+    accessToken = sessionStorage.getItem('accessToken');
+    refreshToken = sessionStorage.getItem('refreshToken');
+  }
 
-  // 소켓 연결 + 연결 성공하면 '/live/{roomID}/chat.addUser' 받아서 메세지 출력
-  const connectHandler = () => {
-    // const socket = new SockJS(`${BASE_URL}/socket-connect`);
-    client.current = Stomp.over(function () {
-      console.log('connecting...');
-      return new SockJS(`${BASE_URL}/ws-stomp`);
+  // 웹 소켓 연결
+  const webSocket = new WebSocket('ws://43.200.219.117:8080/ws-stomp');
+  webSocket.onopen = function () {
+    console.log('websocket open success!');
+  };
+
+  // stomp, Client 객체 생성
+  const client = new StompJS.Client({
+    brokerURL: 'ws://43.200.219.117:8080/ws-stomp',
+    beforeConnect: () => {
+      console.log('before connect');
+    },
+    connectHeaders: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    debug(str) {
+      console.log('debug', str);
+    },
+    reconnectDelay: 50000, // 자동 재연결
+    heartbeatIncoming: 4000,
+    heartbeatOutgoing: 4000,
+  });
+  // 연결되면
+  client.onConnect = function () {
+    // 구독되면
+    client.subscribe(`/${roomId as string}`, (message) => {
+      const datas = JSON.parse(message.body);
+      console.log('subscribe message', datas);
     });
-    console.log('connect success');
-    client.current.connect(
-      {
-        Authorization: `Bearer ${typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}`,
-        Refresh: `${typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}`,
-      },
-      () => {
-        client.current?.subscribe(
-          `${BASE_URL}/liveRoom/${roomId}`,
-          (message) => {
-            console.log('connect', message);
-          },
-          {
-            Authorization: `Bearer ${typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}`,
-            Refresh: `${typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}`,
-          },
-        );
-      },
-    );
   };
 
-  useEffect(() => {
-    connectHandler();
-  }, [roomId]);
-
-  const sendHandler = (memberId: string, inputValue: string) => {
-    if (client.current && client.current.connected) {
-      client.current.send(
-        `${BASE_URL}/live/${roomId}/chat.sendMessage`,
-        {
-          'Content-Type': 'application/json',
-        },
-        JSON.stringify({ type: 'CHAT', message: inputValue, memberId: memberId }),
-      );
-    }
+  client.onStompError = function (frame) {
+    console.log(`========> Broker reported error`, frame.headers.message);
+    console.log(`========> Additional details:${frame.body}`);
   };
 
-  useEffect(() => {
-    sendHandler(memberId, inputValue);
-  }, [inputValue]);
-
+  // 챗히스토리에 챗 내용 저장 및 인풋 초기화
   const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
       setChatHistory([...chatHistory, { type: 'CHAT', memberId: username, message: inputValue }]);
       setInputValue('');
     }
   };
-
+  // 엔터 누르면 handleSendMessage 실행
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSendMessage();
