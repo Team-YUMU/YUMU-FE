@@ -32,10 +32,11 @@ export default function Landing() {
   const popularRef = useRef<HTMLDivElement>(null);
   const [liveSoonData, setLiveSoonData] = useState<popularProps[]>([]);
   const [liveSoonDataSecond, setLiveSoonDataSecond] = useState<popularProps[]>([]);
+  const pageSize = 15;
 
   const loadLiveSoonData = async () => {
     try {
-      const res = await getAuction({ keyword: '', page: 0, sort: 'liveSoon', size: 15 });
+      const res = await getAuction(0, pageSize, 'liveSoon', '');
       const data = res.auctions;
       console.log(data);
       setLiveSoonData(data);
@@ -46,7 +47,7 @@ export default function Landing() {
 
   const loadLiveSoonDataSecond = async () => {
     try {
-      const res = await getAuction({ keyword: '', page: 1, sort: 'liveSoon', size: 15 });
+      const res = await getAuction(1, pageSize, 'liveSoon', '');
       const data = res.auctions;
       console.log(data);
       setLiveSoonDataSecond(data);

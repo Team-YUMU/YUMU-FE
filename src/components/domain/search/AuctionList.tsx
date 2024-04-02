@@ -1,19 +1,14 @@
 import Link from 'next/link';
+import { AuctionProps } from '@/types/types';
+import AuctionCard from '@/components/common/AuctionCard';
 
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
-
-export default function AuctionList({ todos }: { todos: Todo[] }) {
+export default function AuctionList({ auctions }: { auctions: AuctionProps[] }) {
   return (
-    <ul className='grid w-full grid-cols-4 gap-x-6 gap-y-8'>
-      {todos?.map((item: Todo) => (
+    <ul className='grid w-full grid-cols-4 gap-x-[3rem] gap-y-[6rem]'>
+      {auctions?.map((item) => (
         <li key={item.id}>
-          <Link href={`/auction/${item.id}/detail`} className='block h-[10rem] border p-4'>
-            <h3 className='truncate text-16-500'>{item.title}</h3>
-            {item.completed && <span className='text-12-400 text-[#787486]'>완료</span>}
+          <Link href={`/auction/${item.id}/detail`}>
+            <AuctionCard {...item} />
           </Link>
         </li>
       ))}
