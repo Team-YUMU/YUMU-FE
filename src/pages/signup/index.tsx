@@ -33,52 +33,84 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schemaSignup) });
 
   const onSubmit = async (data: FormData) => {
     try {
-      const emailCheck = await getEmailCheck(data.email);
-      console.log(emailCheck);
       setIsModalOpen(true);
       await postMember(data);
     } catch (error) {
       console.log('onSubmit error', error);
-      if (error instanceof AxiosError) {
-        // const nicknameErrorMessage: string = error.response?.data.errorMessage;
-        const emailErrorMessage: string = error.response?.data.errorMessage;
-        setErrorMessage(emailErrorMessage);
-        // setErrorMessage(nicknameErrorMessage);
-      }
     }
   };
+
   const [errorMessage, setErrorMessage] = useState('');
-  //  const [errorMessage, setNicknameErrorMessage] = useState('');
-  /*
-  const handleCheckNickname = async (data: FormData) => {
-    console.log('clicked');
+
+  // const handleCheckNickname = async () => {
+  //   const nicknameParams = getValues('nickname');
+  //   try {
+  //     const nicknameCheck = await getNicknameCheck(nicknameParams);
+  //     console.log(nicknameCheck);
+  //   } catch (error) {
+  //     if (error instanceof AxiosError) {
+  //       const nicknameErrorMessage: string = error.response?.data.errorMessage;
+  //       setErrorMessage(nicknameErrorMessage);
+  //     }
+  //   }
+  // };
+  // const onChangeNickName = async () => {
+  //   const nicknameParams = getValues('nickname');
+  //   try {
+  //     await putMemberNickNameData(nicknameParams);
+  //     alert('성공적으로 수정되었습니다.');
+  //   } catch (error) {
+  //     if (error instanceof AxiosError) {
+  //       alert(error.response?.data.errorMessage);
+  //     }
+  //   }
+  // };
+  const handleCheckDuplicate = async (key: keyof FormData) => {
+    const value = getValues(key);
+
     try {
-      const nicknameCheck = await getNicknameCheck(data.nickname);
-      console.log(nicknameCheck);
+      if (key === 'nickname') {
+        try {
+          const nicknameCheck = await getNicknameCheck(value);
+        } catch (error) {}
+      } else if (key === 'email') {
+        const emailCheck = await getEmailCheck(value);
+        console.log(emailCheck);
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
-        const nicknameErrorMessage: string = error.response?.data.errorMessage;
-        setEmailErrorMessage(nicknameErrorMessage);
+        const errorMessage: string = error.response?.data.errorMessage;
+        setErrorMessage(errorMessage);
+      }
+
+      if (key === 'nickname') {
+        setErrorMessage('nickname');
+      } else if (key === 'email') {
+        setErrorMessage('email');
       }
     }
   };
-  const handleCheckEmail = async (data: FormData) => {
-    try {
-      const emailCheck = await getEmailCheck(data.email);
-      console.log(emailCheck);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const emailErrorMessage: string = error.response?.data.errorMessage;
-        setErrorMessage(emailErrorMessage);
-      }
-    }
-  };
-*/
+  // const handleCheckEmail = async () => {
+  //   const emailParams = getValues('email');
+  //   try {
+  //     await getEmailCheck(emailParams);
+  //   } catch (error) {
+  //     if (error instanceof AxiosError) {
+  //       // const nicknameErrorMessage: string = error.response?.data.errorMessage;
+  //       const emailErrorMessage: string = error.response?.data.errorMessage;
+  //       setErrorMessage(emailErrorMessage);
+  //       console.log(error.response?.data);
+  //       // setErrorMessage(nicknameErrorMessage);
+  //     }
+  //   }
+  // };
+
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <AlertDialog>
@@ -103,7 +135,9 @@ export default function SignUpPage() {
                 {...register('nickname')}
               />
 
-              <Button className='absolute bottom-6 right-6'>중복확인</Button>
+              <Button type='button' onClick={() => handleCheckDuplicate()} className='absolute bottom-6 right-6'>
+                중복확인
+              </Button>
             </div>
             <div className='relative flex items-center justify-end'>
               <AuthInput
@@ -114,7 +148,9 @@ export default function SignUpPage() {
                 className={`h-[6.4rem] w-[43.8rem] `}
                 {...register('email')}
               />
-              <Button className='absolute bottom-6 right-6'>중복확인</Button>
+              <Button type='button' onClick={() => handleCheckDuplicate()} className='absolute bottom-6 right-6'>
+                중복확인
+              </Button>
             </div>
             <AuthInput
               type='password'
