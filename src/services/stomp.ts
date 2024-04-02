@@ -4,10 +4,10 @@ import { Server } from 'https';
 // 웹 소켓은 변수로 server를 받아 HTTP포트를 자동으로 공유합니다.
 export default (server: Server) => {
   // server에 웹 소켓 서버를 연결한다.
-  const wwsServer = new WebSocket.Server({ server });
+  const wss = new WebSocket.Server({ server });
 
   // 서버와 클라이언트가 웹 소켓 연결을 맺을 때 connection 이벤트 발생
-  wwsServer.on('connection', (ws: WebSocket, req) => {
+  wss.on('connection', (ws: WebSocket, req) => {
     //클라이언트의 IP를 알아내는 유명한 방법 중 하나
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log('새로운 클라이언트 접속', ip);

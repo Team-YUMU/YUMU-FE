@@ -2,6 +2,7 @@
 
 import * as StompJS from '@stomp/stompjs';
 import { useRouter } from 'next/router';
+import { disconnect } from 'process';
 import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 
@@ -31,49 +32,104 @@ const Chating: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [chatValue, setChatValue] = useState<ChatHistoryProps | null>(null);
 
-  let accessToken;
-  let refreshToken;
+  // useEffect(() => {
+  //   // stomp, Client 객체 생성
+  //   const client = new StompJS.Client({
+  //     brokerURL: 'http://43.200.219.117:8080/ws-stomp',
+  //     beforeConnect: () => {
+  //       console.log('before connect');
+  //     },
+  //     connectHeaders: {
+  //       Authorization: typeof window !== 'undefined' ? `Bearer ${localStorage.getItem('accessToken')}` : '',
+  //       Refresh: typeof window !== 'undefined' ? `${localStorage.getItem('refreshToken')}` : '',
+  //     },
+  //     debug(str) {
+  //       console.log('debug', str);
+  //     },
+  //     onConnect: () => {
+  //       console.log('connect!');
+  //       client.subscribe(`/liveRoom/${roomId}`, (message) => {
+  //         const datas = JSON.parse(message.body);
+  //         console.log('subscribe message', datas);
+  //       });
+  //       client.activate();
+  //     },
+  //     reconnectDelay: 50000, // 자동 재연결
+  //     heartbeatIncoming: 4000,
+  //     heartbeatOutgoing: 4000,
+  //   });
 
-  if (typeof window !== 'undefined') {
-    accessToken = sessionStorage.getItem('accessToken');
-    refreshToken = sessionStorage.getItem('refreshToken');
-  }
+  //   // // 연결되면
+  //   // client.onConnect = function (frame) {
+  //   //   // 구독되면
+  //   //   client.subscribe(`/${roomId}`, (message) => {
+  //   //     const datas = JSON.parse(message.body);
+  //   //     console.log('subscribe message', datas);
+  //   //   });
+  //   // };
 
-  // 웹 소켓 연결
-  const webSocket = new WebSocket('ws://43.200.219.117:8080/ws-stomp');
-  webSocket.onopen = function () {
-    console.log('websocket open success!');
+  //   client.onStompError = function (frame) {
+  //     console.log(`========> Broker reported error`, frame.headers.message);
+  //     console.log(`========> Additional details:${frame.body}`);
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   const socket = new SockJS('http://43.200.219.117:8080/ws-stomp');
+  //   const client = new StompJS.Client();
+
+  //   const connectCallback = () => {
+  //     console.log('websocket 연결 성공');
+
+  //     client.subscribe(`/liveRoom/${roomId}`, (message) => {
+  //       console.log('subscribe success message : ', message);
+  //     });
+  //   };
+
+  //   socket.onopen = () => {
+  //     console.log('websocket 연결 열림');
+  //     client.configure({
+  //       brokerURL: 'ws://43.200.219.117:8080/ws-stomp',
+  //       onConnect: connectCallback,
+  //       onStompError: () => {
+  //         console.log('error!');
+  //       },
+  //     });
+  //     client.activate();
+  //   };
+  // }, []);
+
+  const client = useRef<StompJS.Client>();
+
+  const connect = () => {
+    client.current = new StompJS.Client({
+      brokerURL: 'ws://43.200.219.117:8080/ws-stomp',
+      beforeConnect: () => {
+        console.log('before connect');
+      },
+      onConnect: () => {
+        console.log('success');
+        subscribe();
+      },
+    });
+    client.current.activate();
   };
 
-  // stomp, Client 객체 생성
-  const client = new StompJS.Client({
-    brokerURL: 'ws://43.200.219.117:8080/ws-stomp',
-    beforeConnect: () => {
-      console.log('before connect');
-    },
-    connectHeaders: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    debug(str) {
-      console.log('debug', str);
-    },
-    reconnectDelay: 50000, // 자동 재연결
-    heartbeatIncoming: 4000,
-    heartbeatOutgoing: 4000,
-  });
-  // 연결되면
-  client.onConnect = function () {
-    // 구독되면
-    client.subscribe(`/${roomId as string}`, (message) => {
-      const datas = JSON.parse(message.body);
-      console.log('subscribe message', datas);
+  const subscribe = () => {
+    client.current.subscribe('/liveRoom/' + roomId, () => {
+      setChatHistory([...chatHistory, { type: 'CHAT', memberId: username, message: inputValue }]);
     });
   };
 
-  client.onStompError = function (frame) {
-    console.log(`========> Broker reported error`, frame.headers.message);
-    console.log(`========> Additional details:${frame.body}`);
+  const disconnect = () => {
+    console.log('disconnect');
+    // client.current.deactivate();
   };
+
+  useEffect(() => {
+    connect();
+    // return () => disconnect();
+  }, []);
 
   // 챗히스토리에 챗 내용 저장 및 인풋 초기화
   const handleSendMessage = () => {
@@ -92,8 +148,8 @@ const Chating: React.FC = () => {
   return (
     <main className={`flex min-h-screen w-full flex-col items-center justify-center gap-2 p-2`}>
       <div>
-        <p>{typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}</p>
-        <p>{typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}</p>
+        <p>{typeof window !== 'undefined' ? `Bearer ${localStorage.getItem('accessToken')}` : ''}</p>
+        <p>{typeof window !== 'undefined' ? `${localStorage.getItem('refreshToken')}` : ''}</p>
       </div>
       <div className='flex flex-row items-center'>
         <p className='w-1/2 grow border-r border-white p-2 text-right'>Room : {roomId}</p>
