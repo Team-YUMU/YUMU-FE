@@ -1,82 +1,73 @@
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-// import AuctionCard from '@/components/common/AuctionCard';
-import testArts from '@/mocks/testArts.json';
 import { QueryClient, useQuery, keepPreviousData } from '@tanstack/react-query';
 import Pagination from '@/components/common/Pagination';
 import AuctionList from '@/components/domain/search/AuctionList';
 import EmptyView from '@/components/common/EmptyView';
 import SelectBox from '@/components/common/SortSelect';
-
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
-
-type Art = {
-  id: number;
-  artName: string;
-  artSubTitle: string;
-  artImage: string;
-  artist: string;
-  status: string;
-  createdAt: number;
-  wishCnt: number;
-};
-
-const getTodos = async (page: number, limit: number) => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}&_page=${page}`);
-  const data = await res.json();
-  return data;
-};
+import { AuctionProps } from '@/types/types';
+import { getAuction } from '@/services/api';
+interface AuctionData {
+  page: number;
+  totalElements: number;
+  totalPages: number;
+  auctions: AuctionProps[];
+}
 
 function SearchPage() {
   const router = useRouter();
   const { keyword } = router.query;
-
-  const artData = testArts.results;
-  const [arts, setArts] = useState(artData);
-
-  const [order, setOrder] = useState('createdAt');
-
-  const sortedItems = arts.sort((a, b) => Number(b[order as keyof Art]) - Number(a[order as keyof Art]));
+  const searchKeyword = typeof keyword === 'string' ? keyword : '';
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 16;
-  const totalCount = 200;
   const indexSize = 10;
-
-  const totalPage = Math.ceil(totalCount / pageSize);
+  /** NOTE
+   * const totalCount = 18; // totalCount = totalElements 서버에서 가져옴
+   * const totalPage = Math.ceil(totalCount / pageSize); // totalPage = totalPages 서버에서 가져옴
+   */
   const currentPageGroup = Math.ceil(currentPage / indexSize);
-
-  const startPage = (currentPageGroup - 1) * indexSize + 1;
-  const endPage = Math.min(startPage + indexSize - 1, totalPage);
+  const [order, setOrder] = useState('latest');
 
   const {
-    data: todos,
+    data: auctionData,
     isPending,
     isError,
-  } = useQuery<Todo[]>({
-    queryKey: ['todos', currentPage],
-    queryFn: () => getTodos(currentPage, pageSize),
+  } = useQuery<AuctionData>({
+    queryKey: ['auctions', currentPage, order, searchKeyword],
+    queryFn: () => getAuction(currentPage, pageSize, order, searchKeyword),
     placeholderData: keepPreviousData,
   });
 
   const queryClient = new QueryClient();
+
+  const auctions = auctionData?.auctions ?? [];
+  const totalPage = auctionData?.totalPages ?? 0;
+
+  const startPage = (currentPageGroup - 1) * indexSize + 1;
+  const endPage = Math.min(startPage + indexSize - 1, totalPage);
+
+  /** NOTE
+   * const sortedItems = auctions.sort( // 서버에서 정렬해 줌
+      (a, b) => Number(b[order as keyof AuctionProps]) - Number(a[order as keyof AuctionProps]),
+    );
+   */
 
   useEffect(() => {
     if (currentPage < totalPage) {
       const nextPage = currentPage + 1;
 
       queryClient.prefetchQuery({
-        queryKey: ['todos', currentPage],
-        queryFn: () => getTodos(nextPage, pageSize),
+        queryKey: ['auctions', currentPage, order, searchKeyword],
+        queryFn: () => getAuction(nextPage, pageSize, order, searchKeyword),
       });
     }
   }, [currentPage, queryClient]);
+
+  /** TODO
+   * skeleton ui 리팩토링
+   */
 
   if (isPending) return '로딩 중입니다...';
 
@@ -96,29 +87,24 @@ function SearchPage() {
         <SelectBox setOrder={setOrder} />
       </div>
 
-      {/* UI 테스트용 */}
-      <div className='flex flex-col items-center'>
-        <ul className='grid w-full grid-cols-4 gap-x-[3rem] gap-y-[6rem]'>
-          {sortedItems?.map((item) => (
-            <li key={item.id}>
-              <Link href={`/auction/${item.id}/detail`}>{/* <AuctionCard {...item} /> */}</Link>
-            </li>
-          ))}
-        </ul>
-
-        <Pagination
-          totalPage={totalPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          startPage={startPage}
-          endPage={endPage}
-        />
-
-        {/* API 테스트용 */}
-        {todos && todos.length !== 0 ? (
-          <AuctionList todos={todos} />
+      <div className='flex flex-col items-center gap-[9rem]'>
+        {auctions && auctions.length !== 0 ? (
+          <AuctionList auctions={auctions} />
         ) : (
-          <EmptyView text={'검색어를 찾을 수 없습니다.'} />
+          <EmptyView
+            title='작품을 찾지 못했습니다.'
+            description={`새로운 검색어로\n 당신에게 단 하나뿐인 작품을 찾아보세요!`}
+          />
+        )}
+
+        {auctions && auctions.length !== 0 && (
+          <Pagination
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            startPage={startPage}
+            endPage={endPage}
+          />
         )}
       </div>
     </div>

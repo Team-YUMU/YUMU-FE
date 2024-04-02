@@ -14,7 +14,6 @@ import {
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
 import { useRouter } from 'next/router';
-import { z } from 'zod';
 import AuthInput from '@/components/ui/AuthInput';
 import { Button } from '@/components/ui/button';
 import { AxiosError } from 'axios';
@@ -33,52 +32,79 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schemaSignup) });
 
+  const [nicknameCheck, setNicknameCheck] = useState('');
+  const [emailCheck, setEmailCheck] = useState('');
+  const [nicknameError, setnickNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const handleCheckDuplicate = async (key: keyof FormData) => {
+    const value = getValues(key);
+    try {
+      let emailresult;
+      let nicknameresult;
+      if (key === 'nickname') {
+        nicknameresult = await getNicknameCheck(value);
+      } else if (key === 'email') {
+        emailresult = await getEmailCheck(value);
+      }
+
+      if (nicknameresult) {
+        const { message } = nicknameresult;
+        if (message) {
+          setNicknameCheck(message);
+          setnickNameError('');
+        }
+      } else if (emailresult) {
+        const { message } = emailresult;
+        if (message) {
+          setEmailCheck(message);
+          setEmailError('');
+        }
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMessages = error.response?.data.errorMessage;
+        console.log(errorMessages);
+        if (key === 'email') {
+          setEmailError(errorMessages);
+          setEmailCheck('');
+        } else if (key === 'nickname') {
+          setnickNameError('');
+          setNicknameCheck(errorMessages);
+        }
+      }
+    }
+  };
+
   const onSubmit = async (data: FormData) => {
-    try {
-      const emailCheck = await getEmailCheck(data.email);
-      console.log(emailCheck);
-      setIsModalOpen(true);
-      await postMember(data);
-    } catch (error) {
-      console.log('onSubmit error', error);
-      if (error instanceof AxiosError) {
-        // const nicknameErrorMessage: string = error.response?.data.errorMessage;
-        const emailErrorMessage: string = error.response?.data.errorMessage;
-        setErrorMessage(emailErrorMessage);
-        // setErrorMessage(nicknameErrorMessage);
+    let isNicknameChecked = false;
+    let isEmailChecked = false;
+
+    if (nicknameError || nicknameCheck) {
+      isNicknameChecked = true;
+    } else {
+      setnickNameError('닉네임 중복확인을 해주세요.');
+    }
+
+    if (emailError || emailCheck) {
+      isEmailChecked = true;
+    } else {
+      setEmailError('이메일 중복확인을 해주세요.');
+    }
+
+    if (isNicknameChecked && isEmailChecked) {
+      try {
+        setIsModalOpen(true);
+        await postMember(data);
+      } catch (error) {
+        console.log('onSubmit error', error);
       }
     }
   };
-  const [errorMessage, setErrorMessage] = useState('');
-  //  const [errorMessage, setNicknameErrorMessage] = useState('');
-  /*
-  const handleCheckNickname = async (data: FormData) => {
-    console.log('clicked');
-    try {
-      const nicknameCheck = await getNicknameCheck(data.nickname);
-      console.log(nicknameCheck);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const nicknameErrorMessage: string = error.response?.data.errorMessage;
-        setEmailErrorMessage(nicknameErrorMessage);
-      }
-    }
-  };
-  const handleCheckEmail = async (data: FormData) => {
-    try {
-      const emailCheck = await getEmailCheck(data.email);
-      console.log(emailCheck);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const emailErrorMessage: string = error.response?.data.errorMessage;
-        setErrorMessage(emailErrorMessage);
-      }
-    }
-  };
-*/
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <AlertDialog>
@@ -93,34 +119,57 @@ export default function SignUpPage() {
             className={` relative flex w-full flex-col items-center justify-center ${errors ? 'gap-[3.5rem]' : 'gap-[1rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className='relative flex items-center justify-end'>
-              <AuthInput
-                type='text'
-                placeholder='닉네임을 입력해주세요'
-                required={true}
-                errorMessage={errorMessage ? errorMessage : errors?.nickname?.message}
-                className=' h-[6.4rem] w-[43.8rem]'
-                {...register('nickname')}
-              />
+            <div>
+              <div className='relative flex items-center justify-end'>
+                <AuthInput
+                  type='text'
+                  placeholder='닉네임을 입력해주세요'
+                  required={true}
+                  errorMessage={nicknameError ? nicknameError : errors?.nickname?.message}
+                  className=' h-[6.4rem] w-[43.8rem]'
+                  {...register('nickname')}
+                />
 
-              <Button className='absolute bottom-6 right-6'>중복확인</Button>
+                <Button
+                  type='button'
+                  onClick={() => handleCheckDuplicate('nickname')}
+                  className='absolute bottom-6 right-6'
+                >
+                  중복확인
+                </Button>
+              </div>
+              {nicknameCheck ? (
+                <p className='mt-[0.8rem] font-NotoSansKR text-12-400 text-red-F'>{nicknameCheck}</p>
+              ) : (
+                ''
+              )}
             </div>
-            <div className='relative flex items-center justify-end'>
-              <AuthInput
-                type='email'
-                required={!!errors.email}
-                placeholder='이메일을 입력해 주세요'
-                errorMessage={errorMessage ? errorMessage : errors?.email?.message}
-                className={`h-[6.4rem] w-[43.8rem] `}
-                {...register('email')}
-              />
-              <Button className='absolute bottom-6 right-6'>중복확인</Button>
+            <div>
+              <div className='relative flex items-center justify-end'>
+                <AuthInput
+                  type='email'
+                  required={!!errors.email}
+                  placeholder='이메일을 입력해 주세요'
+                  errorMessage={emailError ? emailError : errors?.email?.message}
+                  className={`h-[6.4rem] w-[43.8rem] `}
+                  {...register('email')}
+                />
+
+                <Button
+                  type='button'
+                  onClick={() => handleCheckDuplicate('email')}
+                  className='absolute bottom-6 right-6'
+                >
+                  중복확인
+                </Button>
+              </div>
+              {emailCheck ? <p className='mt-[0.8rem] font-NotoSansKR text-12-400 text-red-F'>{emailCheck}</p> : ''}
             </div>
             <AuthInput
               type='password'
               required={!!errors.password}
               errorMessage={errors?.password?.message}
-              className=' h-[6.4rem] w-[43.8rem]'
+              className='h-[6.4rem] w-[43.8rem]'
               {...register('password')}
               placeholder='비밀번호를 입력해주세요'
             />
