@@ -23,10 +23,11 @@ function SearchPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 16;
   const indexSize = 10;
-  // const totalCount = 18; // 서버에서 가져옴 totalCount = totalElements
-  // const totalPage = Math.ceil(totalCount / pageSize); // 서버에서 가져옴 totalPage = totalPages
+  /** NOTE
+   * const totalCount = 18; // totalCount = totalElements 서버에서 가져옴
+   * const totalPage = Math.ceil(totalCount / pageSize); // totalPage = totalPages 서버에서 가져옴
+   */
   const currentPageGroup = Math.ceil(currentPage / indexSize);
-
   const [order, setOrder] = useState('latest');
 
   const {
@@ -47,9 +48,11 @@ function SearchPage() {
   const startPage = (currentPageGroup - 1) * indexSize + 1;
   const endPage = Math.min(startPage + indexSize - 1, totalPage);
 
-  // const sortedItems = auctions.sort( // 서버에서 정렬해 줌
-  //   (a, b) => Number(b[order as keyof AuctionProps]) - Number(a[order as keyof AuctionProps]),
-  // );
+  /** NOTE
+   * const sortedItems = auctions.sort( // 서버에서 정렬해 줌
+      (a, b) => Number(b[order as keyof AuctionProps]) - Number(a[order as keyof AuctionProps]),
+    );
+   */
 
   useEffect(() => {
     if (currentPage < totalPage) {
@@ -62,7 +65,11 @@ function SearchPage() {
     }
   }, [currentPage, queryClient]);
 
-  if (isPending) return '로딩 중입니다...'; // TODO : skeleton ui 리팩토링
+  /** TODO
+   * skeleton ui 리팩토링
+   */
+
+  if (isPending) return '로딩 중입니다...';
 
   if (isError) return '에러가 발생했습니다.';
 
