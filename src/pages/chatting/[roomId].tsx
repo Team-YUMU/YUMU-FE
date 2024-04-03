@@ -70,6 +70,15 @@ const Chating: React.FC = () => {
         console.log('typeof : ', typeof message.body);
         console.log('json : ', JSON.parse(message.body));
         console.log('message : ', JSON.parse(message.body).message);
+        setChatHistory([
+          ...chatHistory,
+          {
+            type: JSON.parse(message.body).type,
+            memberId: JSON.parse(message.body).memberId,
+            message: JSON.parse(message.body).message,
+          },
+        ]);
+        console.log(chatHistory.length);
       });
     } else {
       console.log('not connected! :', isConnected, stompClient?.connected);
