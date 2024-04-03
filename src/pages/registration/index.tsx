@@ -136,7 +136,7 @@ export default function Registration() {
               {...register('artDescription')}
               id='artDescription'
               placeholder='작품 상세를 입력해주세요.'
-              className='mb-[3rem] min-h-[20rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd] '
+              className='mb-[3rem] min-h-[20rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 scrollbar-hide placeholder:text-[#bdbdbd]'
             />
             <RightLabel mainLabel='작품 요약' subLabel='* 300자 이내로 작성해주세요' />
             <Textarea
@@ -144,7 +144,7 @@ export default function Registration() {
               id='artSummary'
               placeholder='작품 요약을 입력해주세요.'
               maxLength={300}
-              className='min-h-[10rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd]'
+              className='min-h-[10rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 scrollbar-hide placeholder:text-[#bdbdbd]'
             />
           </div>
           <Separator className='col-span-2 my-[8rem]' />
@@ -294,12 +294,11 @@ export default function Registration() {
           />
           <div>
             <RightLabel mainLabel='유의 사항' subLabel='* 상세 페이지에 나오는 유의 사항입니다.' />
-            <Input
+            <Textarea
               {...register('notice')}
               id='notice'
               placeholder='유의사항 '
-              maxLength={50}
-              className='min-h-[20rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd]'
+              className='min-h-[20rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 scrollbar-hide placeholder:text-[#bdbdbd]'
             />
           </div>
         </div>
