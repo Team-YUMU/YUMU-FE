@@ -40,20 +40,21 @@ export default function SignInPage() {
 
   const KakaoLoginBaseURL = 'https://kauth.kakao.com/oauth/authorize';
 
+  const KakaoData = {
+    CLIENT_ID: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID as string,
+    REDIRECT_URI: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI as string,
+    CLIENT_SECRET: process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET as string,
+  };
+
   const authParam = new URLSearchParams({
-    client_id: '35db98ff4af114997aed8f7d44938cfd',
-    redirect_uri: 'http://localhost:3000/callback',
+    client_id: KakaoData.CLIENT_ID,
+    redirect_uri: KakaoData.REDIRECT_URI,
     response_type: 'code',
-    client_secret: 'BBkkwkXtSiGlrzwpI9Dessi62zOUl3XL',
+    client_secret: KakaoData.CLIENT_SECRET,
   });
 
-  const handleKakaoLogin = async () => {
-    try {
-      router.push(`${KakaoLoginBaseURL}?${authParam.toString()}`);
-    } catch (error) {
-      console.log('error', error);
-    }
-    console.log('카카오버튼 클릭');
+  const handleKakaoLogin = () => {
+    router.push(`${KakaoLoginBaseURL}?${authParam.toString()}`);
   };
 
   return (
