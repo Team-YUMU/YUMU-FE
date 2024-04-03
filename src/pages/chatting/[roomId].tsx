@@ -2,9 +2,9 @@
 
 import * as StompJS from '@stomp/stompjs';
 import { useRouter } from 'next/router';
-import { disconnect } from 'process';
 import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
+import { Client, Message, over } from 'stompjs';
 
 // 보내는 건 /live/~
 // 받는 것(구독하는 입장)에서는 /liveRoom/~
@@ -32,98 +32,58 @@ const Chating: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [chatValue, setChatValue] = useState<ChatHistoryProps | null>(null);
 
-  // useEffect(() => {
-  //   // stomp, Client 객체 생성
-  //   const client = new StompJS.Client({
-  //     brokerURL: 'http://43.200.219.117:8080/ws-stomp',
-  //     beforeConnect: () => {
-  //       console.log('before connect');
-  //     },
-  //     connectHeaders: {
-  //       Authorization: typeof window !== 'undefined' ? `Bearer ${localStorage.getItem('accessToken')}` : '',
-  //       Refresh: typeof window !== 'undefined' ? `${localStorage.getItem('refreshToken')}` : '',
-  //     },
-  //     debug(str) {
-  //       console.log('debug', str);
-  //     },
-  //     onConnect: () => {
-  //       console.log('connect!');
-  //       client.subscribe(`/liveRoom/${roomId}`, (message) => {
-  //         const datas = JSON.parse(message.body);
-  //         console.log('subscribe message', datas);
-  //       });
-  //       client.activate();
-  //     },
-  //     reconnectDelay: 50000, // 자동 재연결
-  //     heartbeatIncoming: 4000,
-  //     heartbeatOutgoing: 4000,
-  //   });
-
-  //   // // 연결되면
-  //   // client.onConnect = function (frame) {
-  //   //   // 구독되면
-  //   //   client.subscribe(`/${roomId}`, (message) => {
-  //   //     const datas = JSON.parse(message.body);
-  //   //     console.log('subscribe message', datas);
-  //   //   });
-  //   // };
-
-  //   client.onStompError = function (frame) {
-  //     console.log(`========> Broker reported error`, frame.headers.message);
-  //     console.log(`========> Additional details:${frame.body}`);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const socket = new SockJS('http://43.200.219.117:8080/ws-stomp');
-  //   const client = new StompJS.Client();
-
-  //   const connectCallback = () => {
-  //     console.log('websocket 연결 성공');
-
-  //     client.subscribe(`/liveRoom/${roomId}`, (message) => {
-  //       console.log('subscribe success message : ', message);
-  //     });
-  //   };
-
-  //   socket.onopen = () => {
-  //     console.log('websocket 연결 열림');
-  //     client.configure({
-  //       brokerURL: 'ws://43.200.219.117:8080/ws-stomp',
-  //       onConnect: connectCallback,
-  //       onStompError: () => {
-  //         console.log('error!');
-  //       },
-  //     });
-  //     client.activate();
-  //   };
-  // }, []);
-
-  const client = useRef<StompJS.Client>();
+  const [isConnected, setIsConnected] = useState(false);
+  const [stompClient, setStompClient] = useState<Client>();
 
   const connect = () => {
-    client.current = new StompJS.Client({
-      brokerURL: 'ws://43.200.219.117:8080/ws-stomp',
-      beforeConnect: () => {
-        console.log('before connect');
-      },
-      onConnect: () => {
-        console.log('success');
-        subscribe();
-      },
-    });
-    client.current.activate();
+    if (!isConnected) {
+      const socket = new SockJS(`${BASE_URL}/ws-stomp`);
+      const client = over(socket);
+      client.connect(
+        {
+          Accept: 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          Authorization: typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : '',
+          Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
+        },
+        onConnected,
+        onError,
+      );
+    }
   };
 
-  const subscribe = () => {
+  const onConnected = () => {
+    setTimeout(() => {
+      setIsConnected(true);
+    }, 1000);
+  };
+
+  const onError = (error: any) => {
+    setIsConnected(false);
+    setTimeout(connect, 1000 * 60);
+    console.log('onError : ', error);
+  };
+
+  const onSubscribe = () => {
     client.current.subscribe('/liveRoom/' + roomId, () => {
       setChatHistory([...chatHistory, { type: 'CHAT', memberId: username, message: inputValue }]);
     });
   };
 
-  const disconnect = () => {
-    console.log('disconnect');
-    // client.current.deactivate();
+  const onDisconnect = () => {
+    if (isConnected && stompClient) {
+      stompClient.disconnect(() => {
+        setIsConnected(false);
+        setStompClient(undefined);
+      });
+    }
+  };
+
+  const onSendChat = () => {
+    if (isConnected && stompClient?.connect) {
+      console.log(inputValue);
+      stompClient.send(`/live/chat/message`);
+    }
   };
 
   useEffect(() => {
