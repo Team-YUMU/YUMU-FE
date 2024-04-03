@@ -138,11 +138,12 @@ export default function Registration() {
               placeholder='작품 상세를 입력해주세요.'
               className='mb-[3rem] min-h-[20rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd] '
             />
-            <RightLabel mainLabel='작품 요약' subLabel='* 메인페이지에 나오는 요약입니다.' />
+            <RightLabel mainLabel='작품 요약' subLabel='* 300자 이내로 작성해주세요' />
             <Textarea
               {...register('artSummary')}
               id='artSummary'
               placeholder='작품 요약을 입력해주세요.'
+              maxLength={300}
               className='min-h-[10rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd]'
             />
           </div>
