@@ -9,7 +9,7 @@ export default function AuctionCard({ artName, artImage, artSubTitle, artist, wi
         <Image src={artImage} alt={artName} className='transition-transform group-hover:scale-125' fill />
       </div>
 
-      <div className='mb-3 min-h-[6.2rem]'>
+      <div className='mb-[1.2rem] min-h-[6.2rem]'>
         <h3 className='mb-[0.5rem] truncate text-20-700'>{artSubTitle}</h3>
         <p className='truncate text-18-500 text-gray-99'>{artist}</p>
       </div>

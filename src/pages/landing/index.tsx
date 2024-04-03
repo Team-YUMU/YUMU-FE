@@ -36,7 +36,7 @@ export default function Landing() {
 
   const loadLiveSoonData = async () => {
     try {
-      const res = await getAuction(0, pageSize, 'liveSoon', '');
+      const res = await getAuction(1, pageSize, 'liveSoon', '');
       const data = res.auctions;
       console.log(data);
       setLiveSoonData(data);
