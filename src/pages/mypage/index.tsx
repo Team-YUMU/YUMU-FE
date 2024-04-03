@@ -55,7 +55,7 @@ export default function MyPage() {
   return (
     <div className='flex h-full min-h-[60vh] w-full flex-col justify-center gap-[4.2rem] md:w-[120rem]'>
       <div
-        className='mac:ml-[3rem] ml-[28rem] mt-[8rem] inline-flex items-center  gap-[0.6rem] py-[1rem]'
+        className='ml-[28rem] mt-[8rem] inline-flex items-center gap-[0.6rem]  py-[1rem] mac:ml-[3rem]'
         onClick={handleMyPageReload}
       >
         <h1 className='font-TheJamsil text-36-500 text-black-2'>마이페이지</h1>
