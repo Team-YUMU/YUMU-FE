@@ -35,7 +35,6 @@
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "date-fns": "^3.4.0",
-    "dayjs": "^1.11.10",
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
     "lucide-react": "^0.354.0",
