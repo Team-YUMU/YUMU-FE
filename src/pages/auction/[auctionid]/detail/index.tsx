@@ -11,7 +11,7 @@ import { BestAuction } from '@/components/common/BestAuction';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getAuctionDetails } from '@/services/api';
-import { ChevronLeft } from 'lucide-react';
+import AuctionDetailHeader from '@/components/common/AuctionDetailHeader';
 
 /** TODO
  * 서버사이드 렌더링으로 리팩토링
@@ -30,7 +30,7 @@ export default function AuctionDetailPage() {
   });
 
   const { artName, artSubTitle, artImage, artist, status } = auctionDetailsData?.artInfo ?? [];
-  const { artDescription, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
+  const { artSummary, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
 
   const formatDate = (dateString: string, type: string) => {
     const dateObject = new Date(dateString);
@@ -66,12 +66,7 @@ export default function AuctionDetailPage() {
 
   return (
     <div className='relative mx-auto my-0 flex w-[136.8rem] flex-col pb-[10.5rem]'>
-      <div className='mb-[4rem] flex flex-row items-center gap-[0.4rem] font-TheJamsil text-36-400 text-black-2'>
-        <button onClick={() => router.push('/search')}>
-          <ChevronLeft color='#e0e0e0' width={36} height={36} />
-        </button>
-        {artName}
-      </div>
+      <AuctionDetailHeader href={'/search'} artName={artName} />
 
       <div className='mb-[8rem] flex gap-[2rem]'>
         <section className='w-[91rem]'>
@@ -96,8 +91,8 @@ export default function AuctionDetailPage() {
             </div>
 
             <div className='mb-[3rem] flex-1'>
-              <h2 className='mb-[1.6rem] font-[TheJamsil] text-36-400 text-black-2'>{artSubTitle}</h2>
-              <p className='text-18-500 text-gray-99'>{artDescription}</p>
+              <h2 className='mb-[1.6rem] line-clamp-2 font-TheJamsil text-36-400 text-black-2'>{artSubTitle}</h2>
+              <p className='line-clamp-4 text-18-500 text-gray-99'>{artSummary}</p>
             </div>
 
             <div>
@@ -130,7 +125,7 @@ export default function AuctionDetailPage() {
 
                 <Link
                   href={`/auction/${auctionid}/live`}
-                  className={`mt-[4.8rem] flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] ${status === 'NOW' ? 'mt-[3rem] bg-red-F' : 'pointer-events-none bg-[#B3B3B3]'} font-TheJamsil text-[2.6rem] font-bold text-white`}
+                  className={`mt-[4.8rem] flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] ${status === 'NOW' ? 'mt-[3rem] bg-red-F' : ' bg-[#B3B3B3]'} font-TheJamsil text-[2.6rem] font-bold text-white`}
                 >
                   {linkText}
                 </Link>
