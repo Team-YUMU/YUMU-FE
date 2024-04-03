@@ -11,7 +11,7 @@ import { BestAuction } from '@/components/common/BestAuction';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getAuctionDetails } from '@/services/api';
-import { ChevronLeft } from 'lucide-react';
+import AuctionDetailHeader from '@/components/common/AuctionDetailHeader';
 
 /** TODO
  * 서버사이드 렌더링으로 리팩토링
@@ -66,13 +66,7 @@ export default function AuctionDetailPage() {
 
   return (
     <div className='relative mx-auto my-0 flex w-[136.8rem] flex-col pb-[10.5rem]'>
-      <div className='mb-[4rem] flex items-center gap-[1.6rem]'>
-        <Link href='/search' className='-ml-[1.2rem]'>
-          <ChevronLeft color='#e0e0e0' width={36} height={36} />
-        </Link>
-
-        <h2 className=' font-TheJamsil text-36-400 text-black-2'>{artName}</h2>
-      </div>
+      <AuctionDetailHeader href={'/search'} artName={artName} />
 
       <div className='mb-[8rem] flex gap-[2rem]'>
         <section className='w-[91rem]'>
@@ -131,7 +125,7 @@ export default function AuctionDetailPage() {
 
                 <Link
                   href={`/auction/${auctionid}/live`}
-                  className={`mt-[4.8rem] flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] ${status === 'NOW' ? 'mt-[3rem] bg-red-F' : 'pointer-events-none bg-[#B3B3B3]'} font-TheJamsil text-[2.6rem] font-bold text-white`}
+                  className={`mt-[4.8rem] flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] ${status === 'NOW' ? 'mt-[3rem] bg-red-F' : ' bg-[#B3B3B3]'} font-TheJamsil text-[2.6rem] font-bold text-white`}
                 >
                   {linkText}
                 </Link>
