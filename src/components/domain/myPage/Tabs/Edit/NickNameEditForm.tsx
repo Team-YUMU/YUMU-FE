@@ -14,6 +14,7 @@ export default function NickNameEditForm({ nickname }: FormData) {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
   const INPUT_SETTING = {
@@ -27,6 +28,7 @@ export default function NickNameEditForm({ nickname }: FormData) {
     try {
       await putMemberNickNameData(nicknameParams);
       alert('성공적으로 수정되었습니다.');
+      setValue('nickname', '');
     } catch (error) {
       if (error instanceof AxiosError) {
         alert(error.response?.data.errorMessage);

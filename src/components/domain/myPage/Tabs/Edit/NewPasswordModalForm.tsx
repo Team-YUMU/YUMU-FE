@@ -28,6 +28,7 @@ export default function NewPasswordModalForm() {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(myPagePwEditSchema),
@@ -38,7 +39,6 @@ export default function NewPasswordModalForm() {
       newCheckPassword: '',
     },
   });
-  const [errorMessage, setErrorMessage] = useState('');
 
   const INPUT_SETTING = {
     label: {
@@ -62,6 +62,9 @@ export default function NewPasswordModalForm() {
     try {
       await putMemberPasswordData(passwordEditData);
       alert('성공적으로 수정되었습니다.');
+      setValue('password', '');
+      setValue('newPassword', '');
+      setValue('newCheckPassword', '');
     } catch (error) {
       if (error instanceof AxiosError) {
         const errorMessage: string = error.response?.data.errorMessage;

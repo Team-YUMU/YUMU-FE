@@ -48,16 +48,17 @@ export default function MyPage() {
     }
   };
 
-  const handleCancelButtonClick = () => {
-    window.location.reload();
+  const handleMyPageReload = () => {
+    router.reload();
   };
 
   return (
-    <div className='flex h-full min-h-[60vh] w-full flex-col justify-center gap-[4.2rem]'>
-      <div className='ml-[28rem] mt-[8rem] inline-flex items-center  gap-[0.6rem] py-[1rem]'>
-        <h1 className='font-TheJamsil text-36-500 text-black-2' onClick={handleCancelButtonClick}>
-          마이페이지
-        </h1>
+    <div className='flex h-full min-h-[60vh] w-full flex-col justify-center gap-[4.2rem] md:w-[120rem]'>
+      <div
+        className='ml-[28rem] mt-[8rem] inline-flex items-center gap-[0.6rem]  py-[1rem] mac:ml-[3rem]'
+        onClick={handleMyPageReload}
+      >
+        <h1 className='font-TheJamsil text-36-500 text-black-2'>마이페이지</h1>
         <div className='flex h-[1.5556rem] w-[1.5556rem] items-center justify-center'>
           {changeUi === true ? (
             <Image src={'/svgs/my-page-arrow-icon.svg'} width={15.556} height={15.556} alt='정보 수정 화살표 아이콘' />
@@ -90,7 +91,7 @@ export default function MyPage() {
                     />
                   </div>
                 </div>
-                <p className='h-[6.3rem] w-[22rem] text-center text-16-500 leading-[2rem] text-gray-9'>
+                <p className='h-[6.3rem] w-[22rem] break-words text-center text-16-500 leading-[2rem] text-gray-9'>
                   {memberInfo.introduce === null ? '소개 글을 작성 해주세요.' : memberInfo.introduce}
                 </p>
 

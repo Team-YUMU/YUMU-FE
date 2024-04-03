@@ -8,7 +8,7 @@ interface FormData {
 }
 
 export default function IntroEditForm({ introduce }: FormData) {
-  const { register, handleSubmit, getValues } = useForm<FormData>();
+  const { register, handleSubmit, getValues, setValue } = useForm<FormData>();
 
   const INPUT_SETTING = {
     placeholder: {
@@ -22,6 +22,7 @@ export default function IntroEditForm({ introduce }: FormData) {
       const res = await putMemberIntroduceData(introduceParams);
       if (res.status === 200) {
         alert('성공적으로 수정되었습니다.');
+        setValue('introduce', '');
       }
     } catch (error) {
       alert(error);
