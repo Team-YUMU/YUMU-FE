@@ -21,21 +21,16 @@ interface ChatHistoryProps {
 const Chating: React.FC = () => {
   const router = useRouter();
   const { roomId } = router.query;
-  // username을 엑세스 토큰처럼 사용(임시)
-  let username: string;
-  if (typeof window !== 'undefined') {
-    username = localStorage.getItem('username') || '';
-  }
   const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([
-    { type: 'chat', memberId: '654321', message: `It's Test Message` },
+    { type: 'CHAT', memberId: '654321', message: `It's Test Message` },
   ]);
   const [inputValue, setInputValue] = useState('');
-  const [chatValue, setChatValue] = useState<ChatHistoryProps | null>(null);
 
   const [isConnected, setIsConnected] = useState(false);
   const [stompClient, setStompClient] = useState<Client>();
 
   const connect = () => {
+    console.log('isConnected check in connect : ', isConnected);
     if (!isConnected) {
       const socket = new SockJS(`${BASE_URL}/ws-stomp`);
       const client = over(socket);
@@ -49,13 +44,15 @@ const Chating: React.FC = () => {
         onConnected,
         onError,
       );
+      setStompClient(client);
     }
   };
 
-  const onConnected = () => {
+  const onConnected = (message: any) => {
     setTimeout(() => {
       setIsConnected(true);
-    }, 1000);
+      console.log('onConnected : ', message);
+    }, 1000 * 5);
   };
 
   const onError = (error: any) => {
@@ -65,9 +62,18 @@ const Chating: React.FC = () => {
   };
 
   const onSubscribe = () => {
-    client.current.subscribe('/liveRoom/' + roomId, () => {
-      setChatHistory([...chatHistory, { type: 'CHAT', memberId: username, message: inputValue }]);
-    });
+    console.log('isConnected in onSubscribe : ', isConnected);
+    console.log('stompClient?.connected in onSubscribe : ', stompClient?.connected);
+    if (isConnected && stompClient?.connected) {
+      stompClient.subscribe('/liveRoom/' + roomId, (message) => {
+        console.log('subscribe! : ', message);
+        console.log('typeof : ', typeof message.body);
+        console.log('json : ', JSON.parse(message.body));
+        console.log('message : ', JSON.parse(message.body).message);
+      });
+    } else {
+      console.log('not connected! :', isConnected, stompClient?.connected);
+    }
   };
 
   const onDisconnect = () => {
@@ -75,26 +81,33 @@ const Chating: React.FC = () => {
       stompClient.disconnect(() => {
         setIsConnected(false);
         setStompClient(undefined);
+        console.log('disconnect success');
       });
     }
   };
 
   const onSendChat = () => {
     if (isConnected && stompClient?.connect) {
-      console.log(inputValue);
-      stompClient.send(`/live/chat/message`);
+      console.log('inputValue : ', inputValue);
+      stompClient.send(
+        `/live/${roomId}/chat.sendMessage`,
+        {},
+        JSON.stringify({ memberId: 3, message: inputValue, auctionId: roomId }),
+      );
     }
   };
 
   useEffect(() => {
     connect();
-    // return () => disconnect();
+    // return () => onDisconnect();
   }, []);
 
   // 챗히스토리에 챗 내용 저장 및 인풋 초기화
   const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
-      setChatHistory([...chatHistory, { type: 'CHAT', memberId: username, message: inputValue }]);
+      // 채팅 보내기
+      onSendChat();
+      // 입력창 초기화
       setInputValue('');
     }
   };
@@ -107,6 +120,11 @@ const Chating: React.FC = () => {
 
   return (
     <main className={`flex min-h-screen w-full flex-col items-center justify-center gap-2 p-2`}>
+      <div className='flex gap-2'>
+        <button onClick={connect}>onConnected</button>
+        <button onClick={onDisconnect}>onDisconnect</button>
+        <button onClick={onSubscribe}>onSubscribe</button>
+      </div>
       <div>
         <p>{typeof window !== 'undefined' ? `Bearer ${localStorage.getItem('accessToken')}` : ''}</p>
         <p>{typeof window !== 'undefined' ? `${localStorage.getItem('refreshToken')}` : ''}</p>
@@ -119,7 +137,7 @@ const Chating: React.FC = () => {
         {chatHistory.map((chat, index) => (
           <div key={index}>
             <p>
-              {chat.memberId} : {chat.message}
+              {index} : {chat.type} | {chat.memberId} : {chat.message}
             </p>
           </div>
         ))}
