@@ -30,7 +30,7 @@ export default function AuctionDetailPage() {
   });
 
   const { artName, artSubTitle, artImage, artist, status } = auctionDetailsData?.artInfo ?? [];
-  const { artDescription, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
+  const { artSummary, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
 
   const formatDate = (dateString: string, type: string) => {
     const dateObject = new Date(dateString);
@@ -66,11 +66,12 @@ export default function AuctionDetailPage() {
 
   return (
     <div className='relative mx-auto my-0 flex w-[136.8rem] flex-col pb-[10.5rem]'>
-      <div className='mb-[4rem] flex flex-row items-center gap-[0.4rem] font-TheJamsil text-36-400 text-black-2'>
-        <button onClick={() => router.push('/search')}>
+      <div className='mb-[4rem] flex items-center gap-[1.6rem]'>
+        <Link href='/search' className='-ml-[1.2rem]'>
           <ChevronLeft color='#e0e0e0' width={36} height={36} />
-        </button>
-        {artName}
+        </Link>
+
+        <h2 className=' font-TheJamsil text-36-400 text-black-2'>{artName}</h2>
       </div>
 
       <div className='mb-[8rem] flex gap-[2rem]'>
@@ -96,8 +97,8 @@ export default function AuctionDetailPage() {
             </div>
 
             <div className='mb-[3rem] flex-1'>
-              <h2 className='mb-[1.6rem] font-[TheJamsil] text-36-400 text-black-2'>{artSubTitle}</h2>
-              <p className='text-18-500 text-gray-99'>{artDescription}</p>
+              <h2 className='mb-[1.6rem] line-clamp-2 font-TheJamsil text-36-400 text-black-2'>{artSubTitle}</h2>
+              <p className='line-clamp-4 text-18-500 text-gray-99'>{artSummary}</p>
             </div>
 
             <div>
