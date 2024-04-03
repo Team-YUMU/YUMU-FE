@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import SearchForm from './SearchForm';
 import Image from 'next/image';
 import { getMemberInfo, postAuthLogout } from '@/services/api';
+import { useQuery } from '@tanstack/react-query';
 
 interface userData {
   nickname: string;
@@ -20,26 +21,12 @@ interface userData {
 }
 
 export default function Header() {
-  const [memberData, setMemberData] = useState<userData>();
-
   const router = useRouter();
 
-  //데이터를 불러온다.
-  const userMembersData = async () => {
-    try {
-      const info = await getMemberInfo();
-      console.log(info);
-      const { nickname, profileImage } = info;
-      setMemberData({ nickname, profileImage });
-    } catch (error) {
-      console.error(error);
-    }
-    console.log(memberData);
-  };
-
-  useEffect(() => {
-    userMembersData();
-  }, []);
+  const { data: memberData } = useQuery<userData>({
+    queryKey: ['memberData'],
+    queryFn: () => getMemberInfo(),
+  });
 
   const handleLogout = async () => {
     try {
