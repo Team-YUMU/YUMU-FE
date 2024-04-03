@@ -95,7 +95,7 @@ export default function Registration() {
             variant={'outline'}
             className='h-[4.8rem] w-[16rem] shrink-0 border-[#ffad33] text-[#ffad33]'
           >
-            저장하기
+            경매 등록하기
           </Button>
         </div>
         <div className='grid w-full grid-cols-[1fr_2fr] gap-2 px-[8.8rem]'>
@@ -138,11 +138,12 @@ export default function Registration() {
               placeholder='작품 상세를 입력해주세요.'
               className='mb-[3rem] min-h-[20rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd] '
             />
-            <RightLabel mainLabel='작품 요약' subLabel='* 메인페이지에 나오는 요약입니다.' />
+            <RightLabel mainLabel='작품 요약' subLabel='* 300자 이내로 작성해주세요' />
             <Textarea
               {...register('artSummary')}
               id='artSummary'
               placeholder='작품 요약을 입력해주세요.'
+              maxLength={300}
               className='min-h-[10rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd]'
             />
           </div>
@@ -293,13 +294,23 @@ export default function Registration() {
           />
           <div>
             <RightLabel mainLabel='유의 사항' subLabel='* 상세 페이지에 나오는 유의 사항입니다.' />
-            <Textarea
+            <Input
               {...register('notice')}
               id='notice'
               placeholder='유의사항 '
+              maxLength={50}
               className='min-h-[20rem] w-full resize-none border border-[#e0e0e0] bg-[#fafafa] px-[3.2rem] py-[2rem] font-[NotoSansKR] text-16-500 placeholder:text-[#bdbdbd]'
             />
           </div>
+        </div>
+        <div className='relative mb-[8rem] flex w-full flex-row items-center justify-end p-[8rem] text-20-500'>
+          <Button
+            type='submit'
+            variant={'outline'}
+            className='h-[4.8rem] w-[16rem] shrink-0 border-[#ffad33] text-[#ffad33]'
+          >
+            경매 등록하기
+          </Button>
         </div>
       </form>
       <ScrollButtons />
