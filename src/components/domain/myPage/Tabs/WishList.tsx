@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getWishHistory, postWishAuction } from '@/services/api';
@@ -12,6 +12,7 @@ export default function WishList() {
   const [ref, inView] = useInView();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [mouseOverIndex, setMouseOverIndex] = useState<number | null>(null);
 
   const {
     data: getWishList,
@@ -41,13 +42,15 @@ export default function WishList() {
   const { mutate } = useMutation({
     mutationFn: (itemId: number) => postWishAuction(itemId),
     onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: ['posts'] });
+      return queryClient.invalidateQueries({ queryKey: ['getWishList'] });
     },
   });
 
   const handleButtonClick = (itemId: number) => {
     mutate(itemId);
   };
+
+  const heartToggle = `absolute flex`;
 
   return (
     <div className='grid h-[73rem] w-[90.8rem] grid-cols-3 gap-[1.72rem] overflow-scroll' onScroll={handleScroll}>
@@ -74,8 +77,10 @@ export default function WishList() {
                       <Image
                         width={35}
                         height={30}
-                        className='absolute'
-                        src={'/images/heart_on.png'}
+                        className={heartToggle}
+                        onMouseEnter={() => setMouseOverIndex(itemIndex)}
+                        onMouseLeave={() => setMouseOverIndex(null)}
+                        src={mouseOverIndex === itemIndex ? '/images/heart_off.png' : '/images/heart_on.png'}
                         alt='관심목록 찜 버튼'
                       />
                     </Button>
