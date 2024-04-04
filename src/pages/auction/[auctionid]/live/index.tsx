@@ -50,7 +50,7 @@ export default function Live() {
           {auctionDetailData?.notice && <InfoBox className='mb-[2rem]' notice={auctionDetailData?.notice} />}
           {/* <LiveVideo notice={auctionDetailData?.notice as string} /> */}
         </div>
-        <LiveChatting />
+        {/* <LiveChatting /> */}
         <AuctionDetail
           description={auctionDetailData?.artDescription}
           notice={auctionDetailData?.notice}

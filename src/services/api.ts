@@ -215,3 +215,13 @@ export async function getLiveAuctionList() {
   const res = await authAxios.get(`${AUCTION_BASE_URL}/live`);
   return res.data;
 }
+
+export async function postBid(auctionId: number, bid: number) {
+  const res = await authAxios.post(`${BASE_URL}/bid?actionId=${auctionId}`, bid);
+  return res.data;
+}
+
+export async function postBidSuccess(auctionId: number) {
+  const res = await authAxios.post(`${BASE_URL}/bid?actionId=${auctionId}`);
+  return res.data;
+}
