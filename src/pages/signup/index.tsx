@@ -34,7 +34,7 @@ export default function SignUpPage() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schemaSignup) });
+  } = useForm<FormData>({ resolver: zodResolver(schemaSignup), reValidateMode: 'onBlur' });
 
   const [nicknameCheck, setNicknameCheck] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
@@ -49,8 +49,12 @@ export default function SignUpPage() {
 
       if (key === 'nickname') {
         nicknameresult = await getNicknameCheck(value);
+        setNicknameCheck('');
+        setnickNameError('');
       } else if (key === 'email') {
         emailresult = await getEmailCheck(value);
+        setEmailCheck('');
+        setEmailError('');
       }
 
       if (nicknameresult) {
@@ -69,7 +73,7 @@ export default function SignUpPage() {
     } catch (error) {
       if (error instanceof AxiosError) {
         const errorMessages = error.response?.data.errorMessage;
-        console.log(errorMessages);
+
         if (key === 'email') {
           setEmailError(errorMessages);
           setEmailCheck('');
@@ -83,26 +87,32 @@ export default function SignUpPage() {
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
   const [isEmailChecked, setIsEmailChecked] = useState(false);
   const [signupMsg, setSignupMsg] = useState('');
+
   const onSubmit = async (data: FormData) => {
-    if (nicknameError || nicknameCheck) {
-      setIsNicknameChecked(true);
-    } else {
-      setnickNameError('닉네임 중복확인을 해주세요.');
+    // 1. 아무 검사도 하지 않은 경우
+    if (!nicknameError || !nicknameCheck || !emailError || !emailCheck) {
+      setIsModalOpen(true);
+      setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
     }
-
-    if (emailError || emailCheck) {
-      setIsEmailChecked(true);
-    } else {
-      setEmailError('이메일 중복확인을 해주세요.');
-    }
-
+    // 둘 다 에러인 경우, 닉네임만 에러인 경우, 이메일만 에러인 경우
     if (emailError || nicknameError) {
       setIsModalOpen(true);
-      setSignupMsg('닉네임 또는 이메일 중복확인을 완료해주세요');
-    } else if (isNicknameChecked && isEmailChecked) {
+      setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
+    }
+    if (!emailError || nicknameError) {
+      setIsModalOpen(true);
+      setSignupMsg('닉네임 중복확인을 해주세요.');
+    }
+    if (emailError || !nicknameError) {
+      setIsModalOpen(true);
+      setSignupMsg('이메일 중복확인을 해주세요.');
+    }
+
+    // 에러메시지가 없고, 메시지만 있는 경우.
+    if (!nicknameError && nicknameCheck && !emailError && emailCheck) {
       try {
         setIsModalOpen(true);
-        setSignupMsg('회원가입이 완료되었습니다');
+        setSignupMsg('회원가입이 완료되었습니다.');
         await postMember(data);
         router.push('/signin');
       } catch (error) {
@@ -121,7 +131,7 @@ export default function SignUpPage() {
 
           <form
             noValidate
-            className={` relative flex w-full flex-col items-center justify-center ${errors.nickname ? 'gap-[3rem]' : 'gap-[1rem]'}`}
+            className={` relative flex w-full flex-col items-center justify-center ${errors.email ? 'gap-[3rem]' : 'gap-[3rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className='h-[6.4rem] w-[43.8rem]'>
