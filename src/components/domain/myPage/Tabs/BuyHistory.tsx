@@ -128,10 +128,10 @@ export default function BuyHistory() {
           )}
         </div>
       ) : (
-        <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
+        <div className='mt-[8.1rem] inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
           <div className='flex w-[15.2rem] flex-col items-center gap-[1rem]'>
             <Image
-              alt='판매 목록 빈 목록 일 때 박스 이미지'
+              alt='낙찰 목록 빈 목록 일 때 박스 이미지'
               width={152}
               height={100}
               src={'svgs/buy-history-null-icon.svg'}
