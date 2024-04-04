@@ -30,7 +30,7 @@ export default function AuctionDetailPage() {
   });
 
   const { artName, artSubTitle, artImage, artist, status } = auctionDetailsData?.artInfo ?? [];
-  const { artSummary, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
+  const { artSummary, auctionStartDate, auctionEndDate, notice, artDescription } = auctionDetailsData;
 
   const formatDate = (dateString: string, type: string) => {
     const dateObject = new Date(dateString);
