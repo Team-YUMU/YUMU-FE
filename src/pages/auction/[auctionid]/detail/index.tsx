@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import InfoBox from '@/components/common/InfoBox';
@@ -13,6 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAuctionDetails } from '@/services/api';
 import AuctionDetailHeader from '@/components/common/AuctionDetailHeader';
 import { formatDate } from '@/util/formateDate';
+import { getMemberInfo } from '@/services/api';
 
 /** TODO
  * 서버사이드 렌더링으로 리팩토링
@@ -21,8 +23,11 @@ import { formatDate } from '@/util/formateDate';
  */
 
 export default function AuctionDetailPage() {
+  const [isLogin, setIsLogin] = useState(false);
+
   const router = useRouter();
   const { auctionid } = router.query;
+  const auctionId = Number(auctionid);
 
   const {
     data: auctionDetailsData = [],
@@ -30,7 +35,7 @@ export default function AuctionDetailPage() {
     isError,
   } = useQuery({
     queryKey: ['auctionDetail'],
-    queryFn: () => getAuctionDetails(Number(auctionid)),
+    queryFn: () => getAuctionDetails(auctionId),
     initialData: [],
   });
 
@@ -57,6 +62,23 @@ export default function AuctionDetailPage() {
 
   if (isError) return '에러가 발생했습니다.';
 
+  useEffect(() => {
+    async function checkLogin() {
+      try {
+        const res = await getMemberInfo();
+        if (res) {
+          setIsLogin(true);
+        } else {
+          setIsLogin(false);
+        }
+      } catch (error) {
+        console.error('사용자 정보를 가져오는 중 오류가 발생했습니다:', error);
+      }
+    }
+
+    checkLogin();
+  }, []);
+
   return (
     <div className='relative mx-auto my-0 flex w-[136.8rem] flex-col pb-[10.5rem]'>
       <AuctionDetailHeader href={'/search'} artName={artName} />
@@ -80,7 +102,7 @@ export default function AuctionDetailPage() {
                 <span className='block text-16-500'>{artist}</span>
               </div>
 
-              <LikeButton />
+              <LikeButton auctionId={auctionId} isLogin={isLogin} />
             </div>
 
             <div className='mb-[3rem] flex-1'>
@@ -112,7 +134,7 @@ export default function AuctionDetailPage() {
                 {status === 'NOW' && (
                   <div className='absolute left-[50%] top-[-50%] flex h-[3.5rem] w-[21.2rem] translate-x-[-50%] translate-y-[40%] items-center justify-center gap-[1.8rem] rounded-full border-4 border-red-F bg-white text-red-F'>
                     <span className='text-16-900'>LIVING</span>
-                    <LiveTimer startTime={auctionStartDate} />
+                    <LiveTimer startTime={auctionStartDate} className='text-20-700' />
                   </div>
                 )}
 
