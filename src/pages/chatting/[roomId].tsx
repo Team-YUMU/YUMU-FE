@@ -2,9 +2,9 @@
 
 import * as StompJS from '@stomp/stompjs';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
-import { Client, Message, over } from 'stompjs';
+import { Client, over } from 'stompjs';
 
 // 보내는 건 /live/~
 // 받는 것(구독하는 입장)에서는 /liveRoom/~
@@ -13,7 +13,7 @@ const BASE_URL = 'http://43.200.219.117:8080';
 
 interface ChatHistoryProps {
   type: string;
-  memberId?: string;
+  memberId: string;
   message: string;
 }
 
@@ -62,8 +62,7 @@ const Chating: React.FC = () => {
   };
 
   const onSubscribe = () => {
-    console.log('isConnected in onSubscribe : ', isConnected);
-    console.log('stompClient?.connected in onSubscribe : ', stompClient?.connected);
+    console.log('onSubscribe : ', isConnected, '|', stompClient?.connected);
     if (isConnected && stompClient?.connected) {
       stompClient.subscribe('/liveRoom/' + roomId, (message) => {
         console.log('subscribe! : ', message);
@@ -101,7 +100,7 @@ const Chating: React.FC = () => {
       stompClient.send(
         `/live/${roomId}/chat.sendMessage`,
         {},
-        JSON.stringify({ memberId: 3, message: inputValue, auctionId: roomId }),
+        JSON.stringify({ memberId: 987, message: inputValue, auctionId: roomId }),
       );
     }
   };
