@@ -215,13 +215,13 @@ export async function getLiveAuctionList() {
   const res = await authAxios.get(`${AUCTION_BASE_URL}/live`);
   return res.data;
 }
-
+// 입찰
 export async function postBid(auctionId: number, bid: number) {
-  const res = await authAxios.post(`${BASE_URL}/bid?actionId=${auctionId}`, bid);
-  return res.data;
+  const res = await authAxios.post(`${BASE_URL}/bid`, { auctionId: auctionId, price: bid });
+  return res;
 }
-
+// 낙찰
 export async function postBidSuccess(auctionId: number) {
-  const res = await authAxios.post(`${BASE_URL}/bid?actionId=${auctionId}`);
-  return res.data;
+  const res = await authAxios.post(`${BASE_URL}/bid/success`, { auctionId });
+  return res;
 }

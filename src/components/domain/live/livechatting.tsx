@@ -42,9 +42,7 @@ export function LiveChatting() {
   });
   const [inputValue, setInputValue] = useState('');
   const [newChat, setNewChat] = useState<ChatHistoryProps>();
-  const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([
-    { type: 'CHAT', memberId: 'Test', message: 'test message' },
-  ]);
+  const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const [stompClient, setStompClient] = useState<Client>();
 
@@ -155,9 +153,9 @@ export function LiveChatting() {
     <div className='col-span-1 flex h-[63.8rem] flex-col gap-2 rounded-[1rem] border-2 border-[#F3F3F3] bg-white font-[notoKR]'>
       <div className='flex h-full flex-col-reverse justify-start gap-[1.2rem] overflow-y-auto p-2 px-[2.3rem] pb-[1.1rem] pt-[2.8rem] scrollbar-hide'>
         {!isConnected && <AuctionNotice notice='경매가 종료되었습니다.' />}
-        {/* <Bid user='Have a Nice Day' bidPrice={100000} variant={'success'} />
-        <Bid user='Have a Nice Day' bidPrice={100000} />
-        <Bid user='Tiffany' bidPrice={100000} /> */}
+        {/* <Bid user={memberData?.nickname} memberImage={memberData?.profileImage} bidPrice={100000} variant={'success'} />
+        <Bid user={memberData?.nickname} memberImage={memberData?.profileImage} bidPrice={100000} />
+        <Bid user={memberData?.nickname} memberImage={memberData?.profileImage} bidPrice={5000} /> */}
         {chatHistory.map((chat, index) => (
           <Chat
             key={index}

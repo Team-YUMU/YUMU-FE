@@ -14,6 +14,7 @@ export default function BiddingBox() {
   const [bidValue, setBidValue] = useState<number>(0);
 
   const postAuctionBid = async () => {
+    console.log(auctionId, bidValue);
     try {
       postBid(auctionId, bidValue).then(() => alert(`${auctionId.toLocaleString()}원 입찰되셨습니다!`));
     } catch (error) {

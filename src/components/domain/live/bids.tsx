@@ -14,11 +14,12 @@ const bidVariants = cva('ml-[1.7rem] rounded-[1rem] border px-[3.1rem] py-[1.6re
 });
 
 interface BidProps extends VariantProps<typeof bidVariants> {
-  user: string;
+  user?: string;
+  memberImage?: string;
   bidPrice: number;
 }
 
-export function Bid({ user, bidPrice, variant }: BidProps) {
+export function Bid({ user, memberImage, bidPrice, variant }: BidProps) {
   function handleAvatar() {
     alert(user);
   }
@@ -26,7 +27,7 @@ export function Bid({ user, bidPrice, variant }: BidProps) {
     <div className={`relative flex flex-row items-center justify-start gap-[1.2rem] text-start`}>
       <Button variant={'ghost'} className='absolute left-0 size-[4rem] rounded-full p-0' onClick={handleAvatar}>
         <Avatar className='size-[4rem]'>
-          <AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
+          <AvatarImage src={memberImage} alt='@shadcn' />
           <AvatarFallback className='bg-stone-400'>{user}</AvatarFallback>
         </Avatar>
       </Button>
