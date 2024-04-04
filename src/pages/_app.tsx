@@ -9,7 +9,7 @@ import Head from 'next/head';
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const exceptionPath = ['/_error', '/404', '/signin', '/signup'];
+  const exceptionPath = ['/_error', '/404'];
 
   const LayoutFilter = router.pathname.startsWith('/mypage') ? SubLayout : Layout;
   if (exceptionPath.includes(router.pathname)) return <Component {...pageProps} />;
