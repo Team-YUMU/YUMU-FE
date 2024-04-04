@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getNicknameCheck, postMember, getEmailCheck } from '@/services/api';
 import { useState } from 'react';
-// import axios from 'axios';
 import Link from 'next/link';
 import { schemaSignup } from '@/types/validator/signForm';
 import {
@@ -87,43 +86,43 @@ export default function SignUpPage() {
   const [signupMsg, setSignupMsg] = useState('');
 
   const onSubmit = async (data: FormData) => {
-    // 1. 아무 검사도 하지 않은 경우
+    //  아무 검사도 하지 않은 경우
     if (!nicknameError || !nicknameCheck || !emailError || !emailCheck) {
       setIsModalOpen(true);
       setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
     }
-    // 둘 다 에러인 경우, 닉네임만 에러인 경우, 이메일만 에러인 경우
-    if (emailError || nicknameError) {
+    // 둘 다 에러인 경우,
+    if (emailError && nicknameError) {
       setIsModalOpen(true);
       setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
-    }
-    if (!emailError || nicknameError) {
+    } //닉네임만 에러인 경우,
+    if (!emailError && nicknameError) {
       setIsModalOpen(true);
       setSignupMsg('닉네임 중복확인을 해주세요.');
-    }
-    if (emailError || !nicknameError) {
+    } // 이메일만 에러인 경우
+    if (emailError && !nicknameError) {
       setIsModalOpen(true);
       setSignupMsg('이메일 중복확인을 해주세요.');
     }
 
     // 에러메시지가 없고, 메시지만 있는 경우.
-    if (!nicknameError && !nicknameCheck && !emailError && !emailCheck) {
+    if (nicknameCheck && emailCheck) {
       try {
         setIsModalOpen(true);
         setSignupMsg('회원가입이 완료되었습니다.');
         await postMember(data);
-        router.push('/signin');
       } catch (error) {
         console.log('onSubmit error', error);
       }
     }
   };
-  const handleReset = () => {
-    setEmailError('');
-    setEmailCheck('');
-    setnickNameError('');
-    setNicknameCheck('');
-  };
+
+  // const handleReset = () => {
+  //   setEmailError('');
+  //   setEmailCheck('');
+  //   setnickNameError('');
+  //   setNicknameCheck('');
+  // };
 
   return (
     <div className='flex min-h-[80vh] flex-col items-center justify-center'>
@@ -206,13 +205,7 @@ export default function SignUpPage() {
               className=' h-[6.4rem] w-[43.8rem]'
             />
             <AlertDialogTrigger asChild>
-              <Button
-                onClick={() => handleReset()}
-                variant='default'
-                className=' mt-7 bg-red-F text-[2rem]'
-                type='submit'
-                size='auth'
-              >
+              <Button variant='default' className=' mt-7 bg-red-F text-[2rem]' type='submit' size='auth'>
                 회원가입
               </Button>
             </AlertDialogTrigger>
@@ -225,7 +218,10 @@ export default function SignUpPage() {
                   <AlertDialogHeader>
                     <AlertDialogTitle className='text-[1.6rem]'>{signupMsg}</AlertDialogTitle>
                   </AlertDialogHeader>
-                  <AlertDialogAction className='rounded-[0.8rem mt-[4.1rem] h-[5rem] w-[32rem] border-t-2 bg-white text-[2rem] text-red-F hover:bg-white'>
+                  <AlertDialogAction
+                    onClick={() => router.push('/signin')}
+                    className='rounded-[0.8rem mt-[4.1rem] h-[5rem] w-[32rem] border-t-2 bg-white text-[2rem] text-red-F hover:bg-white'
+                  >
                     닫기
                   </AlertDialogAction>
                 </div>
