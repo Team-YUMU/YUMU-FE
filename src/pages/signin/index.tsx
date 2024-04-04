@@ -69,7 +69,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className='flex min-h-screen flex-col items-center justify-center'>
+    <div className='flex min-h-[80vh] flex-col items-center justify-center'>
       <AlertDialog>
         <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem]'>
           <div className=' mb-[2.6rem] flex flex-col items-center'>

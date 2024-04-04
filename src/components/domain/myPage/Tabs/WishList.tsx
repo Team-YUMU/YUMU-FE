@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { QueryClient, useInfiniteQuery, useMutation, useQueryClient, QueryKey } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getWishHistory, postWishAuction } from '@/services/api';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
@@ -101,7 +101,7 @@ export default function WishList() {
           )}
         </>
       ) : (
-        <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
+        <div className='mt-[8.1rem] inline-flex  w-[90.8rem] flex-col items-center gap-[2rem]'>
           <div className='flex w-[15.2rem] flex-col items-center gap-[1rem]'>
             <Image
               alt='판매 목록 빈 목록 일 때 박스 이미지'

@@ -111,7 +111,7 @@ export default function SignUpPage() {
     }
   };
   return (
-    <div className='flex min-h-screen flex-col items-center justify-center'>
+    <div className='flex min-h-[80vh] flex-col items-center justify-center'>
       <AlertDialog>
         <div className='flex w-[43.8rem] flex-col items-center gap-[3rem]'>
           <div className=' flex flex-col items-center'>
