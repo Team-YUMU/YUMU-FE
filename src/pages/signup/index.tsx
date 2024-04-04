@@ -107,7 +107,7 @@ export default function SignUpPage() {
     }
 
     // 에러메시지가 없고, 메시지만 있는 경우.
-    if (!nicknameError && nicknameCheck && !emailError && emailCheck) {
+    if (!nicknameError && !nicknameCheck && !emailError && !emailCheck) {
       try {
         setIsModalOpen(true);
         setSignupMsg('회원가입이 완료되었습니다.');
