@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getAuctionDetails } from '@/services/api';
 import AuctionDetailHeader from '@/components/common/AuctionDetailHeader';
+import { formatDate } from '@/util/formateDate';
 
 /** TODO
  * 서버사이드 렌더링으로 리팩토링
@@ -31,22 +32,6 @@ export default function AuctionDetailPage() {
 
   const { artName, artSubTitle, artImage, artist, status } = auctionDetailsData?.artInfo ?? [];
   const { artSummary, auctionStartDate, auctionEndDate, notice, artDescription } = auctionDetailsData;
-
-  const formatDate = (dateString: string, type: string) => {
-    const dateObject = new Date(dateString);
-
-    const year = dateObject.getFullYear();
-    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
-    const date = String(dateObject.getDate()).padStart(2, '0');
-    const hours = String(dateObject.getHours()).padStart(2, '0');
-    const minutes = String(dateObject.getMinutes()).padStart(2, '0');
-
-    if (type === 'YYYY년 MM월 DD일 HH:MM') {
-      return `${year}년 ${month}월 ${date}일 ${hours}:${minutes}`;
-    } else if (type === 'MM.DD') {
-      return `${month}.${date} ${hours}:${minutes}`;
-    }
-  };
 
   let linkText = '';
 
