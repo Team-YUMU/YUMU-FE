@@ -6,7 +6,7 @@ import AuthInput from '@/components/ui/AuthInput';
 import { postAuthLogin } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -20,7 +20,7 @@ import { useState } from 'react';
 export default function SignInPage() {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [errorMsg, setErrorMsg] = useState('');
   type FormData = {
     email: string;
     password: string;
@@ -35,11 +35,15 @@ export default function SignInPage() {
   const onSubmit = async (loginData: FormData) => {
     try {
       const responseApi = await postAuthLogin(loginData);
-      if (responseApi.response?.status === 200) {
+      console.log(responseApi.message);
+      if (responseApi.message === '로그인 완료') {
+        setIsModalOpen(false);
         router.push('/');
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 404) {
+      if (error instanceof AxiosError) {
+        const errMsgText: string = error.response?.data.errorMessage;
+        setErrorMsg(errMsgText);
         setIsModalOpen(true);
       }
     }
@@ -108,7 +112,7 @@ export default function SignInPage() {
               <AlertDialogContent className='flex h-[17.9rem] flex-col items-center justify-around p-0'>
                 <div className='mt-[5rem] '>
                   <AlertDialogHeader>
-                    <AlertDialogTitle className='text-[1.6rem]'>가입되지 않은 사용자 입니다.</AlertDialogTitle>
+                    <AlertDialogTitle className='text-[1.6rem]'>{errorMsg}</AlertDialogTitle>
                   </AlertDialogHeader>
                   <AlertDialogAction
                     onClick={() => {
