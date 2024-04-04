@@ -30,6 +30,7 @@ export function LiveChatting() {
   const router = useRouter();
   const { auctionid } = router.query;
   const [inputValue, setInputValue] = useState('');
+  const [newChat, setNewChat] = useState<ChatHistoryProps>();
   const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([
     { type: 'CHAT', memberId: 'Test', message: 'test message' },
   ]);
@@ -72,19 +73,12 @@ export function LiveChatting() {
     console.log('onSubscribe : ', isConnected, '|', stompClient?.connected);
     if (isConnected && stompClient?.connected) {
       stompClient.subscribe('/liveRoom/' + auctionid, (message) => {
-        console.log('subscribe! : ', message);
-        console.log('typeof : ', typeof message.body);
         console.log('json : ', JSON.parse(message.body));
-        console.log('message : ', JSON.parse(message.body).message);
-        setChatHistory([
-          {
-            type: JSON.parse(message.body).type,
-            memberId: JSON.parse(message.body).memberId,
-            message: JSON.parse(message.body).message,
-          },
-          ...chatHistory,
-        ]);
-        console.log(chatHistory.length);
+        setNewChat({
+          type: JSON.parse(message.body).type,
+          memberId: JSON.parse(message.body).memberId,
+          message: JSON.parse(message.body).message,
+        });
       });
     } else {
       console.log('not connected! :', isConnected, stompClient?.connected);
@@ -103,11 +97,11 @@ export function LiveChatting() {
 
   const onSendChat = () => {
     if (isConnected && stompClient?.connect) {
-      console.log('send : ', { memberId: 3, message: inputValue, auctionId: auctionid });
+      console.log('send : ', { memberId: '이서영', message: inputValue, auctionId: auctionid });
       stompClient.send(
         `/live/${auctionid}/chat.sendMessage`,
         {},
-        JSON.stringify({ memberId: 3, message: inputValue, auctionId: auctionid }),
+        JSON.stringify({ memberId: '이서영', message: inputValue, auctionId: auctionid }),
       );
     }
   };
@@ -123,6 +117,12 @@ export function LiveChatting() {
       onSubscribe();
     }
   }, [isConnected, stompClient]);
+
+  useEffect(() => {
+    if (newChat) {
+      setChatHistory([newChat as ChatHistoryProps, ...chatHistory]);
+    }
+  }, [newChat]);
 
   // 챗히스토리에 챗 내용 저장 및 인풋 초기화
   const handleSendMessage = () => {
@@ -164,7 +164,7 @@ export function LiveChatting() {
           className='h-12 w-full rounded-[36px] border-none bg-zinc-100 py-[2.4rem] pl-[2.2rem] pr-[4.4rem] text-16-500 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
         />
         <div className='absolute right-[4.6rem] top-1/2 flex -translate-y-1/2 flex-row items-center gap-[0.8rem]'>
-          <Button variant={'ghost'} className='h-fit rounded-full p-0' onClick={onDisconnect}>
+          <Button variant={'ghost'} className='h-fit rounded-full p-0' onClick={onSendChat}>
             <SendHorizonal color='#9e9e9e' className='size-[1.6rem]' />
           </Button>
         </div>
