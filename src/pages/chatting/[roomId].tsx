@@ -1,9 +1,10 @@
 'use client';
 
-import { CompatClient, Stomp } from '@stomp/stompjs';
+import * as StompJS from '@stomp/stompjs';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
+import { Client, Message, over } from 'stompjs';
 
 // 보내는 건 /live/~
 // 받는 것(구독하는 입장)에서는 /liveRoom/~
@@ -16,85 +17,110 @@ interface ChatHistoryProps {
   message: string;
 }
 
-const memberId = '123456';
-
 // component
 const Chating: React.FC = () => {
   const router = useRouter();
   const { roomId } = router.query;
-  // username을 엑세스 토큰처럼 사용(임시)
-  let username: string;
-  if (typeof window !== 'undefined') {
-    username = localStorage.getItem('username') || '';
-  }
   const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([
-    { type: 'chat', memberId: '654321', message: `It's Test Message` },
+    { type: 'CHAT', memberId: '654321', message: `It's Test Message` },
   ]);
   const [inputValue, setInputValue] = useState('');
-  const [chatValue, setChatValue] = useState<ChatHistoryProps | null>(null);
 
-  // Stomp의 CompatClient 객체를 참조하는 객체 (리렌더링에도 유지하기 위해 useRef 사용)
-  // Stomp 라이브러와와 소켓 연결을 수행하는 client 객체에 접근하기 위함
-  const client = useRef<CompatClient | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [stompClient, setStompClient] = useState<Client>();
 
-  // 입장하기
-  // /live/join
-
-  // 소켓 연결 + 연결 성공하면 '/live/{roomID}/chat.addUser' 받아서 메세지 출력
-  const connectHandler = () => {
-    // const socket = new SockJS(`${BASE_URL}/socket-connect`);
-    client.current = Stomp.over(function () {
-      console.log('connecting...');
-      return new SockJS(`${BASE_URL}/ws-stomp`);
-    });
-    console.log('connect success');
-    client.current.connect(
-      {
-        Authorization: `Bearer ${typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}`,
-        Refresh: `${typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}`,
-      },
-      () => {
-        client.current?.subscribe(
-          `${BASE_URL}/liveRoom/${roomId}`,
-          (message) => {
-            console.log('connect', message);
-          },
-          {
-            Authorization: `Bearer ${typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}`,
-            Refresh: `${typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}`,
-          },
-        );
-      },
-    );
+  const connect = () => {
+    console.log('isConnected check in connect : ', isConnected);
+    if (!isConnected) {
+      const socket = new SockJS(`${BASE_URL}/ws-stomp`);
+      const client = over(socket);
+      client.connect(
+        {
+          Accept: 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          Authorization: typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : '',
+          Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
+        },
+        onConnected,
+        onError,
+      );
+      setStompClient(client);
+    }
   };
 
-  useEffect(() => {
-    connectHandler();
-  }, [roomId]);
+  const onConnected = (message: any) => {
+    setTimeout(() => {
+      setIsConnected(true);
+      console.log('onConnected : ', message);
+    }, 1000 * 5);
+  };
 
-  const sendHandler = (memberId: string, inputValue: string) => {
-    if (client.current && client.current.connected) {
-      client.current.send(
-        `${BASE_URL}/live/${roomId}/chat.sendMessage`,
-        {
-          'Content-Type': 'application/json',
-        },
-        JSON.stringify({ type: 'CHAT', message: inputValue, memberId: memberId }),
+  const onError = (error: any) => {
+    setIsConnected(false);
+    setTimeout(connect, 1000 * 60);
+    console.log('onError : ', error);
+  };
+
+  const onSubscribe = () => {
+    console.log('isConnected in onSubscribe : ', isConnected);
+    console.log('stompClient?.connected in onSubscribe : ', stompClient?.connected);
+    if (isConnected && stompClient?.connected) {
+      stompClient.subscribe('/liveRoom/' + roomId, (message) => {
+        console.log('subscribe! : ', message);
+        console.log('typeof : ', typeof message.body);
+        console.log('json : ', JSON.parse(message.body));
+        console.log('message : ', JSON.parse(message.body).message);
+        setChatHistory([
+          ...chatHistory,
+          {
+            type: JSON.parse(message.body).type,
+            memberId: JSON.parse(message.body).memberId,
+            message: JSON.parse(message.body).message,
+          },
+        ]);
+        console.log(chatHistory.length);
+      });
+    } else {
+      console.log('not connected! :', isConnected, stompClient?.connected);
+    }
+  };
+
+  const onDisconnect = () => {
+    if (isConnected && stompClient) {
+      stompClient.disconnect(() => {
+        setIsConnected(false);
+        setStompClient(undefined);
+        console.log('disconnect success');
+      });
+    }
+  };
+
+  const onSendChat = () => {
+    if (isConnected && stompClient?.connect) {
+      console.log('inputValue : ', inputValue);
+      stompClient.send(
+        `/live/${roomId}/chat.sendMessage`,
+        {},
+        JSON.stringify({ memberId: 3, message: inputValue, auctionId: roomId }),
       );
     }
   };
 
   useEffect(() => {
-    sendHandler(memberId, inputValue);
-  }, [inputValue]);
+    connect();
+    // return () => onDisconnect();
+  }, []);
 
+  // 챗히스토리에 챗 내용 저장 및 인풋 초기화
   const handleSendMessage = () => {
     if (inputValue.trim() !== '') {
-      setChatHistory([...chatHistory, { type: 'CHAT', memberId: username, message: inputValue }]);
+      // 채팅 보내기
+      onSendChat();
+      // 입력창 초기화
       setInputValue('');
     }
   };
-
+  // 엔터 누르면 handleSendMessage 실행
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSendMessage();
@@ -103,9 +129,14 @@ const Chating: React.FC = () => {
 
   return (
     <main className={`flex min-h-screen w-full flex-col items-center justify-center gap-2 p-2`}>
+      <div className='flex gap-2'>
+        <button onClick={connect}>onConnected</button>
+        <button onClick={onDisconnect}>onDisconnect</button>
+        <button onClick={onSubscribe}>onSubscribe</button>
+      </div>
       <div>
-        <p>{typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : ''}</p>
-        <p>{typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : ''}</p>
+        <p>{typeof window !== 'undefined' ? `Bearer ${localStorage.getItem('accessToken')}` : ''}</p>
+        <p>{typeof window !== 'undefined' ? `${localStorage.getItem('refreshToken')}` : ''}</p>
       </div>
       <div className='flex flex-row items-center'>
         <p className='w-1/2 grow border-r border-white p-2 text-right'>Room : {roomId}</p>
@@ -115,7 +146,7 @@ const Chating: React.FC = () => {
         {chatHistory.map((chat, index) => (
           <div key={index}>
             <p>
-              {chat.memberId} : {chat.message}
+              {index} : {chat.type} | {chat.memberId} : {chat.message}
             </p>
           </div>
         ))}
