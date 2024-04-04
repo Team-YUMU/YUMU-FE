@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/router';
 import { Client, over } from 'stompjs';
 import SockJS from 'sockjs-client';
+import { useQuery } from '@tanstack/react-query';
+import { getMemberInfo } from '@/services/api';
 
 const BASE_URL = 'http://43.200.219.117:8080';
 
@@ -20,6 +22,11 @@ function AuctionNotice({ notice }: { notice: string }) {
   );
 }
 
+interface userData {
+  nickname: string;
+  profileImage: string;
+}
+
 interface ChatHistoryProps {
   type: string;
   memberId: string;
@@ -29,6 +36,10 @@ interface ChatHistoryProps {
 export function LiveChatting() {
   const router = useRouter();
   const { auctionid } = router.query;
+  const { data: memberData } = useQuery<userData>({
+    queryKey: ['memberData'],
+    queryFn: () => getMemberInfo(),
+  });
   const [inputValue, setInputValue] = useState('');
   const [newChat, setNewChat] = useState<ChatHistoryProps>();
   const [chatHistory, setChatHistory] = useState<ChatHistoryProps[]>([
@@ -97,11 +108,11 @@ export function LiveChatting() {
 
   const onSendChat = () => {
     if (isConnected && stompClient?.connect) {
-      console.log('send : ', { memberId: '이서영', message: inputValue, auctionId: auctionid });
+      console.log('send : ', { memberId: memberData?.nickname, message: inputValue, auctionId: auctionid });
       stompClient.send(
         `/live/${auctionid}/chat.sendMessage`,
         {},
-        JSON.stringify({ memberId: '이서영', message: inputValue, auctionId: auctionid }),
+        JSON.stringify({ memberId: memberData?.nickname, message: inputValue, auctionId: auctionid }),
       );
     }
   };
@@ -148,7 +159,12 @@ export function LiveChatting() {
         <Bid user='Have a Nice Day' bidPrice={100000} />
         <Bid user='Tiffany' bidPrice={100000} /> */}
         {chatHistory.map((chat, index) => (
-          <Chat key={index} memberId={chat.memberId}>
+          <Chat
+            key={index}
+            memberId={chat.memberId}
+            memberImage={memberData?.profileImage}
+            mynickname={memberData?.nickname}
+          >
             {chat.message}
           </Chat>
         ))}
@@ -160,7 +176,7 @@ export function LiveChatting() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyPress}
-          placeholder='고운 채팅 쓰기'
+          placeholder={isConnected ? '채팅 연결 중 입니다.' : '고운 채팅 쓰기'}
           className='h-12 w-full rounded-[36px] border-none bg-zinc-100 py-[2.4rem] pl-[2.2rem] pr-[4.4rem] text-16-500 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0'
         />
         <div className='absolute right-[4.6rem] top-1/2 flex -translate-y-1/2 flex-row items-center gap-[0.8rem]'>
