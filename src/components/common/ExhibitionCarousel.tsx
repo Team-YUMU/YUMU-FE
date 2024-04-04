@@ -26,7 +26,7 @@ export function ExhibitionCarousel() {
                 alt={`기획전 이미지 ${index}`}
                 width={1173}
                 height={200}
-                className='h-full w-full'
+                className='h-full w-full rounded-[13.5rem]'
               />
             </CarouselItem>
           ))}
