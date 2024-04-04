@@ -24,7 +24,11 @@ export default function AuctionDetailPage() {
   const router = useRouter();
   const { auctionid } = router.query;
 
-  const { data: auctionDetailsData = [] } = useQuery({
+  const {
+    data: auctionDetailsData = [],
+    isPending,
+    isError,
+  } = useQuery({
     queryKey: ['auctionDetail'],
     queryFn: () => getAuctionDetails(Number(auctionid)),
     initialData: [],
@@ -48,6 +52,10 @@ export default function AuctionDetailPage() {
     default:
       linkText = `${formatDate(auctionStartDate, 'MM.DD')} 오픈 예정`;
   }
+
+  if (isPending) return '로딩 중입니다...';
+
+  if (isError) return '에러가 발생했습니다.';
 
   return (
     <div className='relative mx-auto my-0 flex w-[136.8rem] flex-col pb-[10.5rem]'>
