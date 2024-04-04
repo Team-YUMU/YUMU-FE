@@ -30,7 +30,7 @@ export default function AuctionDetailPage() {
   });
 
   const { artName, artSubTitle, artImage, artist, status } = auctionDetailsData?.artInfo ?? [];
-  const { artSummary, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
+  const { artSummary, auctionStartDate, auctionEndDate, notice, artDescription } = auctionDetailsData;
 
   const formatDate = (dateString: string, type: string) => {
     const dateObject = new Date(dateString);
@@ -76,7 +76,7 @@ export default function AuctionDetailPage() {
 
           <InfoBox className='mb-[3rem]' notice={notice} />
 
-          <AuctionDetail {...auctionDetailsData} />
+          <AuctionDetail description={artDescription} {...auctionDetailsData} />
         </section>
 
         <section className='flex-1'>
