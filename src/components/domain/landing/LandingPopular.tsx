@@ -9,6 +9,7 @@ import LikeButton from '@/components/common/LikeButton';
 type BestAuctionProps = {
   className?: string;
   popularRef?: React.RefObject<HTMLDivElement>;
+  isLogin: boolean;
 };
 
 interface popularProps {
@@ -22,7 +23,7 @@ interface popularProps {
   wishCnt: number;
 }
 
-function LandingPopular({ className = '', popularRef }: BestAuctionProps) {
+function LandingPopular({ className = '', popularRef, isLogin }: BestAuctionProps) {
   const [today, setToday] = useState('');
   const [popularData, setPopularData] = useState<popularProps[]>([]);
   const pageSize = 30;
@@ -89,7 +90,7 @@ function LandingPopular({ className = '', popularRef }: BestAuctionProps) {
                     <Image src='/images/heart.png' alt='찜한 수' width={24} height={20} />
                     <span className='text-16-500 text-gray-99'>{item.wishCnt}</span>
                   </div>
-                  <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
+                  <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' auctionId={item.id} isLogin={isLogin} />
                 </div>
               </Link>
             </CarouselItem>
