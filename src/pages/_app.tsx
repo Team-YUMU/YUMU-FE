@@ -10,8 +10,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const exceptionPath = ['/_error', '/404'];
+  const exceptionPath2 = ['/mypage', '/signin', '/signup'];
 
-  const LayoutFilter = router.pathname.startsWith('/mypage') ? SubLayout : Layout;
+  const LayoutFilter = exceptionPath2.includes(router.pathname) ? SubLayout : Layout;
   if (exceptionPath.includes(router.pathname)) return <Component {...pageProps} />;
 
   const queryClient = new QueryClient();
