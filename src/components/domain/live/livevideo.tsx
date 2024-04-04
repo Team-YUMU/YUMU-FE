@@ -16,8 +16,8 @@ export function LiveVideo({ notice }: LiveVideoProps) {
   }, []);
 
   return (
-    <div className='col-span-2 bg-white'>
-      <AspectRatio ratio={16 / 9} className='bg-black'>
+    <div className='col-span-2 flex h-full flex-col justify-center gap-[2rem] rounded-[2rem] bg-white'>
+      <AspectRatio ratio={16 / 9} className='rounded-[2rem] bg-black-0'>
         {stream && (
           <video
             playsInline
@@ -29,7 +29,6 @@ export function LiveVideo({ notice }: LiveVideoProps) {
         )}
       </AspectRatio>
       {notice && <InfoBox className='mb-[2rem]' notice={notice} />}
-      <div className='rounded-xl bg-slate-50 p-2'>{notice}</div>
     </div>
   );
 }
