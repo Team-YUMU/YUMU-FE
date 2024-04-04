@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getNicknameCheck, postMember, getEmailCheck } from '@/services/api';
 import { useState } from 'react';
-// import axios from 'axios';
 import Link from 'next/link';
 import { schemaSignup } from '@/types/validator/signForm';
 import {
