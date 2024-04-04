@@ -27,7 +27,7 @@ export default function SalesHistory() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['getSalesList'],
     queryFn: ({ pageParam = 999999 }) => getSalesHistory(pageParam, 5),
     initialPageParam: 999999,
     retry: 0,

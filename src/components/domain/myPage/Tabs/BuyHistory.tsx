@@ -24,7 +24,7 @@ export default function BuyHistory() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['getBuyList'],
     queryFn: ({ pageParam = 999999 }) => getBuyHistory(pageParam, 6),
     initialPageParam: 999999,
     retry: 0,

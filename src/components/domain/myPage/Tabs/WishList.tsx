@@ -20,7 +20,7 @@ export default function WishList() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['getWishList'],
     queryFn: ({ pageParam = 999999 }) => getWishHistory(pageParam, 6),
     initialPageParam: 999999,
     retry: 0,
