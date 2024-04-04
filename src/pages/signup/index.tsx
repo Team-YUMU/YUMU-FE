@@ -33,8 +33,9 @@ export default function SignUpPage() {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schemaSignup) });
+  } = useForm<FormData>({ resolver: zodResolver(schemaSignup), reValidateMode: 'onBlur' });
 
   const [nicknameCheck, setNicknameCheck] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
@@ -42,6 +43,8 @@ export default function SignUpPage() {
   const [emailError, setEmailError] = useState('');
 
   const handleCheckDuplicate = async (key: keyof FormData) => {
+    setError('nickname', {});
+    setError('email', {});
     const value = getValues(key);
     try {
       let emailresult;
@@ -69,7 +72,7 @@ export default function SignUpPage() {
     } catch (error) {
       if (error instanceof AxiosError) {
         const errorMessages = error.response?.data.errorMessage;
-        console.log(errorMessages);
+
         if (key === 'email') {
           setEmailError(errorMessages);
           setEmailCheck('');
@@ -80,29 +83,34 @@ export default function SignUpPage() {
       }
     }
   };
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
-  const [isEmailChecked, setIsEmailChecked] = useState(false);
+
   const [signupMsg, setSignupMsg] = useState('');
+
   const onSubmit = async (data: FormData) => {
-    if (nicknameError || nicknameCheck) {
-      setIsNicknameChecked(true);
-    } else {
-      setnickNameError('닉네임 중복확인을 해주세요.');
+    // 1. 아무 검사도 하지 않은 경우
+    if (!nicknameError || !nicknameCheck || !emailError || !emailCheck) {
+      setIsModalOpen(true);
+      setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
     }
-
-    if (emailError || emailCheck) {
-      setIsEmailChecked(true);
-    } else {
-      setEmailError('이메일 중복확인을 해주세요.');
-    }
-
+    // 둘 다 에러인 경우, 닉네임만 에러인 경우, 이메일만 에러인 경우
     if (emailError || nicknameError) {
       setIsModalOpen(true);
-      setSignupMsg('닉네임 또는 이메일 중복확인을 완료해주세요');
-    } else if (isNicknameChecked && isEmailChecked) {
+      setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
+    }
+    if (!emailError || nicknameError) {
+      setIsModalOpen(true);
+      setSignupMsg('닉네임 중복확인을 해주세요.');
+    }
+    if (emailError || !nicknameError) {
+      setIsModalOpen(true);
+      setSignupMsg('이메일 중복확인을 해주세요.');
+    }
+
+    // 에러메시지가 없고, 메시지만 있는 경우.
+    if (!nicknameError && nicknameCheck && !emailError && emailCheck) {
       try {
         setIsModalOpen(true);
-        setSignupMsg('회원가입이 완료되었습니다');
+        setSignupMsg('회원가입이 완료되었습니다.');
         await postMember(data);
         router.push('/signin');
       } catch (error) {
@@ -110,6 +118,13 @@ export default function SignUpPage() {
       }
     }
   };
+  const handleReset = () => {
+    setEmailError('');
+    setEmailCheck('');
+    setnickNameError('');
+    setNicknameCheck('');
+  };
+
   return (
     <div className='flex min-h-[80vh] flex-col items-center justify-center'>
       <AlertDialog>
@@ -121,7 +136,7 @@ export default function SignUpPage() {
 
           <form
             noValidate
-            className={` relative flex w-full flex-col items-center justify-center ${errors.nickname ? 'gap-[3rem]' : 'gap-[1rem]'}`}
+            className={` relative flex w-full flex-col items-center justify-center ${errors.nickname || errors.email ? 'gap-[3rem]' : 'gap-[2rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className='h-[6.4rem] w-[43.8rem]'>
@@ -150,7 +165,7 @@ export default function SignUpPage() {
               )}
             </div>
 
-            <div>
+            <div className='h-[6.4rem] w-[43.8rem]'>
               <div className='relative flex items-center justify-end'>
                 <AuthInput
                   type='email'
@@ -191,7 +206,13 @@ export default function SignUpPage() {
               className=' h-[6.4rem] w-[43.8rem]'
             />
             <AlertDialogTrigger asChild>
-              <Button variant='default' className=' mt-7 bg-red-F text-[2rem]' type='submit' size='auth'>
+              <Button
+                onClick={() => handleReset()}
+                variant='default'
+                className=' mt-7 bg-red-F text-[2rem]'
+                type='submit'
+                size='auth'
+              >
                 회원가입
               </Button>
             </AlertDialogTrigger>
