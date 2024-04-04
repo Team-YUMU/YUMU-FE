@@ -39,7 +39,7 @@ export default function Header() {
   };
 
   return (
-    <header className=' border-b-[0.1rem border-b-gray-50 bg-slate-50'>
+    <header className=' border-b-[0.1rem] border-b-gray-50 bg-slate-50'>
       {exceptionPath.includes(router.pathname) ? (
         <div className='container mx-auto items-center justify-center '>
           <Link href='/' className='flex h-[7.2rem] items-center justify-center'>
@@ -48,7 +48,7 @@ export default function Header() {
         </div>
       ) : (
         <div className='container mx-auto flex items-center justify-between'>
-          <Link href='/'>
+          <Link href='/' className='flex h-[7.2rem] items-center'>
             <Image src='/svgs/yumu-logo.svg' alt='로고 이미지' width={139} height={27} />
           </Link>
           <div>
@@ -81,6 +81,11 @@ export default function Header() {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                <Button size='header' className='mb-[1.1rem] mt-[1.3rem] bg-red-F font-bold leading-5 text-white '>
+                  <Link href='/registration' className='text-[1.6rem]'>
+                    경매등록하기
+                  </Link>
+                </Button>
               </div>
             ) : (
               <div className='flex items-center'>
@@ -92,11 +97,6 @@ export default function Header() {
                 </Link>
               </div>
             )}
-            <Button size='header' className='mb-[1.1rem] mt-[1.3rem] bg-red-F font-bold leading-5 text-white '>
-              <Link href='/registration' className='text-[1.6rem]'>
-                경매등록하기
-              </Link>
-            </Button>
           </div>
         </div>
       )}
