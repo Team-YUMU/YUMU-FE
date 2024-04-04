@@ -12,47 +12,59 @@ import Autoplay from 'embla-carousel-autoplay';
 
 const BannerInformation = [
   {
-    src: '/svgs/banner-1.svg',
+    src: '/svgs/landingBanner.svg',
     title: (
       <>
-        1. 놓치면 아쉬운 <br /> 종료임박 프로젝트
+        유무 OPEN!
+        <br />
+        작가님 들어오세요!
       </>
     ),
     subTitle: (
       <>
-        서포터님의 사랑은 받은 <br />
-        인기프로젝트가 곧 끝나요 <br />
-        프로젝트가 종료되기 전 살펴보세요!
+        유일무이한 당신의 작품이
+        <br />
+        특별한 가치를 가지고 오래 지속되도록
+        <br />
+        유무가 응원할게요!
       </>
     ),
   },
   {
-    src: '/svgs/banner-1.svg',
+    src: '/svgs/landingBanner.svg',
     title: (
       <>
-        2. 놓치면 아쉬운 <br /> 종료임박 프로젝트
+        유무 OPEN!
+        <br />
+        작가님 들어오세요!
       </>
     ),
     subTitle: (
       <>
-        서포터님의 사랑은 받은 <br />
-        인기프로젝트가 곧 끝나요 <br />
-        프로젝트가 종료되기 전 살펴보세요!
+        유일무이한 당신의 작품이
+        <br />
+        특별한 가치를 가지고 오래 지속되도록
+        <br />
+        유무가 응원할게요!
       </>
     ),
   },
   {
-    src: '/svgs/banner-1.svg',
+    src: '/svgs/landingBanner.svg',
     title: (
       <>
-        3. 놓치면 아쉬운 <br /> 종료임박 프로젝트
+        유무 OPEN!
+        <br />
+        작가님 들어오세요!
       </>
     ),
     subTitle: (
       <>
-        서포터님의 사랑은 받은 <br />
-        인기프로젝트가 곧 끝나요 <br />
-        프로젝트가 종료되기 전 살펴보세요!
+        유일무이한 당신의 작품이
+        <br />
+        특별한 가치를 가지고 오래 지속되도록
+        <br />
+        유무가 응원할게요!
       </>
     ),
   },
@@ -100,11 +112,11 @@ export default function LandingBanner() {
                 alt={`배너이미지 `}
                 width={1375}
                 height={396}
-                className='h-auto w-full object-cover'
+                className='h-auto w-full rounded-[2rem] object-cover'
               />
-              <div className='absolute left-[15.6rem] top-0 max-h-[39.8rem] max-w-[37.2rem]'>
-                <p className='pt-[8.8rem] text-[4.8rem] font-bold leading-[6rem] text-[#fff]'>{el.title}</p>
-                <div className='mt-[2.6rem] text-[1.8rem] font-normal leading-[2.5rem] text-[#fff]'>{el.subTitle}</div>
+              <div className='absolute left-[15.6rem] top-0 max-h-[39.8rem] max-w-[38.1rem]'>
+                <p className='pt-[8.8rem] font-TheJamsil text-[4.8rem] font-bold leading-[6rem]'>{el.title}</p>
+                <div className='<br /> mt-[2.6rem] text-[1.8rem] font-normal leading-[2.5rem]'>{el.subTitle}</div>
               </div>
             </CarouselItem>
           ))}

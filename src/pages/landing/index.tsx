@@ -9,7 +9,7 @@ import {
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import LandingBanner from '@/components/domain/landing/LandingBanner';
 import LandingLivePopular from '@/components/domain/landing/LandingLivePopular';
-import { BestAuction } from '@/components/common/BestAuction';
+import LandingPopular from '@/components/domain/landing/LandingPopular';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -31,8 +31,7 @@ export default function Landing() {
   const router = useRouter();
   const popularRef = useRef<HTMLDivElement>(null);
   const [liveSoonData, setLiveSoonData] = useState<popularProps[]>([]);
-  const [liveSoonDataSecond, setLiveSoonDataSecond] = useState<popularProps[]>([]);
-  const pageSize = 15;
+  const pageSize = 20;
 
   const loadLiveSoonData = async () => {
     try {
@@ -40,17 +39,6 @@ export default function Landing() {
       const data = res.auctions;
       console.log(data);
       setLiveSoonData(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const loadLiveSoonDataSecond = async () => {
-    try {
-      const res = await getAuction(1, pageSize, 'liveSoon', '');
-      const data = res.auctions;
-      console.log(data);
-      setLiveSoonDataSecond(data);
     } catch (error) {
       console.error(error);
     }
@@ -66,14 +54,6 @@ export default function Landing() {
       block: 'center',
     });
   };
-
-  // const nextSlide = () => {
-  //   setCurrentIndex((prevIndex) => (prevIndex === liveSoonData.length - 1 ? 0 : prevIndex + 1));
-  // };
-
-  // const prevSlide = () => {
-  //   setCurrentIndex((prevIndex) => (prevIndex === 0 ? liveSoonData.length - 1 : prevIndex - 1));
-  // };
 
   return (
     <>
@@ -109,34 +89,68 @@ export default function Landing() {
                 loop: true,
               }}
               plugins={[Autoplay({ delay: 4000 })]}
-              className='mr-[8.2rem] w-full max-w-[87.2rem] bg-pink'
+              className='mr-[8.2rem] w-full max-w-[87.2rem]'
             >
-              <CarouselContent className='-ml-1 flex basis-1/3  flex-wrap'>
-                <CarouselItem className='flex  flex-wrap pl-1'>
-                  <div className='flex basis-1/3 bg-red '>
-                    {liveSoonData.map((item, index) => (
-                      <div key={index} className='relative'>
-                        <div className='p-1'>
-                          <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
-                          <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
-                          <p className='w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
+              <CarouselContent>
+                <CarouselItem>
+                  <section className='grid w-full grid-cols-3 grid-rows-2 gap-x-10 gap-y-[4rem]'>
+                    {liveSoonData.slice(0, 6).map((item, index) => (
+                      <div key={index}>
+                        <div className='relative'>
+                          <Image
+                            src={item.artImage}
+                            alt={item.artName}
+                            width={280}
+                            height={200}
+                            className='h-[20rem] w-[28rem] rounded-[.6rem]'
+                          />
+                          <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
+                          <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
+                          <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
                         </div>
-                        <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                       </div>
                     ))}
-                  </div>
-                  <div className='flex basis-1/3'>
-                    {liveSoonData.map((item, index) => (
-                      <div key={index} className='relative'>
-                        <div className='p-1'>
-                          <Image src={item.artImage} alt='' width={280} height={200} className='h-[20rem] w-[28rem]' />
-                          <p className='mt-[1.5rem] text-20-700'>{item.artName}</p>
-                          <p className='w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
+                  </section>
+                </CarouselItem>
+                <CarouselItem>
+                  <section className='grid w-full grid-cols-3 grid-rows-2 gap-x-10 gap-y-[4rem]'>
+                    {liveSoonData.slice(6, 12).map((item, index) => (
+                      <div key={index}>
+                        <div className='relative'>
+                          <Image
+                            src={item.artImage}
+                            alt={item.artName}
+                            width={280}
+                            height={200}
+                            className='h-[20rem] w-[28rem] rounded-[.6rem]'
+                          />
+                          <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
+                          <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
+                          <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
                         </div>
-                        <LikeButton className='absolute right-[1.5rem] top-[1.4rem]' />
                       </div>
                     ))}
-                  </div>
+                  </section>
+                </CarouselItem>
+                <CarouselItem>
+                  <section className='grid w-full grid-cols-3 grid-rows-2 gap-x-10 gap-y-[4rem]'>
+                    {liveSoonData.slice(12, 18).map((item, index) => (
+                      <div key={index}>
+                        <div className='relative'>
+                          <Image
+                            src={item.artImage}
+                            alt={item.artName}
+                            width={280}
+                            height={200}
+                            className='h-[20rem] w-[28rem] rounded-[.6rem]'
+                          />
+                          <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
+                          <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
+                          <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
+                        </div>
+                      </div>
+                    ))}
+                  </section>
                 </CarouselItem>
               </CarouselContent>
               <MainCarouselPrevious
@@ -150,48 +164,10 @@ export default function Landing() {
                 className='-right-32  h-[7.7rem] w-[7.7rem] rounded-full border-transparent bg-[#fff] shadow-lg'
               />
             </Carousel>
-            {/* <div className='relative w-full'>
-              <button
-                className='absolute inset-y-0 left-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 bg-opacity-50 text-white'
-                onClick={prevSlide}
-              >
-                이전
-              </button>
-              <button
-                className='absolute inset-y-0 right-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 bg-opacity-50 text-white'
-                onClick={nextSlide}
-              >
-                다음
-              </button>
-              <div className='absolute mr-[8.2rem] grid  w-[87.2rem]  grid-flow-col grid-rows-2  gap-4 bg-pink'>
-                {liveSoonData.map((item, index) => (
-                  <div
-                    key={index}
-                    className=' basis-1/3'
-                    // className={`transition-opacity duration-500 ${
-                    //   index === currentIndex ? 'opacity-100' : 'opacity-0'
-                    // }`}
-                  >
-                    <div className='rounded-lg bg-gray-200 p-4'>
-                      <Image
-                        src={item.artImage}
-                        alt={item.artName}
-                        width={280}
-                        height={200}
-                        className='h-[20rem] w-[28rem]'
-                      />
-                      <p className='text-lg mt-2 font-semibold'>{item.artSubTitle}</p>
-                      <p className='text-gray-600'>{item.artist}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div> */}
           </div>
         </section>
         <section className='mt-[8rem]'>
-          <BestAuction popularRef={popularRef} />
+          <LandingPopular popularRef={popularRef} />
         </section>
       </main>
     </>
