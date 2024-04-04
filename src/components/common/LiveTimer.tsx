@@ -34,7 +34,7 @@ function LiveTimer({ startTime, className }: LiveTimerProps) {
     return `${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
   };
 
-  return <strong className={`text-16-700 text-red-F ${className}`}>{formatTime(remainingTime)}</strong>;
+  return <strong className={`${className}`}>{formatTime(remainingTime)}</strong>;
 }
 
 export default LiveTimer;
