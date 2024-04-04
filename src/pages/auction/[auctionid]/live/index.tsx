@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { GetAuctionDetailsProps } from '@/types/types';
 import { getAuctionDetails } from '@/services/api';
 import { ChevronLeft } from 'lucide-react';
+import CurrentBidBox from '@/components/domain/live/CurrentBidBox';
 
 export default function Live() {
   const [auctionDetailData, setAuctionDetailData] = useState<GetAuctionDetailsProps | null>();
@@ -56,6 +57,7 @@ export default function Live() {
           artistInfo={auctionDetailData?.artistInfo}
         />
         <div className='space-y-[2rem]'>
+          <CurrentBidBox />
           <BiddingBox />
           <BidHistories />
         </div>
