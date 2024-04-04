@@ -33,6 +33,7 @@ export default function SignUpPage() {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schemaSignup), reValidateMode: 'onBlur' });
 
@@ -42,6 +43,8 @@ export default function SignUpPage() {
   const [emailError, setEmailError] = useState('');
 
   const handleCheckDuplicate = async (key: keyof FormData) => {
+    setError('nickname', {});
+    setError('email', {});
     const value = getValues(key);
     try {
       let emailresult;
@@ -49,12 +52,8 @@ export default function SignUpPage() {
 
       if (key === 'nickname') {
         nicknameresult = await getNicknameCheck(value);
-        setNicknameCheck('');
-        setnickNameError('');
       } else if (key === 'email') {
         emailresult = await getEmailCheck(value);
-        setEmailCheck('');
-        setEmailError('');
       }
 
       if (nicknameresult) {
@@ -84,8 +83,7 @@ export default function SignUpPage() {
       }
     }
   };
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
-  const [isEmailChecked, setIsEmailChecked] = useState(false);
+
   const [signupMsg, setSignupMsg] = useState('');
 
   const onSubmit = async (data: FormData) => {
@@ -120,6 +118,13 @@ export default function SignUpPage() {
       }
     }
   };
+  const handleReset = () => {
+    setEmailError('');
+    setEmailCheck('');
+    setnickNameError('');
+    setNicknameCheck('');
+  };
+
   return (
     <div className='flex min-h-[80vh] flex-col items-center justify-center'>
       <AlertDialog>
@@ -131,7 +136,7 @@ export default function SignUpPage() {
 
           <form
             noValidate
-            className={` relative flex w-full flex-col items-center justify-center ${errors.email ? 'gap-[3rem]' : 'gap-[3rem]'}`}
+            className={` relative flex w-full flex-col items-center justify-center ${errors.nickname || errors.email ? 'gap-[3rem]' : 'gap-[2rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className='h-[6.4rem] w-[43.8rem]'>
@@ -160,7 +165,7 @@ export default function SignUpPage() {
               )}
             </div>
 
-            <div>
+            <div className='h-[6.4rem] w-[43.8rem]'>
               <div className='relative flex items-center justify-end'>
                 <AuthInput
                   type='email'
@@ -201,7 +206,13 @@ export default function SignUpPage() {
               className=' h-[6.4rem] w-[43.8rem]'
             />
             <AlertDialogTrigger asChild>
-              <Button variant='default' className=' mt-7 bg-red-F text-[2rem]' type='submit' size='auth'>
+              <Button
+                onClick={() => handleReset()}
+                variant='default'
+                className=' mt-7 bg-red-F text-[2rem]'
+                type='submit'
+                size='auth'
+              >
                 회원가입
               </Button>
             </AlertDialogTrigger>
