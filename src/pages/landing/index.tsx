@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { getAuction } from '@/services/api';
 import LikeButton from '@/components/common/LikeButton';
+import Link from 'next/link';
 
 interface popularProps {
   id: number;
@@ -86,7 +87,6 @@ export default function Landing() {
             <Carousel
               opts={{
                 align: 'start',
-                loop: true,
               }}
               plugins={[Autoplay({ delay: 4000 })]}
               className='mr-[8.2rem] w-full max-w-[87.2rem]'
@@ -96,18 +96,22 @@ export default function Landing() {
                   <section className='grid w-full grid-cols-3 grid-rows-2 gap-x-10 gap-y-[4rem]'>
                     {liveSoonData.slice(0, 6).map((item, index) => (
                       <div key={index}>
-                        <div className='relative'>
-                          <Image
-                            src={item.artImage}
-                            alt={item.artName}
-                            width={280}
-                            height={200}
-                            className='h-[20rem] w-[28rem] rounded-[.6rem]'
-                          />
-                          <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
-                          <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
-                          <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
-                        </div>
+                        <Link href={`/auction/${item.id}/detail`}>
+                          <div className='relative'>
+                            <div className='overflow-hidden'>
+                              <Image
+                                src={item.artImage}
+                                alt={item.artName}
+                                width={280}
+                                height={200}
+                                className='h-[20rem] w-[28rem] rounded-[.6rem] transition-transform hover:scale-125'
+                              />
+                            </div>
+                            <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
+                            <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
+                            <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
+                          </div>
+                        </Link>
                       </div>
                     ))}
                   </section>
@@ -116,18 +120,22 @@ export default function Landing() {
                   <section className='grid w-full grid-cols-3 grid-rows-2 gap-x-10 gap-y-[4rem]'>
                     {liveSoonData.slice(6, 12).map((item, index) => (
                       <div key={index}>
-                        <div className='relative'>
-                          <Image
-                            src={item.artImage}
-                            alt={item.artName}
-                            width={280}
-                            height={200}
-                            className='h-[20rem] w-[28rem] rounded-[.6rem]'
-                          />
-                          <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
-                          <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
-                          <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
-                        </div>
+                        <Link href={`/auction/${item.id}/detail`}>
+                          <div className='relative'>
+                            <div className='overflow-hidden'>
+                              <Image
+                                src={item.artImage}
+                                alt={item.artName}
+                                width={280}
+                                height={200}
+                                className='h-[20rem] w-[28rem] rounded-[.6rem] transition-transform hover:scale-125'
+                              />
+                            </div>
+                            <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
+                            <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
+                            <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
+                          </div>
+                        </Link>
                       </div>
                     ))}
                   </section>
@@ -136,18 +144,22 @@ export default function Landing() {
                   <section className='grid w-full grid-cols-3 grid-rows-2 gap-x-10 gap-y-[4rem]'>
                     {liveSoonData.slice(12, 18).map((item, index) => (
                       <div key={index}>
-                        <div className='relative'>
-                          <Image
-                            src={item.artImage}
-                            alt={item.artName}
-                            width={280}
-                            height={200}
-                            className='h-[20rem] w-[28rem] rounded-[.6rem]'
-                          />
-                          <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
-                          <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
-                          <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
-                        </div>
+                        <Link href={`/auction/${item.id}/detail`}>
+                          <div className='relative'>
+                            <div className='overflow-hidden'>
+                              <Image
+                                src={item.artImage}
+                                alt={item.artName}
+                                width={280}
+                                height={200}
+                                className='h-[20rem] w-[28rem] rounded-[.6rem] transition-transform hover:scale-125'
+                              />
+                            </div>
+                            <p className='text-lg mt-[1.5rem] font-NotoSansKR text-20-700'>{item.artSubTitle}</p>
+                            <p className='mt-[.5rem] text-18-500 text-gray-600'>{item.artist}</p>
+                            <LikeButton className='absolute right-[1.8rem] top-[1.4rem]' />
+                          </div>
+                        </Link>
                       </div>
                     ))}
                   </section>

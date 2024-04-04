@@ -74,8 +74,6 @@ export default function LandingBanner() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-  console.log(count);
-  console.log(current);
 
   useEffect(() => {
     if (!api) {
@@ -85,7 +83,6 @@ export default function LandingBanner() {
     setCurrent(api.selectedScrollSnap() + 1);
 
     api.on('select', () => {
-      console.log('current');
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
@@ -100,9 +97,6 @@ export default function LandingBanner() {
             delay: 4000,
           }),
         ]}
-        // opts={{
-        //   loop: true,
-        // }}
       >
         <CarouselContent>
           {BannerInformation.map((el, index) => (
