@@ -85,7 +85,7 @@
       <td align="center"><a href="https://github.com/PJW980921"><img src="https://github.com/sozign/codeit-top-secret-X/assets/124119421/ee39bc37-5825-4b4f-8831-ed814b019129" width="128px;" alt=""/><br /><sub><b>박지원</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/ynmkim"><img src="https://github.com/Team-YUMU/YUMU-FE/assets/124119421/c8d7b441-aa9d-4bb2-8cd1-44f47bd2e490" width="128px;" alt=""/><br /><sub><b>김윤미</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/Nebaisgood"><img src="https://github.com/Team-YUMU/YUMU-FE/assets/124119421/bd43955b-40bf-4203-bda3-f4ba8786f4c1" width="128px;" alt=""/><br /><sub><b>성은지</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/00TaciTa00"><img src=" " width="128px;" alt=""/><br /><sub><b>이서영</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/00TaciTa00"><img src="https://github.com/Team-YUMU/YUMU-FE/assets/79896328/06704f2b-0a6a-43dc-a3e7-bb664aa168c0" width="128px;" alt=""/><br /><sub><b>이서영</b></sub></a><br /></td>
     </tr>
   </tbody>
 </table>
