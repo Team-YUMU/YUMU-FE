@@ -33,7 +33,7 @@ const nextConfig = {
   redirects: async () => [
     {
       source: '/api/v1/:path*',
-      destination: 'http://43.200.219.117:8080/api/v1/:path*',
+      destination: 'http://3.34.229.242:8080/api/v1/:path*',
       permanent: false,
     },
   ],
