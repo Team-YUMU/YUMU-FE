@@ -1,16 +1,19 @@
 import Image from 'next/image';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { QueryClient, useInfiniteQuery, useMutation, useQueryClient, QueryKey } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getWishHistory, postWishAuction } from '@/services/api';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function WishList() {
   const [ref, inView] = useInView();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [mouseOverIndex, setMouseOverIndex] = useState<number | null>(null);
 
   const {
     data: getWishList,
@@ -19,7 +22,7 @@ export default function WishList() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['getWishList'],
     queryFn: ({ pageParam = 999999 }) => getWishHistory(pageParam, 6),
     initialPageParam: 999999,
     retry: 0,
@@ -40,13 +43,15 @@ export default function WishList() {
   const { mutate } = useMutation({
     mutationFn: (itemId: number) => postWishAuction(itemId),
     onSuccess: () => {
-      return queryClient.invalidateQueries({ queryKey: ['posts'] });
+      return queryClient.invalidateQueries({ queryKey: ['getWishList'] });
     },
   });
 
   const handleButtonClick = (itemId: number) => {
     mutate(itemId);
   };
+
+  const heartToggle = `absolute flex`;
 
   return (
     <div className='grid h-[73rem] w-[90.8rem] grid-cols-3 gap-[1.72rem] overflow-scroll' onScroll={handleScroll}>
@@ -73,32 +78,28 @@ export default function WishList() {
                       <Image
                         width={35}
                         height={30}
-                        className='absolute'
-                        src={'/images/heart_on.png'}
+                        className={heartToggle}
+                        onMouseEnter={() => setMouseOverIndex(itemIndex)}
+                        onMouseLeave={() => setMouseOverIndex(null)}
+                        src={mouseOverIndex === itemIndex ? '/images/heart_off.png' : '/images/heart_on.png'}
                         alt='관심목록 찜 버튼'
                       />
                     </Button>
-                    <div className='pt-[1.5rem] text-20-700 text-black-0'>
-                      <p>{item.artTitle}</p>
-                      <p className='h-[5.4rem] w-[19.1rem] text-18-500 text-gray-9'>{item.artSubtitle}</p>
-                    </div>
+                    <Link href={`/auction/${item.auctionId}/detail`}>
+                      <div className='pt-[1.5rem] text-20-700 text-black-0 '>
+                        <p className='hover:border-b-[0.1rem] hover:border-b-black-2'>{item.artTitle}</p>
+                        <p className='h-[5.4rem] w-[19.1rem] text-18-500 text-gray-9'>{item.artSubtitle}</p>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               ))}
             </Fragment>
           ))}
-          {isFetching ? (
-            <div className='grid grid-cols-3 gap-[1.72rem]'>
-              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
-              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
-              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
-            </div>
-          ) : (
-            <div ref={ref}></div>
-          )}
+          {isFetching ? <Spinner /> : <div ref={ref}></div>}
         </>
       ) : (
-        <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
+        <div className='mt-[8.1rem] inline-flex  w-[90.8rem] flex-col items-center gap-[2rem]'>
           <div className='flex w-[15.2rem] flex-col items-center gap-[1rem]'>
             <Image
               alt='판매 목록 빈 목록 일 때 박스 이미지'

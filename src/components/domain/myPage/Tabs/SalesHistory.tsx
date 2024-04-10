@@ -13,6 +13,8 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { Skeleton } from '@/components/ui/skeleton';
+import Link from 'next/link';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function SalesHistory() {
   const [ref, inView] = useInView();
@@ -26,7 +28,7 @@ export default function SalesHistory() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['getSalesList'],
     queryFn: ({ pageParam = 999999 }) => getSalesHistory(pageParam, 5),
     initialPageParam: 999999,
     retry: 0,
@@ -56,8 +58,13 @@ export default function SalesHistory() {
                   <div className=' mx-[4.8rem] flex w-[1rem] flex-col gap-[4.3rem]'>
                     <div className='flex flex-col gap-[0.4rem]'>
                       <span className='h-[1.8rem] w-[9.5rem] flex-shrink-0 text-18-700 text-gray-9'>{'판매 완료'}</span>
-                      <p className='h-[3.9rem] w-[30rem] flex-shrink-0 text-32-700 text-black-2'>{item.artTitle}</p>
+                      <Link href={`/auction/${item.auctionId}/detail`}>
+                        <p className='h-[3.9rem] w-[30rem] flex-shrink-0 text-32-700 text-black-2 hover:border-b-[0.1rem]  hover:border-b-black-2'>
+                          {item.artTitle}
+                        </p>
+                      </Link>
                     </div>
+
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button type='button' size={'myPage'} variant={'myPage'}>
@@ -121,18 +128,10 @@ export default function SalesHistory() {
               ))}
             </Fragment>
           ))}
-          {isFetching ? (
-            <div className='flex flex-col gap-[1.6rem]'>
-              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
-              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
-              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
-            </div>
-          ) : (
-            <div ref={ref}></div>
-          )}
+          {isFetching ? <Spinner /> : <div ref={ref}></div>}
         </div>
       ) : (
-        <div className='inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
+        <div className='mt-[8.1rem] inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>
           <div className='flex w-[15.2rem] flex-col items-center gap-[1rem]'>
             <Image
               alt='판매 목록 빈 목록 일 때 박스 이미지'

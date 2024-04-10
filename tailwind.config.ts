@@ -13,6 +13,7 @@ const config = {
       },
     },
     screens: {
+      mac: { max: '1499px' },
       // => @media (max-width: 1119px) { ... }
       md: { max: '1199px' }, // tablet
 

@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { putMemberNickNameData } from '@/services/api';
+import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 
@@ -14,6 +15,7 @@ export default function NickNameEditForm({ nickname }: FormData) {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<FormData>();
   const INPUT_SETTING = {
@@ -22,11 +24,15 @@ export default function NickNameEditForm({ nickname }: FormData) {
     },
   };
 
+  const queryClient = useQueryClient();
+
   const onChangeNickName = async () => {
     const nicknameParams = getValues('nickname');
     try {
       await putMemberNickNameData(nicknameParams);
       alert('성공적으로 수정되었습니다.');
+      setValue('nickname', '');
+      queryClient.invalidateQueries({ queryKey: ['memberData'] });
     } catch (error) {
       if (error instanceof AxiosError) {
         alert(error.response?.data.errorMessage);

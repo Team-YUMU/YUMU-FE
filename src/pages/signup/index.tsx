@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getNicknameCheck, postMember, getEmailCheck } from '@/services/api';
 import { useState } from 'react';
-// import axios from 'axios';
 import Link from 'next/link';
 import { schemaSignup } from '@/types/validator/signForm';
 import {
@@ -33,8 +32,9 @@ export default function SignUpPage() {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schemaSignup) });
+  } = useForm<FormData>({ resolver: zodResolver(schemaSignup), reValidateMode: 'onBlur' });
 
   const [nicknameCheck, setNicknameCheck] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
@@ -42,10 +42,13 @@ export default function SignUpPage() {
   const [emailError, setEmailError] = useState('');
 
   const handleCheckDuplicate = async (key: keyof FormData) => {
+    setError('nickname', {});
+    setError('email', {});
     const value = getValues(key);
     try {
       let emailresult;
       let nicknameresult;
+
       if (key === 'nickname') {
         nicknameresult = await getNicknameCheck(value);
       } else if (key === 'email') {
@@ -68,7 +71,7 @@ export default function SignUpPage() {
     } catch (error) {
       if (error instanceof AxiosError) {
         const errorMessages = error.response?.data.errorMessage;
-        console.log(errorMessages);
+
         if (key === 'email') {
           setEmailError(errorMessages);
           setEmailCheck('');
@@ -80,46 +83,62 @@ export default function SignUpPage() {
     }
   };
 
+  const [signupMsg, setSignupMsg] = useState('');
+
   const onSubmit = async (data: FormData) => {
-    let isNicknameChecked = false;
-    let isEmailChecked = false;
-
-    if (nicknameError || nicknameCheck) {
-      isNicknameChecked = true;
-    } else {
-      setnickNameError('닉네임 중복확인을 해주세요.');
+    //  아무 검사도 하지 않은 경우
+    if (!nicknameError || !nicknameCheck || !emailError || !emailCheck) {
+      setIsModalOpen(true);
+      setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
+    }
+    // 둘 다 에러인 경우,
+    if (emailError && nicknameError) {
+      setIsModalOpen(true);
+      setSignupMsg('닉네임/이메일 중복확인을 해주세요.');
+    } //닉네임만 에러인 경우,
+    if (!emailError && nicknameError) {
+      setIsModalOpen(true);
+      setSignupMsg('닉네임 중복확인을 해주세요.');
+    } // 이메일만 에러인 경우
+    if (emailError && !nicknameError) {
+      setIsModalOpen(true);
+      setSignupMsg('이메일 중복확인을 해주세요.');
     }
 
-    if (emailError || emailCheck) {
-      isEmailChecked = true;
-    } else {
-      setEmailError('이메일 중복확인을 해주세요.');
-    }
-
-    if (isNicknameChecked && isEmailChecked) {
+    // 에러메시지가 없고, 메시지만 있는 경우.
+    if (nicknameCheck && emailCheck) {
       try {
         setIsModalOpen(true);
+        setSignupMsg('회원가입이 완료되었습니다.');
         await postMember(data);
       } catch (error) {
         console.log('onSubmit error', error);
       }
     }
   };
+
+  // const handleReset = () => {
+  //   setEmailError('');
+  //   setEmailCheck('');
+  //   setnickNameError('');
+  //   setNicknameCheck('');
+  // };
+
   return (
-    <div className='flex min-h-screen flex-col items-center justify-center'>
+    <div className='flex min-h-[80vh] flex-col items-center justify-center'>
       <AlertDialog>
-        <div className='flex w-[43.8rem] flex-col items-center gap-[1.3rem] p-10'>
-          <div className=' mb-[2.6rem] flex flex-col items-center'>
+        <div className='flex w-[43.8rem] flex-col items-center gap-[3rem]'>
+          <div className=' flex flex-col items-center'>
             <h1 className='font-TheJamsil text-[4.6rem] text-[#222]'>회원가입</h1>
             <h2 className='font-notoKR text-[1.6rem] text-gray-9'>회원가입에 필요한 정보를 입력해주세요.</h2>
           </div>
 
           <form
             noValidate
-            className={` relative flex w-full flex-col items-center justify-center ${errors ? 'gap-[3.5rem]' : 'gap-[1rem]'}`}
+            className={` relative flex w-full flex-col items-center justify-center ${errors.nickname || errors.email ? 'gap-[3rem]' : 'gap-[2rem]'}`}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div>
+            <div className='h-[6.4rem] w-[43.8rem]'>
               <div className='relative flex items-center justify-end'>
                 <AuthInput
                   type='text'
@@ -144,7 +163,8 @@ export default function SignUpPage() {
                 ''
               )}
             </div>
-            <div>
+
+            <div className='h-[6.4rem] w-[43.8rem]'>
               <div className='relative flex items-center justify-end'>
                 <AuthInput
                   type='email'
@@ -163,8 +183,10 @@ export default function SignUpPage() {
                   중복확인
                 </Button>
               </div>
+
               {emailCheck ? <p className='mt-[0.8rem] font-NotoSansKR text-12-400 text-red-F'>{emailCheck}</p> : ''}
             </div>
+
             <AuthInput
               type='password'
               required={!!errors.password}
@@ -194,12 +216,10 @@ export default function SignUpPage() {
               <AlertDialogContent className='flex h-[17.9rem] flex-col items-center justify-around p-0'>
                 <div className='mt-[5rem] '>
                   <AlertDialogHeader>
-                    <AlertDialogTitle className='text-[1.6rem]'>회원가입이 완료되었습니다</AlertDialogTitle>
+                    <AlertDialogTitle className='text-[1.6rem]'>{signupMsg}</AlertDialogTitle>
                   </AlertDialogHeader>
                   <AlertDialogAction
-                    onClick={() => {
-                      router.push('/signin');
-                    }}
+                    onClick={() => router.push('/signin')}
                     className='rounded-[0.8rem mt-[4.1rem] h-[5rem] w-[32rem] border-t-2 bg-white text-[2rem] text-red-F hover:bg-white'
                   >
                     닫기

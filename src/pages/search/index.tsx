@@ -8,6 +8,8 @@ import EmptyView from '@/components/common/EmptyView';
 import SelectBox from '@/components/common/SortSelect';
 import { AuctionProps } from '@/types/types';
 import { getAuction } from '@/services/api';
+import { getMemberInfo } from '@/services/api';
+
 interface AuctionData {
   page: number;
   totalElements: number;
@@ -16,6 +18,8 @@ interface AuctionData {
 }
 
 function SearchPage() {
+  const [isLogin, setIsLogin] = useState(false);
+
   const router = useRouter();
   const { keyword } = router.query;
   const searchKeyword = typeof keyword === 'string' ? keyword : '';
@@ -55,6 +59,23 @@ function SearchPage() {
    */
 
   useEffect(() => {
+    async function checkLogin() {
+      try {
+        const res = await getMemberInfo();
+        if (res) {
+          setIsLogin(true);
+        } else {
+          setIsLogin(false);
+        }
+      } catch (error) {
+        console.error('사용자 정보를 가져오는 중 오류가 발생했습니다:', error);
+      }
+    }
+
+    checkLogin();
+  }, []);
+
+  useEffect(() => {
     if (currentPage < totalPage) {
       const nextPage = currentPage + 1;
 
@@ -63,7 +84,7 @@ function SearchPage() {
         queryFn: () => getAuction(nextPage, pageSize, order, searchKeyword),
       });
     }
-  }, [currentPage, queryClient]);
+  }, [currentPage]);
 
   /** TODO
    * skeleton ui 리팩토링
@@ -89,7 +110,7 @@ function SearchPage() {
 
       <div className='flex flex-col items-center gap-[9rem]'>
         {auctions && auctions.length !== 0 ? (
-          <AuctionList auctions={auctions} />
+          <AuctionList auctions={auctions} isLogin={isLogin} />
         ) : (
           <EmptyView
             title='작품을 찾지 못했습니다.'

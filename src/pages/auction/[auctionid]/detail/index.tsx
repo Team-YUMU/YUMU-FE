@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { AuctionDetail } from '@/components/common/AuctionDetail';
 import { ExhibitionCarousel } from '@/components/common/ExhibitionCarousel';
 import InfoBox from '@/components/common/InfoBox';
@@ -11,7 +12,9 @@ import { BestAuction } from '@/components/common/BestAuction';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getAuctionDetails } from '@/services/api';
-import { ChevronLeft } from 'lucide-react';
+import AuctionDetailHeader from '@/components/common/AuctionDetailHeader';
+import { formatDate } from '@/util/formateDate';
+import { getMemberInfo } from '@/services/api';
 
 /** TODO
  * 서버사이드 렌더링으로 리팩토링
@@ -20,33 +23,24 @@ import { ChevronLeft } from 'lucide-react';
  */
 
 export default function AuctionDetailPage() {
+  const [isLogin, setIsLogin] = useState(false);
+
   const router = useRouter();
   const { auctionid } = router.query;
+  const auctionId = Number(auctionid);
 
-  const { data: auctionDetailsData = [] } = useQuery({
+  const {
+    data: auctionDetailsData = [],
+    isPending,
+    isError,
+  } = useQuery({
     queryKey: ['auctionDetail'],
-    queryFn: () => getAuctionDetails(Number(auctionid)),
+    queryFn: () => getAuctionDetails(auctionId),
     initialData: [],
   });
 
   const { artName, artSubTitle, artImage, artist, status } = auctionDetailsData?.artInfo ?? [];
-  const { artDescription, auctionStartDate, auctionEndDate, notice } = auctionDetailsData;
-
-  const formatDate = (dateString: string, type: string) => {
-    const dateObject = new Date(dateString);
-
-    const year = dateObject.getFullYear();
-    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
-    const date = String(dateObject.getDate()).padStart(2, '0');
-    const hours = String(dateObject.getHours()).padStart(2, '0');
-    const minutes = String(dateObject.getMinutes()).padStart(2, '0');
-
-    if (type === 'YYYY년 MM월 DD일 HH:MM') {
-      return `${year}년 ${month}월 ${date}일 ${hours}:${minutes}`;
-    } else if (type === 'MM.DD') {
-      return `${month}.${date} ${hours}:${minutes}`;
-    }
-  };
+  const { artSummary, auctionStartDate, auctionEndDate, notice, artDescription } = auctionDetailsData;
 
   let linkText = '';
 
@@ -64,14 +58,30 @@ export default function AuctionDetailPage() {
       linkText = `${formatDate(auctionStartDate, 'MM.DD')} 오픈 예정`;
   }
 
+  if (isPending) return '로딩 중입니다...';
+
+  if (isError) return '에러가 발생했습니다.';
+
+  useEffect(() => {
+    async function checkLogin() {
+      try {
+        const res = await getMemberInfo();
+        if (res) {
+          setIsLogin(true);
+        } else {
+          setIsLogin(false);
+        }
+      } catch (error) {
+        console.error('사용자 정보를 가져오는 중 오류가 발생했습니다:', error);
+      }
+    }
+
+    checkLogin();
+  }, []);
+
   return (
     <div className='relative mx-auto my-0 flex w-[136.8rem] flex-col pb-[10.5rem]'>
-      <div className='mb-[4rem] flex flex-row items-center gap-[0.4rem] font-TheJamsil text-36-400 text-black-2'>
-        <button onClick={() => router.push('/search')}>
-          <ChevronLeft color='#e0e0e0' width={36} height={36} />
-        </button>
-        {artName}
-      </div>
+      <AuctionDetailHeader href={'/search'} artName={artName} />
 
       <div className='mb-[8rem] flex gap-[2rem]'>
         <section className='w-[91rem]'>
@@ -81,7 +91,7 @@ export default function AuctionDetailPage() {
 
           <InfoBox className='mb-[3rem]' notice={notice} />
 
-          <AuctionDetail {...auctionDetailsData} />
+          <AuctionDetail description={artDescription} {...auctionDetailsData} />
         </section>
 
         <section className='flex-1'>
@@ -92,12 +102,12 @@ export default function AuctionDetailPage() {
                 <span className='block text-16-500'>{artist}</span>
               </div>
 
-              <LikeButton />
+              <LikeButton auctionId={auctionId} isLogin={isLogin} />
             </div>
 
             <div className='mb-[3rem] flex-1'>
-              <h2 className='mb-[1.6rem] font-[TheJamsil] text-36-400 text-black-2'>{artSubTitle}</h2>
-              <p className='text-18-500 text-gray-99'>{artDescription}</p>
+              <h2 className='mb-[1.6rem] line-clamp-2 font-TheJamsil text-36-400 text-black-2'>{artSubTitle}</h2>
+              <p className='line-clamp-4 text-18-500 text-gray-99'>{artSummary}</p>
             </div>
 
             <div>
@@ -124,13 +134,13 @@ export default function AuctionDetailPage() {
                 {status === 'NOW' && (
                   <div className='absolute left-[50%] top-[-50%] flex h-[3.5rem] w-[21.2rem] translate-x-[-50%] translate-y-[40%] items-center justify-center gap-[1.8rem] rounded-full border-4 border-red-F bg-white text-red-F'>
                     <span className='text-16-900'>LIVING</span>
-                    <LiveTimer startTime={auctionStartDate} />
+                    <LiveTimer startTime={auctionStartDate} className='text-20-700' />
                   </div>
                 )}
 
                 <Link
                   href={`/auction/${auctionid}/live`}
-                  className={`mt-[4.8rem] flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] ${status === 'NOW' ? 'mt-[3rem] bg-red-F' : 'pointer-events-none bg-[#B3B3B3]'} font-TheJamsil text-[2.6rem] font-bold text-white`}
+                  className={`mt-[4.8rem] flex h-[6.4rem] w-full items-center justify-center rounded-[0.6rem] ${status === 'NOW' ? 'mt-[3rem] bg-red-F' : ' bg-[#B3B3B3]'} font-TheJamsil text-[2.6rem] font-bold text-white`}
                 >
                   {linkText}
                 </Link>

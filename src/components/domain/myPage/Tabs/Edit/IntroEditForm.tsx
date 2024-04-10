@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form';
 import { Textarea } from '@/components/ui/my-page-textarea';
 import { Separator } from '@/components/ui/separator';
 import { putMemberIntroduceData } from '@/services/api';
+import { useQueryClient } from '@tanstack/react-query';
 interface FormData {
   introduce: string;
 }
 
 export default function IntroEditForm({ introduce }: FormData) {
-  const { register, handleSubmit, getValues } = useForm<FormData>();
+  const { register, handleSubmit, getValues, setValue } = useForm<FormData>();
 
   const INPUT_SETTING = {
     placeholder: {
@@ -16,17 +17,19 @@ export default function IntroEditForm({ introduce }: FormData) {
     },
   };
 
+  const queryClient = useQueryClient();
+
   const onChangeIntroduce = async () => {
     const introduceParams = getValues('introduce');
     try {
       const res = await putMemberIntroduceData(introduceParams);
       if (res.status === 200) {
         alert('성공적으로 수정되었습니다.');
+        setValue('introduce', '');
+        queryClient.invalidateQueries({ queryKey: ['memberData'] });
       }
     } catch (error) {
       alert(error);
-    } finally {
-      window.location.reload();
     }
   };
 

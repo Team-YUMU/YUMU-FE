@@ -5,6 +5,9 @@ import { Heart } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import ColorChangeMoreArrow from '@/components/svgs/ColorChangeMoreArrow';
+import LiveTimer from '@/components/common/LiveTimer';
+import LiveCountDown from '@/components/common/LiveCountDown';
+import Link from 'next/link';
 
 interface liveProps {
   id: number;
@@ -15,6 +18,8 @@ interface liveProps {
   status: string;
   createdAt: string;
   wishCnt: number;
+  auctionStartDate: string;
+  auctionEndDate: string;
 }
 
 interface LandingLivePopularProps {
@@ -31,8 +36,9 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
 
   const loadLiveAuctionData = async () => {
     try {
-      const data = await getAuction(0, pageSize, 'live', '');
+      const data = await getAuction(1, pageSize, 'live', '');
       const auctionLiveData = data.auctions;
+      console.log(data);
       console.log(auctionLiveData);
       setLiveData(auctionLiveData);
     } catch (error) {
@@ -49,6 +55,8 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
     status: '',
     createdAt: '',
     wishCnt: 0,
+    auctionStartDate: '',
+    auctionEndDate: '',
   };
 
   const displayData =
@@ -61,8 +69,9 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
 
   const loadPopularAuctionData = async () => {
     try {
-      const data = await getAuction(0, pageSize, 'popular', '');
+      const data = await getAuction(1, pageSize, 'popular', '');
       const auctionPopularData = data.auctions;
+      console.log(data);
       console.log(auctionPopularData);
       setPopularData(auctionPopularData);
     } catch (error) {
@@ -111,34 +120,36 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
             {displayData.map((item, index) =>
               item.id !== null ? (
                 <>
-                  <div key={index} className='mr-[1.6rem]'>
-                    <div className='relative right-[-2rem] z-10'>
-                      <div className=' h-[32.8rem] w-[24.8rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] shadow-md'>
-                        <div className='relative left-[.4rem] top-[.4rem] h-[32rem] w-[24rem] overflow-hidden rounded-[.6rem]'>
-                          <Image src={item.artImage} alt='' fill className='transition-transform hover:scale-125' />
+                  <Link href={`/auction/${item.id}/detail`}>
+                    <div key={index} className='mr-[1.6rem]'>
+                      <div className='relative right-[-2rem] z-10'>
+                        <div className=' h-[32.8rem] w-[24.8rem] rounded-[.6rem] bg-gradient-to-b from-[#FF7752] to-[#F9BB00] shadow-md'>
+                          <div className='relative left-[.4rem] top-[.4rem] h-[32rem] w-[24rem] overflow-hidden rounded-[.6rem]'>
+                            <Image src={item.artImage} alt='' fill className='transition-transform hover:scale-125' />
+                          </div>
+                        </div>
+                        <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
+                          <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
+                          <p className='flex h-[2.8rem] w-[11rem] items-center justify-center rounded-[.8rem] rounded-t-none bg-[#FF7751] text-18-700 text-[#fff]'>
+                            {/* 타이머 기능 */}
+                            <LiveCountDown startTime={item.auctionStartDate} endTime={item.auctionEndDate} />
+                          </p>
+                          <Image src='/svgs/m1-timeNear-r.svg' width={16.39} height={14} alt='' />
                         </div>
                       </div>
-                      <div className='absolute left-[5.1rem] top-[.4rem] flex items-start '>
-                        <Image src='/svgs/m1-timeNear-l.svg' width={16.39} height={14} alt='' />
-                        <p className='flex h-[2.8rem] w-[11rem] items-center justify-center rounded-[.8rem] rounded-t-none bg-[#FF7751] text-18-700 text-[#fff]'>
-                          {/* 타이머 기능 */}
-                          {item.createdAt}
-                        </p>
-                        <Image src='/svgs/m1-timeNear-r.svg' width={16.39} height={14} alt='' />
+                      <div className='relative top-[-5.7rem] h-[22.8rem] w-[28rem] rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
+                        <div className='ml-[2rem] mt-[8.2rem]'>
+                          <span className='mr-[1.5rem] text-18-500 text-[#999]'>{item.artist}</span>
+                          <span className='font-[Inter] text-16-500 text-[#999] opacity-40'>
+                            <Heart strokeWidth={3.5} size={12} className='mr-[.6rem] inline ' />
+                            {item.wishCnt.toLocaleString()}
+                          </span>
+                          <p className='mt-[.5rem] text-20-700 '>{item.artName}</p>
+                          <p className='mt-[.5rem] max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
+                        </div>
                       </div>
                     </div>
-                    <div className='relative top-[-5.7rem] h-[22.8rem] w-[28rem] rounded-[1rem] border border-[#DFDFDF] bg-[#F9F9F9]'>
-                      <div className='ml-[2rem] mt-[8.2rem]'>
-                        <span className='mr-[1.5rem] text-18-500 text-[#999]'>{item.artist}</span>
-                        <span className='font-[Inter] text-16-500 text-[#999] opacity-40'>
-                          <Heart strokeWidth={3.5} size={12} className='mr-[.6rem] inline ' />
-                          {item.wishCnt.toLocaleString()}
-                        </span>
-                        <p className='mt-[.5rem] text-20-700 '>{item.artName}</p>
-                        <p className='mt-[.5rem] max-w-[19.1rem] text-18-500 text-[#999]'>{item.artSubTitle}</p>
-                      </div>
-                    </div>
-                  </div>
+                  </Link>
                 </>
               ) : (
                 <div key={index} className='mr-[1.6rem]'>
@@ -187,19 +198,25 @@ function LandingLivePopular({ moveToArtist }: LandingLivePopularProps) {
         <div className=''>
           {/* map으로 돌릴부분 */}
           {popularData.map((item, index) => (
-            <div key={index} className='mb-[2rem] flex justify-between'>
-              <div className='relative  h-[12rem] w-[18rem] overflow-hidden'>
-                <Image src={item.artImage} alt='' fill className='transition-transform hover:scale-125' />
-              </div>
-              <div className='w-[24.1rem]'>
-                <span className='mr-[1.4rem] text-18-500 text-[#FF7752]'>{index + 1}</span>
-                <span className='max-w-[20rem] text-20-700'>{item.artSubTitle}</span>
-                <div className='mt-[3.4rem] text-end'>
-                  <span className='text-16-500 text-[#999]'>경매마감</span>
-                  <span className='ml-[1.2rem] text-20-700 text-[#FF7752]'>00:30:59</span>
+            <>
+              <Link href={`/auction/${item.id}/detail`}>
+                <div key={index} className='mb-[2rem] flex justify-between'>
+                  <div className='relative  h-[12rem] w-[18rem] overflow-hidden'>
+                    <Image src={item.artImage} alt='' fill className='transition-transform hover:scale-125' />
+                  </div>
+                  <div className='w-[24.1rem]'>
+                    <span className='mr-[1.4rem] text-18-500 text-[#FF7752]'>{index + 1}</span>
+                    <span className='max-w-[20rem] text-20-700'>{item.artSubTitle}</span>
+                    <div className='mt-[3.4rem] text-end'>
+                      <span className='text-16-500 text-[#999]'>경매시작</span>
+                      <span className='ml-[1.2rem] text-20-700 text-[#FF7752]'>
+                        <LiveTimer startTime={item.auctionStartDate} className='text-20-700' />
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </Link>
+            </>
           ))}
           <div className='text-center'>
             <button

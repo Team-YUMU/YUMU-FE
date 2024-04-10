@@ -4,41 +4,26 @@ import Layout from '@/components/common/Layout';
 import SubLayout from '@/components/common/SubLayout';
 import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  const exceptionPath = ['/_error', '/404', '/signin', '/signup'];
+  const exceptionPath = ['/_error', '/404'];
+  const exceptionPath2 = ['/mypage', '/signin', '/signup'];
 
+  const LayoutFilter = exceptionPath2.includes(router.pathname) ? SubLayout : Layout;
   if (exceptionPath.includes(router.pathname)) return <Component {...pageProps} />;
 
-  if (router.pathname.startsWith('/mypage')) {
-    const queryClient = new QueryClient();
-    return (
-      <SubLayout>
+  const queryClient = new QueryClient();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <LayoutFilter>
         <Head>
           <title>YUMU 유무</title>
         </Head>
-        <QueryClientProvider client={queryClient}>
-          <Component {...pageProps}></Component>
-        </QueryClientProvider>
-      </SubLayout>
-    );
-  }
-
-  const queryClient = new QueryClient();
-
-  return (
-    <Layout>
-      <Head>
-        <title>YUMU 유무</title>
-      </Head>
-      <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </Layout>
+        <Component {...pageProps}></Component>
+      </LayoutFilter>
+    </QueryClientProvider>
   );
 }

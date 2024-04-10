@@ -17,18 +17,14 @@ const AUCTION_BASE_URL = `${BASE_URL}/auction`;
 
 // signIn-page API (로그인)
 export async function postAuthLogin(loginData: PostAuthLoginProps) {
-  try {
-    const res = await axios.post(`${BASE_URL}/auth/login`, loginData);
-    const accessToken = res.headers['authorization'];
-    const refreshToken = res.headers['refresh'];
-    sessionStorage.setItem('accessToken', accessToken);
-    sessionStorage.setItem('refreshToken', refreshToken);
-    // 클라이언트 측 코드에서 토큰을 다시 저장
-    saveTokensLocally();
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const res = await axios.post(`${BASE_URL}/auth/login`, loginData);
+  const accessToken = res.headers['authorization'];
+  const refreshToken = res.headers['refresh'];
+  sessionStorage.setItem('accessToken', accessToken);
+  sessionStorage.setItem('refreshToken', refreshToken);
+  // 클라이언트 측 코드에서 토큰을 다시 저장
+  saveTokensLocally();
+  return res.data;
 }
 
 // signIn-page nickname check (로그인 닉네임 중복체크)
@@ -218,4 +214,14 @@ export async function postWishAuction(auctionId: number) {
 export async function getLiveAuctionList() {
   const res = await authAxios.get(`${AUCTION_BASE_URL}/live`);
   return res.data;
+}
+// 입찰
+export async function postBid(auctionId: number, bid: number) {
+  const res = await authAxios.post(`${BASE_URL}/bid`, { auctionId: auctionId, price: bid });
+  return res;
+}
+// 낙찰
+export async function postBidSuccess(auctionId: number) {
+  const res = await authAxios.post(`${BASE_URL}/bid/success`, { auctionId });
+  return res;
 }
