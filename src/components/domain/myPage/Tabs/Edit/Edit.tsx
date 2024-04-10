@@ -81,7 +81,7 @@ export default function Edit() {
                   <Image
                     src={memberInfo.profileImage}
                     alt='회원 이미지'
-                    className=' h-full w-full rounded-[50rem] border-[0.1rem]'
+                    className=' h-full w-full rounded-[50rem]  border-[0.1rem] border-gray-9'
                     fill
                   />
                 </div>
@@ -90,7 +90,7 @@ export default function Edit() {
                   <Image
                     src={memberInfo.profileImage}
                     alt='회원 이미지'
-                    className=' h-full w-full rounded-[50rem] border-[0.1rem]'
+                    className=' h-full w-full rounded-[50rem]  border-[0.1rem] border-gray-9'
                     fill
                   />
                 </div>

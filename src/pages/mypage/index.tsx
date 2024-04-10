@@ -71,14 +71,13 @@ export default function MyPage() {
             <Edit />
           ) : (
             <>
-              {' '}
               <div className='inline-flex flex-col items-center gap-[3rem]'>
                 <Image
                   src={memberInfo.profileImage}
                   width={183}
                   height={183}
                   alt='회원 이미지'
-                  className='h-[20rem] w-[20rem] rounded-[20rem] bg-no-repeat'
+                  className='h-[20rem] w-[20rem] rounded-[20rem] border-[0.1rem] border-gray-9 bg-no-repeat'
                 />
                 <div className='inline-flex gap-[0.6rem] py-[1rem] pr-0' onClick={handleChangeUi}>
                   <p className='text-center text-36-500 leading-[2rem] text-black-2 '>{memberInfo.nickname}</p>
