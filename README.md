@@ -14,9 +14,14 @@
 
 🔗 <a href="http://43.200.219.117:8080/swagger-ui/index.html#/" target="_blank">YUMU Swagger</a>
 
+# 📆 프로젝트 기간
+## 2024/02/29 ~ 진행 중
 
-# 🛠️ 기술 스택
+# 🛠️ 기술 스택 
+<div class="display:flex; gap:5px;">
 
+<div>
+    
 ## ⚙️ Front-End
 
 ### FrameWorks
@@ -45,15 +50,20 @@
 
 <img src="https://img.shields.io/badge/dotenv-ECD53F?style=for-the-badge&logo=dotenv&logoColor=white"/> 
 
-### OAuth
+### OAuth 2.0
 
 <img src="https://img.shields.io/badge/kakaotalk-FFCD00?style=for-the-badge&logo=kakaotalk&logoColor=white">
+</div>
 
+<div>
+    
 ## ⚙️ Back-End 
 
+<img src="https://img.shields.io/badge/JAVA 17-007396?style=for-the-badge&logo=java&logoColor=white">
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
 <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
-<img src="https://img.shields.io/badge/kakaotalk-FFCD00?style=for-the-badge&logo=kakaotalk&logoColor=white">
+<img src="https://img.shields.io/badge/websocket-F8DC75?style=for-the-badge&logo=websocket&logoColor=white">
+<img src="https://img.shields.io/badge/stomp-232F3E?style=for-the-badge&logo=stomp &logoColor=white">
 
 ### DB
 
@@ -67,14 +77,24 @@
 <img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white">
 <img src="https://img.shields.io/badge/amazonrds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white">
 <img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">
-  
-
+  </div>
+  <div>
+      
 ## 🖼️ Designer
   
  <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
-  
-  
+  </div>
+  </div>
 
+
+
+ <br> 
+ 
+![Brainstorming](https://github.com/Team-YUMU/YUMU-FE/assets/124119421/d0847179-c65c-4b97-af1b-7cf4c92206dd)
+
+<br>
+
+<hr>
 
 # 👫 팀원 소개 & 역할 
 # 프론트엔드
