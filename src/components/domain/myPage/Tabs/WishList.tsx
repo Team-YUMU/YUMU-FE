@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/router';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function WishList() {
   const [ref, inView] = useInView();
@@ -95,15 +96,7 @@ export default function WishList() {
               ))}
             </Fragment>
           ))}
-          {isFetching ? (
-            <div className='grid grid-cols-3 gap-[1.72rem]'>
-              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
-              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
-              <Skeleton className='h-[20rem] w-[29.2rem] flex-shrink-0 rounded-[0.6rem] bg-gray-7' />
-            </div>
-          ) : (
-            <div ref={ref}></div>
-          )}
+          {isFetching ? <Spinner /> : <div ref={ref}></div>}
         </>
       ) : (
         <div className='mt-[8.1rem] inline-flex  w-[90.8rem] flex-col items-center gap-[2rem]'>

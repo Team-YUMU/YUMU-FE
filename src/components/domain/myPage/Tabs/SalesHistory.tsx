@@ -14,6 +14,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function SalesHistory() {
   const [ref, inView] = useInView();
@@ -127,15 +128,7 @@ export default function SalesHistory() {
               ))}
             </Fragment>
           ))}
-          {isFetching ? (
-            <div className='flex flex-col gap-[1.6rem]'>
-              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
-              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
-              <Skeleton className='h-[24rem] w-[90.8rem] rounded-[1rem] border-[0.1rem] bg-gray-7' />
-            </div>
-          ) : (
-            <div ref={ref}></div>
-          )}
+          {isFetching ? <Spinner /> : <div ref={ref}></div>}
         </div>
       ) : (
         <div className='mt-[8.1rem] inline-flex h-[73rem] w-[90.8rem] flex-col items-center gap-[2rem]'>

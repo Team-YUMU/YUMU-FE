@@ -47,7 +47,7 @@ export default function NewPasswordModalForm() {
       newCheckPassword: '새 비밀번호 확인',
     },
     placeholder: {
-      password: '비밀번호',
+      password: '현재 비밀번호',
       newPassword: '새 비밀번호',
       newCheckPassword: '새 비밀번호 확인',
     },
