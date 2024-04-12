@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install",
-    "proxy": "http://localhost:8080/"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{js,ts,tsx,jsx}": "eslint --fix"
