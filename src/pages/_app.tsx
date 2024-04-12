@@ -21,7 +21,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <LayoutFilter>
         <Head>
           <title>YUMU 유무</title>
-          <meta httpEquiv='Content-Security-Policy' content='upgrade-insecure-requests' />
         </Head>
         <Component {...pageProps}></Component>
       </LayoutFilter>
