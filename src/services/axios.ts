@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REQUEST_URL = 'http://3.34.229.242:8080/';
+const REQUEST_URL = 'https://3.34.229.242/';
 
 export const instance = axios.create({
   baseURL: REQUEST_URL,
