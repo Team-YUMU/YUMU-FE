@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
 const REQUEST_URL = 'https://3.34.229.242/';
 
 export const instance = axios.create({
@@ -15,7 +16,6 @@ export const authInstance = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=UTF-8',
     Authorization: typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : '',
-    Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
   },
 });
 
@@ -25,14 +25,10 @@ export const authInstanceWithMedia = axios.create({
   headers: {
     'Content-Type': 'multipart/form-data;',
     Authorization: typeof window !== 'undefined' ? `Bearer ${sessionStorage.getItem('accessToken')}` : '',
-    Refresh: typeof window !== 'undefined' ? `${sessionStorage.getItem('refreshToken')}` : '',
   },
 });
 export default function saveTokensLocally() {
   const accessToken = sessionStorage.getItem('accessToken');
-  const refreshToken = sessionStorage.getItem('refreshToken');
   authInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
-  authInstance.defaults.headers.Refresh = refreshToken;
   authInstanceWithMedia.defaults.headers.Authorization = `Bearer ${accessToken}`;
-  authInstanceWithMedia.defaults.headers.Refresh = refreshToken;
 }

@@ -19,9 +19,7 @@ const AUCTION_BASE_URL = `${BASE_URL}/auction`;
 export async function postAuthLogin(loginData: PostAuthLoginProps) {
   const res = await axios.post(`${BASE_URL}/auth/login`, loginData);
   const accessToken = res.headers['authorization'];
-  const refreshToken = res.headers['refresh'];
   sessionStorage.setItem('accessToken', accessToken);
-  sessionStorage.setItem('refreshToken', refreshToken);
   // 클라이언트 측 코드에서 토큰을 다시 저장
   saveTokensLocally();
   return res.data;
