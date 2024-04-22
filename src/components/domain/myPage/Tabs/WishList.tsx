@@ -26,6 +26,7 @@ export default function WishList() {
     queryFn: ({ pageParam = 999999 }) => getWishHistory(pageParam, 6),
     initialPageParam: 999999,
     retry: 0,
+    staleTime: 1000 * 60 * 5,
     getNextPageParam: (lastPage) => (!lastPage?.isLast ? lastPage?.nextLastPostId : undefined),
   });
 
