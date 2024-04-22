@@ -32,6 +32,7 @@ export default function SalesHistory() {
     queryFn: ({ pageParam = 999999 }) => getSalesHistory(pageParam, 5),
     initialPageParam: 999999,
     retry: 0,
+    staleTime: 1000 * 60 * 5,
     getNextPageParam: (lastPage) => (!lastPage?.isLast ? lastPage?.nextLastPostId : undefined),
   });
 
