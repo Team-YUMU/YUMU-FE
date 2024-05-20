@@ -26,6 +26,7 @@ export default function Edit() {
   const { data: memberInfo } = useQuery<FormData>({
     queryKey: ['memberData'],
     queryFn: () => getMemberInfo(),
+    staleTime: 1000 * 60 * 5,
   });
 
   const queryClient = useQueryClient();

@@ -26,6 +26,7 @@ export default function Header() {
   const { data: memberData } = useQuery<userData>({
     queryKey: ['memberData'],
     queryFn: () => getMemberInfo(),
+    staleTime: 1000 * 60 * 5,
   });
 
   const handleLogout = async () => {
