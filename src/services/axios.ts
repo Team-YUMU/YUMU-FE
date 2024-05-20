@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
-const REQUEST_URL = 'https://3.34.229.242/';
+const REQUEST_URL = 'https://yumu-back.shop';
 
 export const instance = axios.create({
   baseURL: REQUEST_URL,
